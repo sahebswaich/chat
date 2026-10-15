@@ -1,0 +1,11 @@
+# Copy to .dev.vars for `npm run dev` (local only; never commit .dev.vars).
+# In production these are set with `npx wrangler secret put <NAME>`.
+
+# Your Claude API key from https://platform.claude.com (Settings → API keys).
+ANTHROPIC_API_KEY=sk-ant-...
+
+# Any long random string; protects /admin/*. Generate one with:  openssl rand -base64 32
+ADMIN_TOKEN=change-me-to-a-long-random-string
+
+# Optional: point the server at a different Claude API base URL (normally leave unset).
+# ANTHROPIC_BASE_URL=https://api.anthropic.com

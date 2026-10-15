@@ -2,7 +2,23 @@
   "name": "nimbus-server",
   "version": "1.0.0",
   "private": true,
+  "description": "Nimbus server: Cloudflare Worker + D1 that holds the Claude API key, invite codes and daily limits.",
   "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "wrangler d1 migrations apply nimbus --local && wrangler dev",
+    "deploy": "wrangler deploy && wrangler d1 migrations apply nimbus --remote",
+    "db:migrate": "wrangler d1 migrations apply nimbus --remote",
+    "db:migrate:local": "wrangler d1 migrations apply nimbus --local",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "types": "wrangler types --include-runtime=false --strict-vars=false",
+    "check": "tsc --noEmit && vitest run && wrangler deploy --dry-run --outdir .wrangler/dry-run",
+    "admin": "node scripts/admin.mjs"
+  },
   "dependencies": {
     "@anthropic-ai/sdk": "0.135.0"
   },
