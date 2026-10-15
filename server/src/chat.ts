@@ -153,8 +153,10 @@ function streamAnswer(
     if (!open) return;
     try {
       controller.enqueue(encoder.encode(chunk));
+      console.log("DEBUG wrote", chunk.length, (controller as any).desiredSize);
       lastWrite = Date.now();
-    } catch {
+    } catch (e) {
+      console.log("DEBUG write failed", String(e));
       open = false;
       upstream.abort();
     }

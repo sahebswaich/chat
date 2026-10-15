@@ -304,11 +304,22 @@ describe("POST /v1/chat errors", () => {
         sseBody([messageStart(), { type: "content_block_start", index: 0, content_block: { type: "text", text: "" } }]) +
           sseBody([{ type: "content_block_delta", index: 0, delta: { type: "text_delta", text: "Hello" } }]),
       );
-      // Sends a little, then never finishes (until aborted).
+      // Keeps streaming text until the request is aborted.
+      const more = new TextEncoder().encode(
+        sseBody([{ type: "content_block_delta", index: 0, delta: { type: "text_delta", text: " more" } }]),
+      );
+      let timer: ReturnType<typeof setInterval> | undefined;
       const body = new ReadableStream<Uint8Array>({
         start(controller) {
           controller.enqueue(head);
-          c.signal?.addEventListener("abort", () => controller.error(new DOMException("aborted", "AbortError")));
+          timer = setInterval(() => controller.enqueue(more), 20);
+          c.signal?.addEventListener("abort", () => {
+            clearInterval(timer);
+            controller.error(new DOMException("aborted", "AbortError"));
+          });
+        },
+        cancel() {
+          clearInterval(timer);
         },
       });
       return new Response(body, { headers: { "content-type": "text/event-stream" } });
