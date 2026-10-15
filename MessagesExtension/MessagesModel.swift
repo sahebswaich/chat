@@ -155,9 +155,9 @@ final class MessagesModel {
         if style == .expanded, let selectedMessageURL {
             openCard(from: selectedMessageURL)
         }
-        let session = self.session
+        let currentSession = session
         Task {
-            await session.refreshUsage()
+            await currentSession.refreshUsage()
         }
     }
 

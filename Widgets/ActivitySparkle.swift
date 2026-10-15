@@ -1,3 +1,4 @@
+import Foundation
 import SwiftUI
 
 /// The Nimbus badge for the Lock Screen activity: sparkles on a sky-gradient tile that pulse

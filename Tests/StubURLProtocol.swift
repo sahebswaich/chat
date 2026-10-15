@@ -76,12 +76,12 @@ nonisolated final class StubURLProtocol: URLProtocol {
         let request = self.request
         let host = request.url?.host() ?? ""
         let body = Self.readBody(of: request)
-        let stub: Stub? = Self.state.withLock { state in
+        let registered: Stub? = Self.state.withLock { state in
             state.requests[host, default: []].append(request)
             state.bodies[host, default: []].append(body)
             return state.stubs[host]
         }
-        guard let stub,
+        guard let stub = registered,
               let url = request.url,
               let response = HTTPURLResponse(url: url, statusCode: stub.status, httpVersion: "HTTP/1.1", headerFields: stub.headers)
         else {

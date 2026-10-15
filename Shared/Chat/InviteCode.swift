@@ -67,8 +67,8 @@ nonisolated enum InviteCode {
         case "nimbus":
             let isJoin = components.host?.lowercased() == "join" || pathParts.first?.lowercased() == "join"
             guard isJoin else { return nil }
-            let rawCode = query("code") ?? pathParts.last(where: { $0.lowercased() != "join" })
-            guard let rawCode, let code = normalize(rawCode) else { return nil }
+            let candidate = query("code") ?? pathParts.last(where: { $0.lowercased() != "join" })
+            guard let rawCode = candidate, let code = normalize(rawCode) else { return nil }
             let host = query("host").flatMap { NimbusConfig.normalizeHost($0) }
             return (code, host)
         case "https", "http":

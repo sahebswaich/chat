@@ -6,7 +6,9 @@ import Foundation
 /// control (widgets extension) and by Shortcuts (app). Runs in the app process.
 nonisolated struct OpenAskIntent: AppIntent {
     static let title: LocalizedStringResource = "Ask Nimbus"
-    static let description = IntentDescription("Open Nimbus ready for a new question.")
+    static var description: IntentDescription {
+        IntentDescription("Open Nimbus ready for a new question.")
+    }
     static let openAppWhenRun: Bool = true
 
     init() {}

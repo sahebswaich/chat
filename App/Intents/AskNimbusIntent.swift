@@ -6,7 +6,9 @@ import Foundation
 /// Send Message).
 nonisolated struct AskNimbusIntent: AppIntent {
     static let title: LocalizedStringResource = "Ask Nimbus"
-    static let description = IntentDescription("Ask Nimbus a question and get the answer back.")
+    static var description: IntentDescription {
+        IntentDescription("Ask Nimbus a question and get the answer back.")
+    }
 
     @Parameter(title: "Question", requestValueDialog: "What do you want to ask?")
     var question: String
@@ -22,12 +24,12 @@ nonisolated struct AskNimbusIntent: AppIntent {
         guard !trimmed.isEmpty else {
             throw AskNimbusIntentError.emptyQuestion
         }
-        let credential = await MainActor.run { () -> Credential? in
+        let storedCredential = await MainActor.run { () -> Credential? in
             // The app or the iMessage extension may have signed in since this process started.
             NimbusSession.shared.reload()
             return NimbusSession.shared.credential
         }
-        guard let credential else {
+        guard let credential = storedCredential else {
             throw AskNimbusIntentError.notSignedIn
         }
 

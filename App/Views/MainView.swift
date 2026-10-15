@@ -195,10 +195,10 @@ struct MainView: View {
             router.pending = .join(code: request.code, host: request.host)
             return
         }
-        let session = self.session
+        let currentSession = session
         Task {
             do {
-                try await session.signIn(code: request.code, host: request.host, consentedAt: consentedAt)
+                try await currentSession.signIn(code: request.code, host: request.host, consentedAt: consentedAt)
             } catch {
                 guard let mapped = NimbusError.from(error) else { return }
                 joinError = mapped.errorDescription
@@ -209,7 +209,7 @@ struct MainView: View {
 }
 
 /// An invite link that arrived while already signed in.
-private struct JoinRequest: Equatable {
+private nonisolated struct JoinRequest: Equatable, Sendable {
     let code: String
     let host: String?
 }
