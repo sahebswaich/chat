@@ -191,14 +191,15 @@ final class ConversationController {
     }
 
     /// Saves whenever an answer finishes or fails, wherever the app is.
+    /// (The controller lives as long as the app, so capturing it strongly is fine.)
     private func observeAnswers() {
         withObservationTracking {
             _ = engine.completionTick
             _ = engine.errorTick
-        } onChange: { [weak self] in
+        } onChange: {
             // Called just before the change; hop so the save sees the finished message.
-            Task { @MainActor [weak self] in
-                self?.answerSettled()
+            Task { @MainActor in
+                self.answerSettled()
             }
         }
     }

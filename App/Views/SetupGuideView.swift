@@ -24,7 +24,9 @@ struct SetupGuideView: View {
             mock
                 .frame(maxWidth: .infinity)
                 .frame(height: compact ? 190 : 270)
-                .background(mockBackground)
+                .background {
+                    mockBackground
+                }
                 .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
                 .overlay {
                     RoundedRectangle(cornerRadius: 22, style: .continuous)
@@ -150,8 +152,8 @@ struct SetupGuideView: View {
             }
             .frame(width: iconSize, height: iconSize)
             Text(row.title)
-                .font(compact ? .subheadline : .body)
-                .fontWeight(isHighlighted ? .semibold : .regular)
+                .font(compact ? Font.subheadline : Font.body)
+                .fontWeight(isHighlighted ? Font.Weight.semibold : Font.Weight.regular)
                 .foregroundStyle(.primary)
             Spacer(minLength: 0)
             if isHighlighted {
@@ -188,7 +190,7 @@ struct SetupGuideView: View {
                 .frame(width: 22, height: 22)
                 .background(NimbusTheme.sky, in: Circle())
             Text(Self.title(for: step))
-                .font(compact ? .subheadline.weight(.semibold) : .headline)
+                .font(compact ? Font.subheadline.weight(.semibold) : Font.headline)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer(minLength: 8)
             stepDots

@@ -9,12 +9,15 @@ import UIKit
 /// made as the scene turns inactive on its way out (and tried again on background). Updates go
 /// out at most once a second. When the answer is done or fails, the activity ends with the final
 /// state and stays on the Lock Screen for 15 minutes. Coming back to the app ends it at once.
+///
+/// Only the activity's id is kept; ActivityKit calls happen in `nonisolated` helpers that look
+/// the activity up, so no `Activity` object is held in main-actor state.
 final class LiveActivityController {
     static let shared = LiveActivityController()
 
     private typealias ActivityState = NimbusActivityAttributes.ContentState
 
-    private var activity: Activity<NimbusActivityAttributes>?
+    private var activityID: String?
     private var lastState: ActivityState?
     private var monitor: Task<Void, Never>?
     private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
@@ -34,41 +37,38 @@ final class LiveActivityController {
     }
 
     /// The app is on screen again: the answer is visible there, so the activity goes away.
+    /// This also clears activities left over from an earlier launch.
     func sceneDidBecomeActive() {
         monitor?.cancel()
         monitor = nil
-        activity = nil
+        activityID = nil
         lastState = nil
         endBackgroundTime()
-        // Also clears activities left over from an earlier launch.
-        let running = Activity<NimbusActivityAttributes>.activities
-        guard !running.isEmpty else { return }
         Task {
-            for activity in running {
-                await activity.end(nil, dismissalPolicy: .immediate)
-            }
+            await Self.endActivities(id: nil, finalState: nil, immediately: true)
         }
     }
 
     // MARK: - Activity
 
     private func startActivityIfNeeded(for engine: ChatEngine) {
-        guard activity == nil,
+        guard activityID == nil,
               ActivityAuthorizationInfo().areActivitiesEnabled,
               let phase = ActivityState.Phase(engine.phase),
               !phase.isFinished
         else { return }
         let state = ActivityState(phase: phase, answer: engine.latestAssistantMessage?.text ?? "")
         do {
-            activity = try Activity<NimbusActivityAttributes>.request(
+            let activity = try Activity<NimbusActivityAttributes>.request(
                 attributes: NimbusActivityAttributes(question: Self.question(for: engine)),
                 content: ActivityContent(state: state, staleDate: Self.staleDate()),
                 pushType: nil
             )
+            activityID = activity.id
             lastState = state
         } catch {
             // Not allowed right now (e.g. already in the background). Background time still runs.
-            activity = nil
+            activityID = nil
         }
     }
 
@@ -92,36 +92,30 @@ final class LiveActivityController {
         guard let phase = ActivityState.Phase(engine.phase), !phase.isFinished else {
             let finalPhase = ActivityState.Phase(engine.phase) ?? .done
             let text = assistant?.state.failureMessage ?? assistant?.text ?? ""
-            await finishActivity(with: ActivityState(phase: finalPhase, answer: text))
+            if let id = activityID {
+                activityID = nil
+                lastState = nil
+                await Self.endActivities(id: id, finalState: ActivityState(phase: finalPhase, answer: text), immediately: false)
+            }
             endBackgroundTime()
             return true
         }
         let state = ActivityState(phase: phase, answer: assistant?.text ?? "")
-        if let activity, state != lastState {
+        if let id = activityID, state != lastState {
             lastState = state
-            await activity.update(ActivityContent(state: state, staleDate: Self.staleDate()))
+            await Self.updateActivity(id: id, state: state)
         }
         return false
-    }
-
-    private func finishActivity(with state: ActivityState) async {
-        guard let activity else { return }
-        self.activity = nil
-        lastState = nil
-        await activity.end(
-            ActivityContent(state: state, staleDate: nil),
-            dismissalPolicy: .after(Date().addingTimeInterval(15 * 60))
-        )
     }
 
     // MARK: - Background time
 
     private func beginBackgroundTime() {
         guard backgroundTask == .invalid else { return }
-        backgroundTask = UIApplication.shared.beginBackgroundTask(withName: "Nimbus answer") { [weak self] in
+        backgroundTask = UIApplication.shared.beginBackgroundTask(withName: "Nimbus answer") {
             // Runs on the main thread, and must end the task before returning.
             MainActor.assumeIsolated {
-                self?.backgroundTimeExpired()
+                LiveActivityController.shared.backgroundTimeExpired()
             }
         }
     }
@@ -129,8 +123,8 @@ final class LiveActivityController {
     private func backgroundTimeExpired() {
         monitor?.cancel()
         monitor = nil
-        if let activity {
-            self.activity = nil
+        if let id = activityID {
+            activityID = nil
             let state = ActivityState(
                 phase: .failed,
                 preview: "Nimbus paused in the background. Open it to finish the answer.",
@@ -138,10 +132,7 @@ final class LiveActivityController {
             )
             lastState = nil
             Task {
-                await activity.end(
-                    ActivityContent(state: state, staleDate: nil),
-                    dismissalPolicy: .after(Date().addingTimeInterval(15 * 60))
-                )
+                await Self.endActivities(id: id, finalState: state, immediately: false)
             }
         }
         endBackgroundTime()
@@ -153,11 +144,42 @@ final class LiveActivityController {
         backgroundTask = .invalid
     }
 
+    // MARK: - ActivityKit calls
+
+    /// A fresh lookup each time, so every ActivityKit call gets its own value.
+    private nonisolated static func lookUpActivity(id: String) -> Activity<NimbusActivityAttributes>? {
+        Activity<NimbusActivityAttributes>.activities.first { $0.id == id }
+    }
+
+    private nonisolated static func updateActivity(id: String, state: ActivityState) async {
+        guard let activity = lookUpActivity(id: id) else { return }
+        await activity.update(ActivityContent(state: state, staleDate: staleDate()))
+    }
+
+    /// Ends the activity with `id` (every Nimbus activity when nil). A final state stays on the
+    /// Lock Screen for 15 minutes unless `immediately`.
+    private nonisolated static func endActivities(id: String?, finalState: ActivityState?, immediately: Bool) async {
+        let ids: [String]
+        if let id {
+            ids = [id]
+        } else {
+            ids = Activity<NimbusActivityAttributes>.activities.map { $0.id }
+        }
+        for activityID in ids {
+            guard let activity = lookUpActivity(id: activityID) else { continue }
+            let content = finalState.map { ActivityContent(state: $0, staleDate: nil) }
+            let policy: ActivityUIDismissalPolicy = immediately
+                ? .immediate
+                : .after(Date().addingTimeInterval(15 * 60))
+            await activity.end(content, dismissalPolicy: policy)
+        }
+    }
+
     // MARK: - Helpers
 
     /// If the app is suspended before the next update, the activity shows as stale
     /// ("Open Nimbus to see the answer") instead of "Writing…" forever.
-    private static func staleDate() -> Date {
+    private nonisolated static func staleDate() -> Date {
         Date().addingTimeInterval(45)
     }
 

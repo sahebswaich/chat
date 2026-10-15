@@ -216,9 +216,12 @@ struct OnboardingView: View {
                 if isWorking {
                     ProgressView()
                         .tint(.white)
+                    Text("Checking…")
+                        .font(.headline)
+                } else {
+                    Text("Continue")
+                        .font(.headline)
                 }
-                Text(isWorking ? "Checking…" : "Continue")
-                    .font(.headline)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 6)

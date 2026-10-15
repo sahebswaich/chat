@@ -29,23 +29,7 @@ struct ChatView: View {
     private var style: ChatStyle { conversations.selectedStyle }
 
     var body: some View {
-        thread
-            .overlay {
-                if engine.messages.isEmpty {
-                    ChatEmptyState { question in
-                        conversations.ask(question)
-                    }
-                    .transition(.opacity)
-                }
-            }
-            .safeAreaInset(edge: .bottom, spacing: 0) {
-                composerArea
-            }
-            .navigationTitle(conversations.title)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                toolbarContent
-            }
+        screen
             .nimbusHaptics(for: engine)
             .sensoryFeedback(.selection, trigger: conversations.selectedStyle)
             .confirmationDialog(
@@ -81,6 +65,26 @@ struct ChatView: View {
     }
 
     // MARK: - Thread
+
+    private var screen: some View {
+        thread
+            .overlay {
+                if engine.messages.isEmpty {
+                    ChatEmptyState { question in
+                        conversations.ask(question)
+                    }
+                    .transition(.opacity)
+                }
+            }
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                composerArea
+            }
+            .navigationTitle(conversations.title)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                toolbarContent
+            }
+    }
 
     private var thread: some View {
         ThreadView(

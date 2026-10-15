@@ -22,7 +22,7 @@ struct NimbusApp: App {
                 .onOpenURL { url in
                     // nimbus://join?code=…&host=…, nimbus://ask?q=…, nimbus://new.
                     // Screens pick the request up from `NimbusRouter.shared.pending`.
-                    NimbusRouter.shared.handle(url: url)
+                    _ = NimbusRouter.shared.handle(url: url)
                 }
         }
         .modelContainer(container)

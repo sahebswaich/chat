@@ -25,7 +25,7 @@ struct SetupGuideCard: View {
                         .font(.caption.weight(.bold))
                         .foregroundStyle(.secondary)
                         .frame(width: 26, height: 26)
-                        .background(Circle().fill(Color.secondary.opacity(0.15)))
+                        .background(Color.secondary.opacity(0.15), in: Circle())
                 }
                 .buttonStyle(.borderless)
                 .accessibilityLabel("Dismiss")
