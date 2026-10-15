@@ -1,7 +1,9 @@
 import Foundation
 import Testing
 
-@Suite("NimbusClient and ChatEngine over the wire")
+// Serialized and with generous deadlines: these tests poll the main actor while a stream runs,
+// and a cold, busy CI simulator can take far longer than a laptop.
+@Suite("NimbusClient and ChatEngine over the wire", .serialized)
 struct NimbusClientTests {
     /// A `/v1/chat` response in the exact shape the server sends.
     private static let contractStream: String = [
@@ -63,7 +65,7 @@ struct NimbusClientTests {
     }
 
     private func waitUntilFinished(_ engine: ChatEngine) async throws {
-        let deadline = ContinuousClock.now + .seconds(10)
+        let deadline = ContinuousClock.now + .seconds(30)
         while engine.phase.isBusy, ContinuousClock.now < deadline {
             try await Task.sleep(for: .milliseconds(20))
         }
@@ -331,7 +333,7 @@ struct NimbusClientTests {
         let engine = ChatEngine(surface: .messages, client: { client })
 
         engine.ask("tell me a long story")
-        let deadline = ContinuousClock.now + .seconds(10)
+        let deadline = ContinuousClock.now + .seconds(30)
         while engine.latestAssistantMessage?.text.isEmpty ?? true, ContinuousClock.now < deadline {
             try await Task.sleep(for: .milliseconds(20))
         }
