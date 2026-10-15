@@ -1,0 +1,81 @@
+name: iOS
+
+on:
+  push:
+    paths-ignore: ["server/**", "docs/**", "**/*.md"]
+  pull_request:
+    paths-ignore: ["server/**", "docs/**", "**/*.md"]
+  workflow_dispatch:
+
+concurrency:
+  group: ios-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # App Store Connect requires Xcode 26+ (iOS 26 SDK) since April 2026.
+  XCODE_VERSION: "26.6"
+
+jobs:
+  build-and-test:
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Select Xcode
+        run: |
+          if [ -d "/Applications/Xcode_${XCODE_VERSION}.app" ]; then
+            sudo xcode-select -s "/Applications/Xcode_${XCODE_VERSION}.app/Contents/Developer"
+          else
+            XC=$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)
+            sudo xcode-select -s "$XC/Contents/Developer"
+          fi
+          xcodebuild -version
+          xcrun simctl list runtimes | grep -i ios || true
+
+      - name: Build (iOS Simulator, Debug)
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project Nimbus.xcodeproj -scheme Nimbus -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' -derivedDataPath build/sim \
+            ARCHS=arm64 CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee build-sim.log | xcbeautify --renderer github-actions
+
+      - name: Build (iOS device, Release)
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project Nimbus.xcodeproj -scheme Nimbus -configuration Release \
+            -destination 'generic/platform=iOS' -derivedDataPath build/device \
+            CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee build-device.log | xcbeautify --renderer github-actions
+
+      - name: Unit tests
+        run: |
+          set -o pipefail
+          # Newest iOS runtime, first available iPhone on it.
+          SIM_ID=$(xcrun simctl list devices available -j | python3 -c '
+          import json, sys
+          devs = json.load(sys.stdin)["devices"]
+          ios = sorted((k for k in devs if "iOS" in k), key=lambda k: [int(x) for x in k.split("iOS-")[-1].split("-")])
+          for rt in reversed(ios):
+              phones = [d for d in devs[rt] if d["name"].startswith("iPhone")]
+              if phones:
+                  print(phones[0]["udid"]); break
+          ')
+          echo "Testing on simulator $SIM_ID"
+          xcodebuild test \
+            -project Nimbus.xcodeproj -scheme Nimbus \
+            -destination "id=${SIM_ID}" -derivedDataPath build/test \
+            CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee test.log | xcbeautify --renderer github-actions
+
+      - name: Error summary
+        if: failure()
+        run: |
+          for f in build-sim.log build-device.log test.log; do
+            [ -f "$f" ] || continue
+            echo "===== $f ====="
+            grep -E "(error|fatal error):|✘|Testing failed|failed with" "$f" | sort -u | head -150 || true
+          done

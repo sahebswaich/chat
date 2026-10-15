@@ -64,7 +64,13 @@ dashes/spaces ignored). Response `200 {"token": "<opaque>", "name": "James", "da
 Errors: `400 invalid_request`, `404 invalid_code`, `410 code_used_up`.
 
 ### `GET /v1/me`
-Response `200 {"name": "James", "usedToday": 12, "dailyLimit": 200}`. `401 unauthorized`.
+Response `200 {"name": "James", "usedToday": 12, "dailyLimit": 200, "supportEmail": "owner@example.com"}`
+(`supportEmail` from the `SUPPORT_EMAIL` var, `""` if unset). `401 unauthorized`.
+
+### `DELETE /v1/me`
+Deletes the caller's account: user row, usage counters and cards they created (reports are kept
+for moderation, with the user link removed). `204`. The app's **Delete my data** button calls this
+and then signs out (App Review guideline 5.1.1(v): apps that create accounts must offer deletion).
 
 ### `POST /v1/chat` → `text/event-stream`
 Request:
@@ -123,7 +129,30 @@ Request `{"messages": [...], "answer": "…", "reason": "offensive"}` → `204`.
 ### Public pages
 * `GET /health` → `{"ok": true}`
 * `GET /join/:code` → HTML landing page: “Install Nimbus from TestFlight” (uses `TESTFLIGHT_URL` var if set) + “Open Nimbus” button to `nimbus://join?code=…&host=…`, and the code in big type to type manually.
-* `GET /privacy` → HTML privacy policy (needed for external TestFlight testing).
+* `GET /privacy` → HTML privacy policy (needed for external TestFlight testing). Must say that
+  questions and pasted text are sent to Anthropic's Claude API to generate answers.
+* `GET /terms` → HTML terms of use: zero tolerance for objectionable or abusive content, misuse
+  ends access, answers are AI-generated and can be wrong, report button, contact.
+* `GET /support` → HTML support page with the `SUPPORT_EMAIL` contact and how to report content.
+
+## App Review requirements (external TestFlight testers go through Beta App Review)
+
+* **Consent before anything is sent to the AI** (guideline 5.1.2(i)): the sign-in screen, in both
+  the app and the iMessage extension, explains that questions and pasted text are sent to Anthropic's
+  Claude AI to generate answers. People must tick "I agree to the Terms and to sending my
+  questions to Claude", with links to `/terms` and `/privacy`, before **Continue** is enabled. The
+  consent time is stored with the credential (`Credential.consentedAt`), so it is shared by the app
+  and the extension.
+* **Report** on every AI answer, including cards received from other people (`POST /v1/report`),
+  with a promise to review reports within 24 hours.
+* **Filtering:** Claude's built-in safeguards plus a safety section in every system prompt (no
+  sexual content involving minors, no hate or harassment, no instructions for serious harm;
+  decline briefly).
+* **Contact:** Settings shows the support email and links to `/support`, `/terms` and `/privacy`.
+* **Delete my data** in Settings (`DELETE /v1/me`).
+* **Reviewer access:** make an invite for App Review (`npm run admin -- invite "App Review" --uses 5`)
+  and paste the code in App Store Connect → TestFlight → Test Information → Beta App Review
+  Information → notes. Keep the server running.
 
 ## AI behaviour
 
