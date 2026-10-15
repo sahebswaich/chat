@@ -4,20 +4,20 @@ import Foundation
 /// "Ask Nimbus" for Siri, Shortcuts, Spotlight and the Action Button. It asks one question and
 /// returns the whole answer: Siri reads it out, and Shortcuts can pass it on (for example to
 /// Send Message).
-nonisolated struct AskNimbusIntent: AppIntent {
-    static let title: LocalizedStringResource = "Ask Nimbus"
-    static var description: IntentDescription {
+///
+/// Main-actor isolated (the project default) because Swift doesn't allow `nonisolated` on
+/// property-wrapped vars like `@Parameter`; only the synchronous protocol requirements are
+/// `nonisolated`.
+struct AskNimbusIntent: AppIntent {
+    nonisolated static let title: LocalizedStringResource = "Ask Nimbus"
+    nonisolated static var description: IntentDescription {
         IntentDescription("Ask Nimbus a question and get the answer back.")
     }
 
     @Parameter(title: "Question", requestValueDialog: "What do you want to ask?")
     var question: String
 
-    init() {}
-
-    init(question: String) {
-        self.question = question
-    }
+    nonisolated init() {}
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> & ProvidesDialog {
         let trimmed = question.trimmingCharacters(in: .whitespacesAndNewlines)
