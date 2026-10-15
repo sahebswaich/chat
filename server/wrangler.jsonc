@@ -1,0 +1,35 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Nimbus server: a single Cloudflare Worker backed by one D1 database.
+  "name": "nimbus",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "observability": { "enabled": true },
+
+  // Plain (non-secret) settings. Change them here and redeploy.
+  "vars": {
+    // Messages per user per UTC day (an invite can override it per person).
+    "DAILY_LIMIT": "200",
+    // Public TestFlight link shown on the /join page ("" hides the button).
+    "TESTFLIGHT_URL": "",
+    // Claude model used for every answer.
+    "MODEL": "claude-opus-5-5"
+  },
+
+  // Set with `npx wrangler secret put <NAME>` (or `--secrets-file` on the first deploy).
+  "secrets": {
+    "required": ["ANTHROPIC_API_KEY", "ADMIN_TOKEN"]
+  },
+
+  // No database_id needed: `wrangler deploy` creates the "nimbus" database on the
+  // first deploy (automatic provisioning) and finds it by name afterwards.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "nimbus",
+      "migrations_dir": "migrations"
+    }
+  ]
+}
