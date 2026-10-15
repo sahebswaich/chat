@@ -57,7 +57,6 @@ final class MessagesModel {
     /// A send or insert is on its way (buttons are disabled meanwhile).
     private(set) var isDelivering = false
     /// The answer whose card is being made after the tap (spinner on the Card button).
-    private(set) var cardInFlight: UUID?
 
     // MARK: Hooks set by MessagesViewController
 
@@ -81,6 +80,12 @@ final class MessagesModel {
     init() {
         cards.onPrepared = { [weak self] answerID, card in
             self?.recents.attachCard(card, to: answerID)
+        }
+        cards.onUploadFailed = { [weak self] _ in
+            self?.showToast(
+                "Card sent. Its web link couldn't be saved, so people on a Mac may not see it.",
+                systemImage: "exclamationmark.triangle"
+            )
         }
     }
 
@@ -292,8 +297,6 @@ final class MessagesModel {
         engine.load(Self.thread(question: recent.question, answer: recent.answer, answerID: recent.id, date: recent.date))
         if let cardID = recent.cardID, let host = recent.cardHost {
             cards.seed(PreparedCard(id: cardID, host: host), for: recent.id)
-        } else if canAsk {
-            cards.prefetch(answerID: recent.id, question: recent.question, answer: recent.answer)
         }
         expand(focusComposer: false)
     }
@@ -331,14 +334,12 @@ final class MessagesModel {
         }
     }
 
-    /// Called when an answer finishes streaming: remember it and get its card ready.
+    /// Called when an answer finishes streaming: remember it in Recents. (Nothing goes to the
+    /// server until the person actually sends it as a card.)
     func answerDidFinish() {
         guard let answer = engine.messages.last, answer.isCompletedAnswer else { return }
         let question = askedQuestion(for: answer)
         recents.add(RecentAnswer(id: answer.id, question: question, answer: answer.text))
-        if session.isSignedIn {
-            cards.prefetch(answerID: answer.id, question: question, answer: answer.text)
-        }
     }
 
     // MARK: - Thread actions
@@ -429,9 +430,9 @@ final class MessagesModel {
         }
     }
 
-    /// Send as a card bubble. Instant when the card was prefetched; otherwise the card is made
-    /// first (and Messages may then stage it instead of sending). Falls back to a text when no
-    /// card can be made.
+    /// Send as a card bubble, straight from the tap: the card id is picked here, the bubble goes
+    /// out at once, and the card is uploaded in the background. Falls back to a text when no card
+    /// can be made (signed out, or the image can't be drawn).
     func sendCard(_ answer: ThreadMessage) {
         guard canStartDelivery else { return }
         guard let conversation = conversationProvider?() else {
@@ -443,21 +444,23 @@ final class MessagesModel {
         sendTick += 1
         beginDelivery()
 
-        if case .ready(let card)? = cards.status(for: answer.id),
-           let message = cards.makeMessage(card: card, question: question, answer: text) {
-            pendingCardMessage = message
-            conversation.send(message) { @Sendable (error: (any Error)?) in
-                Task { @MainActor in
-                    await self.cardSendFinished(error: error, fallbackText: text)
-                }
+        guard let prepared = cards.cardForSending(answerID: answer.id),
+              let message = cards.makeMessage(card: prepared.card, question: question, answer: text) else {
+            let lead = session.isSignedIn ? "Couldn't draw the card" : "Cards need you to be signed in"
+            Task {
+                await self.sendTextInstead(text, lead: lead)
+                self.endDelivery()
             }
             return
         }
-
-        cardInFlight = answer.id
-        let answerID = answer.id
-        Task {
-            await self.prepareAndDeliverCard(answerID: answerID, question: question, answer: text)
+        if prepared.isNew {
+            cards.upload(prepared.card, answerID: answer.id, question: question, answer: text)
+        }
+        pendingCardMessage = message
+        conversation.send(message) { @Sendable (error: (any Error)?) in
+            Task { @MainActor in
+                await self.cardSendFinished(error: error, fallbackText: text)
+            }
         }
     }
 
@@ -494,34 +497,6 @@ final class MessagesModel {
             await insertCard(message, fallbackText: fallbackText)
         } else {
             await sendTextInstead(fallbackText, lead: "Couldn't send the card")
-        }
-        endDelivery()
-    }
-
-    private func prepareAndDeliverCard(answerID: UUID, question: String, answer: String) async {
-        let result = await cards.prepare(answerID: answerID, question: question, answer: answer)
-        cardInFlight = nil
-        switch result {
-        case .success(let card):
-            guard let message = cards.makeMessage(card: card, question: question, answer: answer) else {
-                await sendTextInstead(answer, lead: "Couldn't draw the card")
-                endDelivery()
-                return
-            }
-            guard let conversation = conversationProvider?() else {
-                showToast(Self.noConversationText, systemImage: "exclamationmark.triangle")
-                endDelivery()
-                return
-            }
-            do {
-                try await ConversationBridge.send(message, in: conversation)
-                collapse()
-            } catch {
-                // The wait for the network usually used up the tap: stage it instead.
-                await insertCard(message, fallbackText: answer)
-            }
-        case .failure(let error):
-            await sendTextInstead(answer, lead: Self.cardFailureLead(error))
         }
         endDelivery()
     }
@@ -582,22 +557,9 @@ final class MessagesModel {
 
     private func endDelivery() {
         isDelivering = false
-        cardInFlight = nil
         pendingCardMessage = nil
     }
 
-    private static func cardFailureLead(_ error: NimbusError) -> String {
-        switch error {
-        case .network:
-            return "You seem to be offline"
-        case .notSignedIn, .unauthorized:
-            return "Cards need you to be signed in"
-        case .dailyLimit:
-            return "Today's limit is reached"
-        default:
-            return "Couldn't make a card right now"
-        }
-    }
 
     // MARK: - Received cards
 

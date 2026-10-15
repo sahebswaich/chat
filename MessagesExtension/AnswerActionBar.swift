@@ -5,8 +5,6 @@ import SwiftUI
 /// `[ ↑ Send ]  [ ▢ Card ]  [ ✎ Insert ]  [ ⋯ ]`. On narrow screens Card and Insert drop their
 /// titles.
 struct AnswerActionBar: View {
-    /// Shows a spinner on Card while the card is made after the tap.
-    var isPreparingCard: Bool
     /// A send or insert is already on its way.
     var isDisabled: Bool
     var onSend: () -> Void
@@ -93,14 +91,8 @@ struct AnswerActionBar: View {
         }
     }
 
-    @ViewBuilder
     private var cardIcon: some View {
-        if isPreparingCard {
-            ProgressView()
-                .controlSize(.mini)
-        } else {
-            Image(systemName: "rectangle.on.rectangle")
-        }
+        Image(systemName: "rectangle.on.rectangle")
     }
 
     @ViewBuilder

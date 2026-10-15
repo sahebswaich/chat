@@ -119,6 +119,30 @@ describe("cards", () => {
     expect(row?.user_id).toMatch(/^u_/);
   });
 
+  it("accepts an app-chosen id, treats a retry as a no-op and refuses someone else's id", async () => {
+    const token = await signUp("James");
+    const id = "Ab3_-xYz09Qw12Er";
+    const first = await call("POST", "/v1/cards", { token, body: { id, question: "q", answer: "first" } });
+    expect(first.status).toBe(200);
+    expect(await first.json()).toEqual({ id, url: `${BASE}/c/${id}` });
+
+    // The app retries after a dropped connection: same id, same user → 200, original kept.
+    const retry = await call("POST", "/v1/cards", { token, body: { id, question: "q", answer: "second" } });
+    expect(retry.status).toBe(200);
+    const card = (await (await call("GET", `/c/${id}.json`)).json()) as Record<string, string>;
+    expect(card["answer"]).toBe("first");
+
+    const other = await signUp("Mallory");
+    const stolen = await call("POST", "/v1/cards", { token: other, body: { id, question: "q", answer: "spoof" } });
+    expect(stolen.status).toBe(409);
+    expect((await errorOf(stolen)).code).toBe("card_exists");
+
+    for (const bad of ["short", "has space in it!!", "x".repeat(65)]) {
+      const res = await call("POST", "/v1/cards", { token, body: { id: bad, question: "q", answer: "a" } });
+      expect(res.status).toBe(400);
+    }
+  });
+
   it("404s unknown cards", async () => {
     const page = await call("GET", "/c/AAAAAAAAAAAAAAAA");
     expect(page.status).toBe(404);

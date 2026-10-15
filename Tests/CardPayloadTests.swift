@@ -118,4 +118,15 @@ struct CardPayloadTests {
         #expect(!CardPayload.isValidID("../etc"))
         #expect(!CardPayload.isValidID("a b"))
     }
+
+    @Test func newIDsAreValidUniqueAndServerShaped() {
+        let ids = (0..<200).map { _ in CardPayload.newID() }
+        #expect(Set(ids).count == ids.count)
+        for id in ids {
+            #expect(id.count == 16)
+            #expect(CardPayload.isValidID(id))
+            // Same alphabet the server accepts for app-chosen ids: [A-Za-z0-9_-]{16,64}.
+            #expect(id.allSatisfy { $0.isASCII && ($0.isLetter || $0.isNumber || $0 == "-" || $0 == "_") })
+        }
+    }
 }

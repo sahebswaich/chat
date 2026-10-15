@@ -98,8 +98,13 @@ Pre-stream errors are normal JSON errors: `401 unauthorized`, `400 invalid_reque
 `429 daily_limit` (`message` says when it resets).
 
 ### `POST /v1/cards`
-Request `{"question": "what is nephilim", "answer": "…"}` (≤ 2k / 20k chars) →
-`200 {"id": "<12+ char id>", "url": "https://<host>/c/<id>"}`. The iMessage card bubble uses
+Request `{"id": "<optional, 16–64 of [A-Za-z0-9_-]>", "question": "what is nephilim", "answer": "…"}`
+(≤ 2k / 20k chars) → `200 {"id": "…", "url": "https://<host>/c/<id>"}`. The app picks the id
+itself on the **Card** tap (`CardPayload.newID()`, 96 random bits), sends the bubble at once (iOS
+only allows a direct send right after a touch) and uploads the card in the background with
+retries. A retry with the same id by the same user is a no-op `200`; an id owned by someone else
+is `409 card_exists`. Without `id` the server picks one. Cards are only stored when someone
+actually sends one. The iMessage card bubble uses
 this URL as `MSMessage.url`: people reading the chat on a Mac or Apple Watch can't run iMessage
 apps, and clicking a card there opens the URL in the browser, so `/c/:id` shows the question and answer as a nice page.
 

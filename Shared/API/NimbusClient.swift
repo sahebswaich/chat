@@ -103,8 +103,9 @@ nonisolated struct NimbusClient: Sendable {
     }
 
     /// `POST /v1/cards` — stores a card for the web fallback page.
-    func createCard(question: String, answer: String) async throws -> CardResponse {
+    func createCard(id: String? = nil, question: String, answer: String) async throws -> CardResponse {
         let body = try encode(CardRequest(
+            id: id,
             question: TextLimit.clip(question, maxUTF16: TextLimit.cardQuestion),
             answer: TextLimit.clip(answer, maxUTF16: TextLimit.cardAnswer)
         ))

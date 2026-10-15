@@ -88,6 +88,9 @@ struct ModelsCodingTests {
 
         let card = try jsonObject(CardRequest(question: "q", answer: "a"))
         #expect(Set(card.keys) == ["question", "answer"])
+        let chosen = try jsonObject(CardRequest(id: "Ab3_-xYz09Qw12Er", question: "q", answer: "a"))
+        #expect(Set(chosen.keys) == ["id", "question", "answer"])
+        #expect(chosen["id"] as? String == "Ab3_-xYz09Qw12Er")
 
         let report = try jsonObject(ReportRequest(
             messages: [ChatTurn(role: .user, content: "q")],

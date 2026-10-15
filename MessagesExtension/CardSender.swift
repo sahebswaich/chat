@@ -9,27 +9,36 @@ nonisolated struct PreparedCard: Equatable, Sendable {
     var host: String
 }
 
+/// A card ready to go into a bubble, and whether it still has to be uploaded.
+nonisolated struct CardForSending: Sendable {
+    var card: PreparedCard
+    var isNew: Bool
+}
+
 /// Creates Nimbus card bubbles.
 ///
-/// Card ids are created ahead of time (`prefetch`) as soon as an answer finishes, because iOS
-/// only allows a direct send right after a tap: waiting for `POST /v1/cards` after the tap
-/// would make the send fail and fall back to an insert.
+/// iOS only allows a direct send right after a tap, so the card can't wait for the server: on
+/// the Card tap the app picks the card id itself (`CardPayload.newID()`), sends the bubble at
+/// once, and uploads the card (`POST /v1/cards` with that id) in the background, retrying a few
+/// times. Nothing is stored on the server for answers that are never sent as a card.
 final class CardSender {
     nonisolated enum Status: Equatable, Sendable {
-        case preparing
         case ready(PreparedCard)
-        case failed(NimbusError)
     }
 
-    /// Called on the main actor when a card id arrives for an answer.
+    /// Called on the main actor when an answer gets a card id (so Recents can reuse it).
     var onPrepared: (@MainActor (UUID, PreparedCard) -> Void)?
+    /// Called on the main actor when a sent card couldn't be uploaded after retrying.
+    var onUploadFailed: (@MainActor (NimbusError) -> Void)?
 
     /// Only the newest few answers keep a card.
     static let maxCached = 6
+    /// Delays before each upload retry.
+    static let retryDelays: [Duration] = [.seconds(1), .seconds(3), .seconds(8)]
 
     private var statuses: [UUID: Status] = [:]
-    private var tasks: [UUID: Task<Status, Never>] = [:]
     private var order: [UUID] = []
+    private var uploads: [UUID: Task<Void, Never>] = [:]
     private let makeClient: @MainActor () -> NimbusClient
 
     init(client: @escaping @MainActor () -> NimbusClient = { NimbusClient(credential: NimbusSession.shared.credential) }) {
@@ -40,46 +49,51 @@ final class CardSender {
         statuses[answerID]
     }
 
-    /// The card is already known (a received card, or a recent answer that has one).
+    /// The card is already on a server (a received card, or a recent answer that has one).
     func seed(_ card: PreparedCard, for answerID: UUID) {
-        tasks[answerID]?.cancel()
-        tasks[answerID] = nil
         statuses[answerID] = .ready(card)
         remember(answerID)
     }
 
-    /// Starts creating a card for an answer in the background, unless one exists or is on its way.
-    func prefetch(answerID: UUID, question: String, answer: String) {
-        switch statuses[answerID] {
-        case .preparing?, .ready?:
-            return
-        case .failed?, nil:
-            start(answerID: answerID, question: question, answer: answer)
+    /// The card to put in the bubble right now: the known one, or a new id on the signed-in
+    /// server. Nil when signed out.
+    func cardForSending(answerID: UUID) -> CardForSending? {
+        if case .ready(let card)? = statuses[answerID] {
+            return CardForSending(card: card, isNew: false)
         }
+        let client = makeClient()
+        guard client.credential != nil, let host = client.resolvedHost else { return nil }
+        let card = PreparedCard(id: CardPayload.newID(), host: host)
+        statuses[answerID] = .ready(card)
+        remember(answerID)
+        onPrepared?(answerID, card)
+        return CardForSending(card: card, isNew: true)
     }
 
-    /// The card for an answer: immediately when prefetched, otherwise after waiting for (or
-    /// retrying) the request.
-    func prepare(answerID: UUID, question: String, answer: String) async -> Result<PreparedCard, NimbusError> {
-        if case .ready(let card)? = statuses[answerID] {
-            return .success(card)
-        }
-        if tasks[answerID] == nil {
-            start(answerID: answerID, question: question, answer: answer)
-        }
-        guard let task = tasks[answerID] else {
-            if case .failed(let error)? = statuses[answerID] {
-                return .failure(error)
+    /// Uploads a newly made card in the background so its link works on Macs and for
+    /// truncated answers. Retries on network trouble; reports a final failure.
+    func upload(_ card: PreparedCard, answerID: UUID, question: String, answer: String) {
+        guard uploads[answerID] == nil else { return }
+        let client = makeClient()
+        uploads[answerID] = Task { [weak self] in
+            var lastError = NimbusError.network("Couldn't reach Nimbus.")
+            for attempt in 0...Self.retryDelays.count {
+                if attempt > 0 {
+                    try? await Task.sleep(for: Self.retryDelays[attempt - 1])
+                }
+                if Task.isCancelled { return }
+                do {
+                    _ = try await client.createCard(id: card.id, question: question, answer: answer)
+                    self?.uploads[answerID] = nil
+                    return
+                } catch {
+                    guard let mapped = NimbusError.from(error) else { return } // cancelled
+                    lastError = mapped
+                    if !mapped.isRetryable { break }
+                }
             }
-            return .failure(.notSignedIn)
-        }
-        switch await task.value {
-        case .ready(let card):
-            return .success(card)
-        case .failed(let error):
-            return .failure(error)
-        case .preparing:
-            return .failure(.badResponse)
+            self?.uploads[answerID] = nil
+            self?.onUploadFailed?(lastError)
         }
     }
 
@@ -113,49 +127,11 @@ final class CardSender {
 
     // MARK: - Private
 
-    private func start(answerID: UUID, question: String, answer: String) {
-        let client = makeClient()
-        guard client.credential != nil, let host = client.resolvedHost else {
-            statuses[answerID] = .failed(.notSignedIn)
-            return
-        }
-        statuses[answerID] = .preparing
-        remember(answerID)
-        let task = Task<Status, Never> { [weak self] in
-            let status: Status
-            do {
-                let response = try await client.createCard(question: question, answer: answer)
-                if CardPayload.isValidID(response.id) {
-                    status = .ready(PreparedCard(id: response.id, host: host))
-                } else {
-                    status = .failed(.badResponse)
-                }
-            } catch {
-                status = .failed(NimbusError.from(error) ?? .network("The card request was cancelled."))
-            }
-            self?.finish(answerID, with: status)
-            return status
-        }
-        tasks[answerID] = task
-    }
-
-    private func finish(_ answerID: UUID, with status: Status) {
-        tasks[answerID] = nil
-        // Evicted (or replaced by a seeded card) while the request was in flight.
-        guard case .preparing? = statuses[answerID] else { return }
-        statuses[answerID] = status
-        if case .ready(let card) = status {
-            onPrepared?(answerID, card)
-        }
-    }
-
     private func remember(_ answerID: UUID) {
         order.removeAll { $0 == answerID }
         order.append(answerID)
         while order.count > Self.maxCached {
             let evicted = order.removeFirst()
-            tasks[evicted]?.cancel()
-            tasks[evicted] = nil
             statuses[evicted] = nil
         }
     }

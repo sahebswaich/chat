@@ -81,6 +81,17 @@ nonisolated struct CardPayload: Equatable, Sendable {
     }
 
     /// Server card ids are URL-safe (letters, digits, `-`, `_`).
+    /// A fresh random card id (96 bits, 16 base64url characters), the same shape the server
+    /// makes. The app picks it on the Card tap so the bubble can go out immediately.
+    static func newID() -> String {
+        var generator = SystemRandomNumberGenerator()
+        let bytes = (0..<12).map { _ in UInt8.random(in: .min ... .max, using: &generator) }
+        return Data(bytes).base64EncodedString()
+            .replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "/", with: "_")
+            .replacingOccurrences(of: "=", with: "")
+    }
+
     static func isValidID(_ id: String) -> Bool {
         !id.isEmpty && id.count <= 128 && id.unicodeScalars.allSatisfy { idCharacters.contains($0) }
     }

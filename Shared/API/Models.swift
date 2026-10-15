@@ -111,6 +111,9 @@ nonisolated enum ChatEvent: Sendable, Equatable {
 // MARK: - Cards
 
 nonisolated struct CardRequest: Codable, Sendable, Equatable {
+    /// Chosen by the app so the bubble can be sent before the upload finishes; nil lets the
+    /// server pick one.
+    var id: String?
     var question: String
     var answer: String
 }

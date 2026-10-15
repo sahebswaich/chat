@@ -94,7 +94,6 @@ struct MessagesThreadView: View {
         }
         if let answer = model.actionableAnswer {
             AnswerActionBar(
-                isPreparingCard: model.cardInFlight == answer.id,
                 isDisabled: model.isDelivering,
                 onSend: { model.send(answer) },
                 onCard: { model.sendCard(answer) },
