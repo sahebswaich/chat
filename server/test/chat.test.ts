@@ -308,19 +308,21 @@ describe("POST /v1/chat errors", () => {
       const more = new TextEncoder().encode(
         sseBody([{ type: "content_block_delta", index: 0, delta: { type: "text_delta", text: " more" } }]),
       );
-      let timer: ReturnType<typeof setInterval> | undefined;
+      let timer: ReturnType<typeof setInterval> | null = null;
+      const stop = () => {
+        if (timer !== null) clearInterval(timer);
+        timer = null;
+      };
       const body = new ReadableStream<Uint8Array>({
         start(controller) {
           controller.enqueue(head);
           timer = setInterval(() => controller.enqueue(more), 20);
           c.signal?.addEventListener("abort", () => {
-            clearInterval(timer);
+            stop();
             controller.error(new DOMException("aborted", "AbortError"));
           });
         },
-        cancel() {
-          clearInterval(timer);
-        },
+        cancel: stop,
       });
       return new Response(body, { headers: { "content-type": "text/event-stream" } });
     });

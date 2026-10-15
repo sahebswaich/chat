@@ -5,10 +5,10 @@ import { createInvite, deleteInvite, listInvites, listReports, listUsers, revoke
 import { requireAdmin } from "./auth";
 import { handleCreateCard, handleGetCard } from "./cards";
 import { handleChat } from "./chat";
-import type { AppEnv } from "./env";
+import { supportEmail, type AppEnv } from "./env";
 import { errorResponse, HttpError, json } from "./http";
-import { homePage, joinPage, privacyPage } from "./pages";
-import { handleMe, handleRedeem, handleReport } from "./users";
+import { homePage, joinPage, privacyPage, supportPage, termsPage } from "./pages";
+import { handleDeleteMe, handleMe, handleRedeem, handleReport } from "./users";
 
 type Handler = (request: Request, env: AppEnv, ctx: ExecutionContext, params: string[]) => Promise<Response> | Response;
 
@@ -25,14 +25,18 @@ const admin =
     return handler(request, env, ctx, params);
   };
 
+const hostOf = (request: Request) => new URL(request.url).host;
+
 const routes: Route[] = [
   { method: "GET", pattern: /^\/health$/, handler: () => json({ ok: true }) },
   { method: "GET", pattern: /^\/$/, handler: () => homePage() },
-  { method: "GET", pattern: /^\/privacy\/?$/, handler: (req) => privacyPage(new URL(req.url).host) },
+  { method: "GET", pattern: /^\/privacy\/?$/, handler: (req, env) => privacyPage(hostOf(req), supportEmail(env)) },
+  { method: "GET", pattern: /^\/terms\/?$/, handler: (req, env) => termsPage(hostOf(req), supportEmail(env)) },
+  { method: "GET", pattern: /^\/support\/?$/, handler: (req, env) => supportPage(hostOf(req), supportEmail(env)) },
   {
     method: "GET",
     pattern: /^\/join\/([^/]{1,128})\/?$/,
-    handler: (req, env, _ctx, [code]) => joinPage(code!, new URL(req.url).host, env.TESTFLIGHT_URL),
+    handler: (req, env, _ctx, [code]) => joinPage(code!, hostOf(req), env.TESTFLIGHT_URL),
   },
   {
     method: "GET",
@@ -42,6 +46,7 @@ const routes: Route[] = [
 
   { method: "POST", pattern: /^\/v1\/redeem$/, handler: (req, env) => handleRedeem(req, env) },
   { method: "GET", pattern: /^\/v1\/me$/, handler: (req, env, ctx) => handleMe(req, env, ctx) },
+  { method: "DELETE", pattern: /^\/v1\/me$/, handler: (req, env, ctx) => handleDeleteMe(req, env, ctx) },
   { method: "POST", pattern: /^\/v1\/chat$/, handler: (req, env, ctx) => handleChat(req, env, ctx) },
   { method: "POST", pattern: /^\/v1\/report$/, handler: (req, env, ctx) => handleReport(req, env, ctx) },
   { method: "POST", pattern: /^\/v1\/cards$/, handler: (req, env, ctx) => handleCreateCard(req, env, ctx) },

@@ -4,6 +4,11 @@ import { defineConfig } from "vitest/config";
 // Tests run inside workerd (the real Workers runtime) with a local D1 database.
 // The Claude API is never called: ANTHROPIC_BASE_URL points at a fake host and
 // test/helpers.ts intercepts `fetch` to return recorded-style SSE streams.
+// Test-only values for the required secrets (wrangler warns when they are missing).
+// The bindings below are what the Worker actually sees.
+const TEST_SECRETS = { ANTHROPIC_API_KEY: "sk-ant-test-key", ADMIN_TOKEN: "test-admin-token" };
+for (const [key, value] of Object.entries(TEST_SECRETS)) process.env[key] ??= value;
+
 export default defineConfig(async () => {
   const migrations = await readD1Migrations("./migrations");
   return {
@@ -13,9 +18,8 @@ export default defineConfig(async () => {
         miniflare: {
           bindings: {
             TEST_MIGRATIONS: migrations,
-            ANTHROPIC_API_KEY: "sk-ant-test-key",
+            ...TEST_SECRETS,
             ANTHROPIC_BASE_URL: "https://claude-api.test",
-            ADMIN_TOKEN: "test-admin-token",
           },
         },
       }),

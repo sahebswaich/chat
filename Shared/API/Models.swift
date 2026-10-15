@@ -19,6 +19,15 @@ nonisolated struct MeResponse: Codable, Sendable, Equatable {
     var name: String
     var usedToday: Int
     var dailyLimit: Int
+    /// Owner's contact address (`""` when unset on the server; nil from older servers).
+    var supportEmail: String?
+
+    init(name: String, usedToday: Int, dailyLimit: Int, supportEmail: String? = nil) {
+        self.name = name
+        self.usedToday = usedToday
+        self.dailyLimit = dailyLimit
+        self.supportEmail = supportEmail
+    }
 }
 
 // MARK: - Chat

@@ -45,6 +45,13 @@ nonisolated struct NimbusClient: Sendable {
         return try decode(MeResponse.self, from: data)
     }
 
+    /// `DELETE /v1/me` — deletes the account, its usage and its cards (Settings → Delete my data).
+    /// The caller signs out afterwards.
+    func deleteAccount() async throws {
+        let request = try makeRequest(path: "v1/me", method: "DELETE", body: nil, authenticated: true)
+        _ = try await perform(request)
+    }
+
     /// `POST /v1/chat`, streamed. The stream finishes after `.done`, throws `NimbusError` on
     /// failure, and cancels the HTTP request when the consumer stops iterating.
     func stream(_ request: ChatRequest) -> AsyncThrowingStream<ChatEvent, Error> {
@@ -83,8 +90,8 @@ nonisolated struct NimbusClient: Sendable {
     /// `POST /v1/cards` — stores a card for the web fallback page.
     func createCard(question: String, answer: String) async throws -> CardResponse {
         let body = try encode(CardRequest(
-            question: String(question.prefix(2_000)),
-            answer: String(answer.prefix(20_000))
+            question: TextLimit.clip(question, maxUTF16: TextLimit.cardQuestion),
+            answer: TextLimit.clip(answer, maxUTF16: TextLimit.cardAnswer)
         ))
         let request = try makeRequest(path: "v1/cards", method: "POST", body: body, authenticated: true)
         let data = try await perform(request)
@@ -103,7 +110,14 @@ nonisolated struct NimbusClient: Sendable {
 
     /// `POST /v1/report` — flags an answer for the owner.
     func report(messages: [ChatTurn], answer: String, reason: String) async throws {
-        let body = try encode(ReportRequest(messages: messages, answer: answer, reason: reason))
+        let turns = messages.suffix(TextLimit.chatTurns).map {
+            ChatTurn(role: $0.role, content: TextLimit.clip($0.content, maxUTF16: TextLimit.cardAnswer))
+        }
+        let body = try encode(ReportRequest(
+            messages: turns,
+            answer: TextLimit.clip(answer, maxUTF16: TextLimit.cardAnswer),
+            reason: TextLimit.clip(reason, maxUTF16: TextLimit.reportReason)
+        ))
         let request = try makeRequest(path: "v1/report", method: "POST", body: body, authenticated: true)
         _ = try await perform(request)
     }
@@ -191,6 +205,11 @@ nonisolated struct NimbusClient: Sendable {
         for try await byte in bytes {
             pending.append(byte)
             guard byte == 0x0A || byte == 0x0D || pending.count >= 16_384 else { continue }
+            if Task.isCancelled {
+                // The consumer went away: stop the request so the server stops generating.
+                bytes.task.cancel()
+                throw CancellationError()
+            }
             let events = parser.feed(pending)
             pending.removeAll(keepingCapacity: true)
             if try Self.deliver(events, to: continuation) {

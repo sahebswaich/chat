@@ -4,7 +4,10 @@
   "name": "nimbus",
   "main": "src/index.ts",
   "compatibility_date": "2026-10-01",
-  "compatibility_flags": ["nodejs_compat"],
+  // nodejs_compat: needed by the Anthropic SDK.
+  // enable_request_signal: `request.signal` aborts when the app disconnects, so an
+  // answer nobody is reading stops streaming from Claude (and stops costing tokens).
+  "compatibility_flags": ["nodejs_compat", "enable_request_signal"],
   "workers_dev": true,
   "observability": { "enabled": true },
 
@@ -18,7 +21,10 @@
     "MODEL": "claude-opus-5-5"
   },
 
-  // Set with `npx wrangler secret put <NAME>` (or `--secrets-file` on the first deploy).
+  // Set with `npx wrangler secret put <NAME>`, or with `--secrets-file` on the very
+  // first deploy (see README.md). SUPPORT_EMAIL is an optional extra secret (contact
+  // address shown in the app and on /support); it is deliberately not a var so a
+  // value set with `wrangler secret put` is never overwritten by a deploy.
   "secrets": {
     "required": ["ANTHROPIC_API_KEY", "ADMIN_TOKEN"]
   },

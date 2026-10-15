@@ -29,6 +29,12 @@ nonisolated enum NimbusConfig {
         return URL(string: "https://\(normalized)")
     }
 
+    /// `https://<host>/<path>`, e.g. `webURL(path: "terms", host:)` for the consent screen's links
+    /// (`terms`, `privacy`, `support`).
+    static func webURL(path: String, host: String) -> URL? {
+        baseURL(for: host)?.appending(path: path)
+    }
+
     /// Lowercased `host[:port]` with any scheme, path, query or trailing slash removed,
     /// or nil when the input can't be a host name.
     static func normalizeHost(_ input: String) -> String? {

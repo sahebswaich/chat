@@ -1,7 +1,7 @@
-// App-user routes: redeem an invite, who am I, report an answer.
+// App-user routes: redeem an invite, who am I, delete my account, report an answer.
 
 import { requireUser, usedToday } from "./auth";
-import { defaultDailyLimit, type AppEnv } from "./env";
+import { defaultDailyLimit, supportEmail, type AppEnv } from "./env";
 import { HttpError, invalidRequest, json, noContent, optionalString, readJsonObject, requiredString } from "./http";
 import { isRecord, newToken, newUserId, normalizeInviteCode, nowIso, sha256Hex } from "./util";
 
@@ -51,10 +51,32 @@ export async function handleRedeem(request: Request, env: AppEnv): Promise<Respo
   });
 }
 
-/** GET /v1/me → {"name", "usedToday", "dailyLimit"} */
+/** GET /v1/me → {"name", "usedToday", "dailyLimit", "supportEmail"} */
 export async function handleMe(request: Request, env: AppEnv, ctx: ExecutionContext): Promise<Response> {
   const user = await requireUser(request, env, ctx);
-  return json({ name: user.name, usedToday: await usedToday(env, user.id), dailyLimit: user.dailyLimit });
+  return json({
+    name: user.name,
+    usedToday: await usedToday(env, user.id),
+    dailyLimit: user.dailyLimit,
+    supportEmail: supportEmail(env),
+  });
+}
+
+/**
+ * DELETE /v1/me → 204. Deletes the caller's account: the user row, usage
+ * counters and the cards they created. Reports are kept for moderation with the
+ * link to the user removed. The token stops working immediately.
+ */
+export async function handleDeleteMe(request: Request, env: AppEnv, ctx: ExecutionContext): Promise<Response> {
+  const user = await requireUser(request, env, ctx);
+  // One batch = one transaction: either everything is removed or nothing is.
+  await env.DB.batch([
+    env.DB.prepare("DELETE FROM usage WHERE user_id = ?1").bind(user.id),
+    env.DB.prepare("DELETE FROM cards WHERE user_id = ?1").bind(user.id),
+    env.DB.prepare("UPDATE reports SET user_id = NULL WHERE user_id = ?1").bind(user.id),
+    env.DB.prepare("DELETE FROM users WHERE id = ?1").bind(user.id),
+  ]);
+  return noContent();
 }
 
 /** POST /v1/report {"messages", "answer", "reason"} → 204. The only chat content ever stored. */

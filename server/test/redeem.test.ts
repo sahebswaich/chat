@@ -1,6 +1,8 @@
+import { createExecutionContext, waitOnExecutionContext } from "cloudflare:test";
 import { env } from "cloudflare:workers";
 import { describe, expect, it } from "vitest";
-import { admin, call, createInvite, errorOf, signUp } from "./helpers";
+import worker from "../src/index";
+import { admin, BASE, call, createInvite, errorOf, signUp } from "./helpers";
 
 describe("POST /v1/redeem", () => {
   it("redeems a code and returns a token, name and daily limit", async () => {
@@ -29,7 +31,7 @@ describe("POST /v1/redeem", () => {
     // The token works.
     const me = await call("GET", "/v1/me", { token: body.token });
     expect(me.status).toBe(200);
-    expect(await me.json()).toEqual({ name: "James", usedToday: 0, dailyLimit: 50 });
+    expect(await me.json()).toEqual({ name: "James", usedToday: 0, dailyLimit: 50, supportEmail: "" });
   });
 
   it("uses DAILY_LIMIT when the invite has no limit of its own", async () => {
@@ -92,6 +94,7 @@ describe("authentication", () => {
   it("requires a bearer token on /v1 routes", async () => {
     for (const [method, path] of [
       ["GET", "/v1/me"],
+      ["DELETE", "/v1/me"],
       ["POST", "/v1/chat"],
       ["POST", "/v1/report"],
       ["POST", "/v1/cards"],
@@ -143,5 +146,54 @@ describe("POST /v1/report", () => {
     const res = await call("POST", "/v1/report", { token, body: { messages: [{ role: "system", content: 1 }] } });
     expect(res.status).toBe(400);
     expect((await errorOf(res)).code).toBe("invalid_request");
+  });
+});
+
+describe("GET /v1/me", () => {
+  it("returns SUPPORT_EMAIL as supportEmail when it is set", async () => {
+    const token = await signUp("Ava");
+    const ctx = createExecutionContext();
+    const res = await worker.fetch(
+      new Request(`${BASE}/v1/me`, { headers: { authorization: `Bearer ${token}` } }),
+      { ...env, SUPPORT_EMAIL: " owner@example.com " },
+      ctx,
+    );
+    await waitOnExecutionContext(ctx);
+    expect(await res.json()).toEqual({ name: "Ava", usedToday: 0, dailyLimit: 200, supportEmail: "owner@example.com" });
+  });
+});
+
+describe("DELETE /v1/me", () => {
+  it("deletes the account, usage and cards, keeps reports unlinked, and kills the token", async () => {
+    const token = await signUp("Mia");
+    const other = await signUp("Leo");
+    const id = (await env.DB.prepare("SELECT id FROM users WHERE name = 'Mia'").first<{ id: string }>())!.id;
+    const today = new Date().toISOString().slice(0, 10);
+    await env.DB.prepare("INSERT INTO usage (user_id, day, count) VALUES (?1, ?2, 4)").bind(id, today).run();
+    expect((await call("POST", "/v1/cards", { token, body: { question: "q", answer: "a" } })).status).toBe(200);
+    expect((await call("POST", "/v1/cards", { token: other, body: { question: "q2", answer: "a2" } })).status).toBe(200);
+    const report = { messages: [{ role: "user", content: "hm" }], answer: "bad", reason: "offensive" };
+    expect((await call("POST", "/v1/report", { token, body: report })).status).toBe(204);
+
+    const res = await call("DELETE", "/v1/me", { token });
+    expect(res.status).toBe(204);
+    expect(await res.text()).toBe("");
+
+    const count = async (sql: string) => (await env.DB.prepare(sql).bind(id).first<{ n: number }>())!.n;
+    expect(await count("SELECT COUNT(*) AS n FROM users WHERE id = ?1")).toBe(0);
+    expect(await count("SELECT COUNT(*) AS n FROM usage WHERE user_id = ?1")).toBe(0);
+    expect(await count("SELECT COUNT(*) AS n FROM cards WHERE user_id = ?1")).toBe(0);
+    expect(await count("SELECT COUNT(*) AS n FROM reports WHERE user_id = ?1")).toBe(0);
+    // Other people's data is untouched.
+    expect((await env.DB.prepare("SELECT COUNT(*) AS n FROM cards").first<{ n: number }>())!.n).toBe(1);
+
+    // The report is kept for moderation, without the link to the user.
+    const reports = (await (await admin("GET", "/admin/reports")).json()) as { reports: any[] };
+    expect(reports.reports).toHaveLength(1);
+    expect(reports.reports[0]).toMatchObject({ userId: null, userName: null, answer: "bad", reason: "offensive" });
+
+    expect((await call("GET", "/v1/me", { token })).status).toBe(401);
+    expect((await call("DELETE", "/v1/me", { token })).status).toBe(401);
+    expect((await call("GET", "/v1/me", { token: other })).status).toBe(200);
   });
 });

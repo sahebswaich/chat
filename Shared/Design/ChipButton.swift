@@ -11,9 +11,16 @@ struct ChipButtonStyle: ButtonStyle {
             .lineLimit(1)
             .padding(.horizontal, 14)
             .padding(.vertical, 9)
-            .glassEffect(isSelected ? .regular.tint(NimbusTheme.accent.opacity(0.35)).interactive() : .regular.interactive(), in: Capsule())
+            .glassEffect(glass, in: Capsule())
             .scaleEffect(configuration.isPressed ? 0.95 : 1)
             .animation(.snappy(duration: 0.2), value: configuration.isPressed)
+    }
+
+    private var glass: Glass {
+        if isSelected {
+            return Glass.regular.tint(NimbusTheme.accent.opacity(0.35)).interactive()
+        }
+        return Glass.regular.interactive()
     }
 }
 

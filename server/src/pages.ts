@@ -1,5 +1,5 @@
-// Public HTML pages: /join/:code, /privacy, /c/:id, and small fallbacks.
-// Every dynamic value goes through escapeHtml().
+// Public HTML pages: /join/:code, /privacy, /terms, /support, /c/:id, and small
+// fallbacks. Every dynamic value goes through escapeHtml().
 
 import { escapeHtml, formatInviteCode, normalizeInviteCode } from "./util";
 
@@ -92,7 +92,7 @@ function page(title: string, body: string, opts: PageOptions = {}): Response {
 <main>
 <div class="brand"><div class="logo">${LOGO}</div><b>Nimbus</b></div>
 ${body}
-<footer><a href="/privacy">Privacy</a></footer>
+<footer><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · <a href="/support">Support</a></footer>
 </main>
 </body>
 </html>`;
@@ -138,7 +138,7 @@ export function joinPage(rawCode: string, host: string, testflightUrl: string | 
   <p class="muted">Nimbus is an AI that lives in iMessage. Ask it anything, then send the answer straight into your chat.</p>
   <div class="code" aria-label="Invite code">${escapeHtml(shown)}</div>
   <p class="muted small" style="text-align:center">Your invite code${normalized ? "" : " (this doesn't look like a valid code; check the link)"}</p>
-  ${testflight ? `<a class="btn primary" href="${escapeHtml(testflight)}">Install from TestFlight</a>` : ""}
+  ${testflight ? `<a class="btn primary" href="${escapeHtml(testflight)}">Install Nimbus from TestFlight</a>` : ""}
   <a class="btn${testflight ? "" : " primary"}" href="${escapeHtml(deepLink)}">Open Nimbus</a>
   <ol class="steps small">
     ${testflight ? "<li>Install Nimbus from TestFlight (get the TestFlight app first if asked).</li>" : "<li>Install Nimbus on your iPhone or iPad.</li>"}
@@ -202,15 +202,26 @@ export function homePage(): Response {
   );
 }
 
+const EMAIL_RE = /^[^\s@<>"'()]+@[^\s@<>"'()]+\.[^\s@<>"'()]+$/;
+
+/** How to reach the owner: a mailto link when SUPPORT_EMAIL is set, otherwise the inviter. */
+function contactHtml(email: string): string {
+  if (email && EMAIL_RE.test(email)) {
+    return `<a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a>`;
+  }
+  if (email) return escapeHtml(email);
+  return "the person who sent you your invite (the owner of this Nimbus server)";
+}
+
 /** GET /privacy */
-export function privacyPage(host: string): Response {
+export function privacyPage(host: string, email: string): Response {
   const body = `
 <div class="card">
   <h1>Privacy policy</h1>
   <p class="muted small">Applies to the Nimbus app, its iMessage extension and widgets, and the server at ${escapeHtml(host)}.</p>
 
   <h2>The short version</h2>
-  <p>Nimbus sends what you ask to Anthropic's Claude API to generate an answer. The Nimbus server doesn't keep your chats. It only stores what it needs to run invites and daily limits, plus anything you explicitly choose to share (a report or a card).</p>
+  <p>Your questions and any text you paste are sent to <b>Anthropic's Claude API</b> to generate answers. The Nimbus server doesn't keep your chats. It only stores what it needs to run invites and daily limits, plus anything you explicitly choose to share (a report or a card).</p>
 
   <h2>What is sent to generate answers</h2>
   <ul class="plain">
@@ -218,7 +229,7 @@ export function privacyPage(host: string): Response {
     <li>Any text you paste or share into Nimbus, such as a conversation you want a reply to, explained or fact-checked.</li>
     <li>The style and where you asked from (the app, iMessage or Siri), so the answer is formatted correctly.</li>
   </ul>
-  <p>This is sent over HTTPS to the Nimbus server, which forwards it to <b>Anthropic's Claude API</b> and streams the answer back. If you turn on web search, Claude may search the web to answer. Under Anthropic's commercial terms, data sent through the API is <b>not used to train their models</b>. Anthropic may keep API data for a limited time for safety and abuse monitoring, as described in its own privacy policy.</p>
+  <p>This is sent over HTTPS to the Nimbus server, which forwards it to Anthropic's Claude API and streams the answer back. If web search is on, Claude may search the web to answer. Under Anthropic's commercial terms, data sent through the API is <b>not used to train their models</b>. Anthropic may keep API data for a limited time for safety and abuse monitoring, as described in its own privacy policy.</p>
 
   <h2>What the Nimbus server stores</h2>
   <ul class="plain">
@@ -227,16 +238,73 @@ export function privacyPage(host: string): Response {
     <li><b>Reports:</b> if you tap Report on an answer, that conversation, the answer and your reason are stored so the owner can review it.</li>
     <li><b>Cards:</b> if you send an answer as a Nimbus card, the question and answer are stored so the card's link works for people who can't open iMessage apps (for example on a Mac). Anyone with the link can view that card.</li>
   </ul>
-  <p>The server does <b>not</b> store your questions, pasted text or answers otherwise. Your chat history stays on your device. Standard request logs on Cloudflare, which hosts the server, may briefly record technical details like IP address and timestamps.</p>
+  <p>The server does <b>not</b> store your questions, pasted text or answers otherwise. Your chat history stays on your device. Cloudflare, which hosts the server, may briefly keep standard request logs with technical details like IP address and time.</p>
 
   <h2>What is not collected</h2>
   <p>No advertising, no tracking, no selling of data, no analytics SDKs. Nimbus can't read your Messages; it only sees text you type, paste or explicitly share into it.</p>
 
   <h2>Deleting your data</h2>
-  <p>Delete the app to remove your history from your device. To have your account, usage counters, reports or cards deleted from the server, contact the person who invited you (the owner of this Nimbus server). They can revoke your access and remove your data.</p>
+  <p>In the app, open Settings and tap <b>Delete my data</b>. That deletes your account, usage counters and the cards you created from the server straight away. Reports you sent are kept for moderation, without the link to your account. Deleting the app removes your chat history from your device. You can also ask the owner to delete your data.</p>
 
   <h2>Contact</h2>
-  <p>Questions about privacy? Contact the owner of this Nimbus server: the person who sent you your invite.</p>
+  <p>Questions about privacy? Contact ${contactHtml(email)}.</p>
 </div>`;
   return page("Privacy · Nimbus", body, { cache: "public, max-age=3600" });
+}
+
+/** GET /terms */
+export function termsPage(host: string, email: string): Response {
+  const body = `
+<div class="card">
+  <h1>Terms of use</h1>
+  <p class="muted small">For the Nimbus app, its iMessage extension and widgets, and the server at ${escapeHtml(host)}. By using Nimbus you agree to these terms.</p>
+
+  <h2>Invite only</h2>
+  <p>Nimbus is a private service run by its owner for people they invite. Your invite is personal; don't share your access.</p>
+
+  <h2>Zero tolerance for objectionable content and abuse</h2>
+  <p>There is <b>zero tolerance</b> for objectionable or abusive content or users. Don't use Nimbus to create or send content that is sexual content involving minors, sexually explicit, hateful, harassing, bullying, threatening, violent, or that helps anyone cause serious harm or break the law. Don't use it to target, impersonate or deceive other people, and don't try to get around its safety limits.</p>
+  <p>Misuse ends your access: the owner can revoke it at any time, without notice.</p>
+
+  <h2>AI answers can be wrong</h2>
+  <p>Answers are generated by AI (Anthropic's Claude) and can be inaccurate, incomplete or out of date. Check anything important, and don't rely on Nimbus for medical, legal, financial or safety decisions. You are responsible for what you send to other people.</p>
+
+  <h2>Report anything objectionable</h2>
+  <p>Every answer, including cards other people send you, has a <b>Report</b> action. Reports go to the owner, who reviews them within 24 hours and removes content or access as needed.</p>
+
+  <h2>Your data</h2>
+  <p>Your questions and pasted text are sent to Anthropic's Claude API to generate answers. See the <a href="/privacy">privacy policy</a> for what is stored and how to delete it.</p>
+
+  <h2>No warranty</h2>
+  <p>Nimbus is provided as is, without warranties, and may change or stop at any time. Daily limits apply.</p>
+
+  <h2>Contact</h2>
+  <p>Contact ${contactHtml(email)}.</p>
+</div>`;
+  return page("Terms · Nimbus", body, { cache: "public, max-age=3600" });
+}
+
+/** GET /support */
+export function supportPage(host: string, email: string): Response {
+  const body = `
+<div class="card">
+  <h1>Nimbus support</h1>
+  <p class="muted">Help for the Nimbus app and its iMessage extension (server: ${escapeHtml(host)}).</p>
+
+  <h2>Contact</h2>
+  <p>Email ${contactHtml(email)} with questions or problems.</p>
+
+  <h2>Report an answer</h2>
+  <p>Touch and hold any Nimbus answer, or a Nimbus card someone sent you, and choose <b>Report</b>. Pick a reason and send. Reports go straight to the owner, who reviews them within 24 hours and removes content or access as needed.</p>
+
+  <h2>Common questions</h2>
+  <ul class="plain">
+    <li><b>Where is Nimbus in Messages?</b> Open a conversation, tap <b>+</b>, then <b>More</b>, and choose <b>Nimbus</b>. Drag it up to keep it at the top.</li>
+    <li><b>I hit my daily limit.</b> Limits reset at midnight UTC.</li>
+    <li><b>My invite code doesn't work.</b> Codes look like <b>K7QM-2XPA</b> and can only be used a set number of times. Ask the person who invited you for a new one.</li>
+    <li><b>How do I delete my data?</b> In the app, open Settings and tap <b>Delete my data</b>. See the <a href="/privacy">privacy policy</a>.</li>
+  </ul>
+  <p class="small muted">See also the <a href="/terms">terms of use</a>.</p>
+</div>`;
+  return page("Support · Nimbus", body, { cache: "public, max-age=3600" });
 }

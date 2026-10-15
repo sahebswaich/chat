@@ -13,6 +13,8 @@ final class NimbusSession {
     var usedToday: Int?
     /// Answers allowed per day, when known.
     var dailyLimit: Int?
+    /// The owner's contact address from `GET /v1/me`, nil until known or when unset.
+    var supportEmail: String?
 
     init(credential: Credential?) {
         self.credential = credential
@@ -39,6 +41,23 @@ final class NimbusSession {
         return min(max(Double(usedToday) / Double(dailyLimit), 0), 1)
     }
 
+    /// `12/200 today`, or nil while usage is unknown.
+    var usageText: String? {
+        guard let usedToday, let dailyLimit else { return nil }
+        return "\(usedToday)/\(dailyLimit) today"
+    }
+
+    /// Server pages for the consent screen and Settings (nil when no server is known yet).
+    var termsURL: URL? { pageURL("terms") }
+    var privacyURL: URL? { pageURL("privacy") }
+    var supportURL: URL? { pageURL("support") }
+
+    /// Same pages for a specific server (e.g. the host from a join link before sign-in).
+    func pageURL(_ path: String, host: String? = nil) -> URL? {
+        guard let chosen = host ?? self.host else { return nil }
+        return NimbusConfig.webURL(path: path, host: chosen)
+    }
+
     /// Re-reads the keychain, e.g. when the extension becomes active after the app signed in.
     func reload() {
         let stored = CredentialStore.load()
@@ -51,13 +70,15 @@ final class NimbusSession {
     /// Redeems an invite code and stores the resulting credential.
     /// - Parameters:
     ///   - code: What the person typed or pasted (`k7qm 2xpa`, `K7QM-2XPA`, …).
-    ///   - host: Server from a join link; defaults to the current/baked-in host.
-    func signIn(code: String, host: String? = nil) async throws {
+    ///   - host: Server from a join link or typed by the person; defaults to the current or
+    ///     baked-in host.
+    ///   - consentedAt: When the person ticked "I agree…" (call only after they did).
+    func signIn(code: String, host: String? = nil, consentedAt: Date = Date()) async throws {
         guard let normalized = InviteCode.normalize(code) else {
             throw NimbusError.invalidCode
         }
         let chosenHost: String
-        if let host {
+        if let host, !host.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             guard let normalizedHost = NimbusConfig.normalizeHost(host) else {
                 throw NimbusError.invalidRequest("That server address doesn't look right.")
             }
@@ -76,7 +97,8 @@ final class NimbusSession {
             host: chosenHost,
             token: response.token,
             name: response.name,
-            dailyLimit: response.dailyLimit
+            dailyLimit: response.dailyLimit,
+            consentedAt: consentedAt
         )
         // The code is already spent at this point, so a keychain hiccup must not fail sign-in;
         // the credential still works for this session.
@@ -92,6 +114,21 @@ final class NimbusSession {
         credential = nil
         usedToday = nil
         dailyLimit = nil
+        supportEmail = nil
+    }
+
+    /// `DELETE /v1/me`, then signs out. An already-deleted or revoked account just signs out.
+    func deleteAccount() async throws {
+        guard let current = credential else {
+            signOut()
+            return
+        }
+        do {
+            try await NimbusClient(credential: current).deleteAccount()
+        } catch NimbusError.unauthorized {
+            // Nothing left on the server for this token.
+        }
+        signOut()
     }
 
     /// Fetches `GET /v1/me`. Signs out when the server says the token is no longer valid.
@@ -102,6 +139,11 @@ final class NimbusSession {
             guard credential == current else { return }
             usedToday = me.usedToday
             dailyLimit = me.dailyLimit
+            if let email = me.supportEmail?.trimmingCharacters(in: .whitespacesAndNewlines), !email.isEmpty {
+                supportEmail = email
+            } else {
+                supportEmail = nil
+            }
             if me.name != current.name || me.dailyLimit != current.dailyLimit {
                 var updated = current
                 updated.name = me.name
@@ -128,7 +170,7 @@ final class NimbusSession {
         }
     }
 
-    /// Reacts to errors that change account state.
+    /// Reacts to errors that change account state (revoked token, daily limit reached).
     func handle(error: NimbusError) {
         switch error {
         case .unauthorized:

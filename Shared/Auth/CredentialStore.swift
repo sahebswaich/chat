@@ -27,19 +27,14 @@ nonisolated enum CredentialStore {
     }
 
     static func load() -> Credential? {
-        let groups = candidateGroups()
-        for group in groups {
+        for group in candidateGroups() {
             let (status, data) = read(group: group)
-            if status == errSecSuccess, let data {
-                return decode(data)
+            if status == errSecSuccess, let data, let credential = decode(data) {
+                return credential
             }
-            if status == missingEntitlement {
-                continue
-            }
-            // Item not found, device locked, or another keychain error: no credential.
-            return nil
+            // Not found, missing entitlement or locked: try the next place.
         }
-        // Every keychain attempt lacked the entitlement.
+        // Only ever written when the keychain refused for lack of entitlements.
         guard let data = UserDefaults.standard.data(forKey: defaultsKey) else { return nil }
         return decode(data)
     }

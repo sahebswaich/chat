@@ -40,6 +40,15 @@ describe("prompts", () => {
     expect(systemPrompt("intent", "short")).toContain("plain text only");
     expect(systemPrompt("app", "default")).toContain("Markdown");
     expect(systemPrompt("messages", "reply")).toContain("Output ONLY the text of the message");
+    for (const surface of SURFACES) {
+      for (const style of STYLES) {
+        const p = systemPrompt(surface, style);
+        expect(p, `${surface}:${style}`).toContain("Never produce sexual content involving minors");
+        expect(p).toContain("No hate speech, harassment");
+        expect(p).toContain("decline briefly");
+        expect(p).toContain("<conversation>");
+      }
+    }
   });
 
   it("builds the first user turn", () => {

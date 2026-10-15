@@ -94,7 +94,7 @@ export async function handleChat(request: Request, env: AppEnv, ctx: ExecutionCo
   const used = await consumeDailyQuota(env, user.id, user.dailyLimit, day);
   if (used === null) throw dailyLimitError(user.dailyLimit, now);
 
-  return streamAnswer(env, ctx, user, chat, { day, used, now });
+  return streamAnswer(env, ctx, user, chat, { day, used, now }, request.signal);
 }
 
 function dailyLimitError(limit: number, now: Date): HttpError {
@@ -124,12 +124,18 @@ interface Hooks {
   onText(text: string): void;
 }
 
+/**
+ * Opens the SSE response and pumps Claude's answer into it in the background.
+ * `clientSignal` is the incoming request's signal: with the
+ * `enable_request_signal` compatibility flag it aborts when the app disconnects.
+ */
 function streamAnswer(
   env: AppEnv,
   ctx: ExecutionContext,
   user: User,
   chat: ChatRequest,
   usage: { day: string; used: number; now: Date },
+  clientSignal: AbortSignal | null | undefined,
 ): Response {
   const encoder = new TextEncoder();
   const upstream = new AbortController();
@@ -137,28 +143,29 @@ function streamAnswer(
   let open = true;
   let lastWrite = Date.now();
 
+  // The app went away: stop streaming from Claude (and paying for tokens nobody reads).
+  const disconnect = () => {
+    open = false;
+    upstream.abort();
+  };
+  if (clientSignal?.aborted) disconnect();
+  clientSignal?.addEventListener("abort", disconnect, { once: true });
+
   const body = new ReadableStream<Uint8Array>({
     start(c) {
       controller = c;
     },
-    cancel() {
-      console.log("DEBUG cancel called");
-      // The app disconnected: stop paying for tokens nobody will read.
-      open = false;
-      upstream.abort();
-    },
+    // Called when the response body is cancelled by the runtime (client gone).
+    cancel: disconnect,
   });
 
   const write = (chunk: string) => {
     if (!open) return;
     try {
       controller.enqueue(encoder.encode(chunk));
-      console.log("DEBUG wrote", chunk.length, (controller as any).desiredSize);
       lastWrite = Date.now();
-    } catch (e) {
-      console.log("DEBUG write failed", String(e));
-      open = false;
-      upstream.abort();
+    } catch {
+      disconnect();
     }
   };
   const send = (event: string, data: unknown) => write(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`);
@@ -207,13 +214,13 @@ function streamAnswer(
       send("error", { code, message: MESSAGES[code] });
     } finally {
       clearInterval(heartbeat);
-      if (open) {
-        open = false;
-        try {
-          controller.close();
-        } catch {
-          // already closed/errored
-        }
+      clientSignal?.removeEventListener("abort", disconnect);
+      open = false;
+      // Always end the response body, whichever way the answer ended.
+      try {
+        controller.close();
+      } catch {
+        // Already cancelled by the runtime (client disconnected).
       }
     }
   })();

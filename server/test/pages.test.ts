@@ -1,6 +1,16 @@
+import { createExecutionContext, waitOnExecutionContext } from "cloudflare:test";
 import { env } from "cloudflare:workers";
 import { describe, expect, it } from "vitest";
+import worker from "../src/index";
 import { BASE, call, errorOf, signUp } from "./helpers";
+
+/** Calls the Worker with some vars/secrets overridden. */
+async function fetchWith(path: string, overrides: Record<string, string>): Promise<Response> {
+  const ctx = createExecutionContext();
+  const res = await worker.fetch(new Request(BASE + path), { ...env, ...overrides }, ctx);
+  await waitOnExecutionContext(ctx);
+  return res;
+}
 
 describe("public pages", () => {
   it("GET /health", async () => {
@@ -17,9 +27,20 @@ describe("public pages", () => {
     expect(html).toContain("K7QM-2XPA");
     expect(html).toContain('href="nimbus://join?code=K7QM-2XPA&amp;host=nimbus.example.com"');
     expect(html).toContain("Open Nimbus");
-    expect(html).not.toContain("Install from TestFlight");
+    expect(html).not.toContain("TestFlight</a>");
     expect(html).toContain("prefers-color-scheme:dark");
     expect(html).toContain("#5856F6");
+  });
+
+  it("GET /join/:code shows the TestFlight button when TESTFLIGHT_URL is set", async () => {
+    const html = await (await fetchWith("/join/K7QM-2XPA", { TESTFLIGHT_URL: "https://testflight.apple.com/join/AbCd1234" })).text();
+    expect(html).toContain('<a class="btn primary" href="https://testflight.apple.com/join/AbCd1234">Install Nimbus from TestFlight</a>');
+    expect(html).toContain("Open Nimbus");
+
+    // Only https links become a button.
+    const bad = await (await fetchWith("/join/K7QM-2XPA", { TESTFLIGHT_URL: "javascript:alert(1)" })).text();
+    expect(bad).not.toContain("javascript:");
+    expect(bad).not.toContain("TestFlight</a>");
   });
 
   it("GET /join/:code escapes HTML in the code", async () => {
@@ -44,6 +65,27 @@ describe("public pages", () => {
     expect(html).toContain("not used to train");
     expect(html).toContain("Usage counters");
     expect(html).toContain("Reports");
+    expect(html).toContain("questions and any text you paste are sent to <b>Anthropic's Claude API</b>");
+    expect(html).toContain("device name");
+    expect(html).toContain("Delete my data");
+    expect(html).toContain("the person who sent you your invite");
+  });
+
+  it("GET /terms and /support cover abuse, AI accuracy, reporting and contact", async () => {
+    const terms = await (await call("GET", "/terms")).text();
+    expect(terms).toContain("zero tolerance");
+    expect(terms).toContain("Misuse ends your access");
+    expect(terms).toContain("can be inaccurate");
+    expect(terms).toContain("Report");
+    const support = await (await call("GET", "/support")).text();
+    expect(support).toContain("Report");
+    expect(support).toContain("within 24 hours");
+
+    const withEmail = await (await fetchWith("/support", { SUPPORT_EMAIL: "owner@example.com" })).text();
+    expect(withEmail).toContain('<a href="mailto:owner@example.com">owner@example.com</a>');
+    const evil = await (await fetchWith("/terms", { SUPPORT_EMAIL: '<script>x</script>' })).text();
+    expect(evil).not.toContain("<script>x");
+    expect(evil).toContain("&lt;script&gt;x&lt;/script&gt;");
   });
 });
 

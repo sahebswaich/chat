@@ -128,11 +128,11 @@ final class ChatEngine {
         let typed = text.trimmingCharacters(in: .whitespacesAndNewlines)
         var newContext: String?
         if let pasted = context?.trimmingCharacters(in: .whitespacesAndNewlines), !pasted.isEmpty {
-            newContext = String(pasted.prefix(20_000))
+            newContext = TextLimit.clip(pasted, maxUTF16: TextLimit.chatContent)
         }
         let question: String
         if !typed.isEmpty {
-            question = String(typed.prefix(20_000))
+            question = TextLimit.clip(typed, maxUTF16: TextLimit.chatContent)
         } else if newContext != nil {
             question = style.contextPrompt
         } else {
@@ -208,24 +208,37 @@ final class ChatEngine {
         lastError = nil
     }
 
+    /// Reports an answer from this thread (`POST /v1/report`) with the conversation that led
+    /// to it. Throws `NimbusError`; the UI says thanks and that reports are reviewed within 24 hours.
+    func report(_ message: ThreadMessage, reason: ReportReason) async throws {
+        let earlier: [ThreadMessage]
+        if let index = messages.firstIndex(where: { $0.id == message.id }) {
+            earlier = Array(messages[..<index])
+        } else {
+            earlier = []
+        }
+        let client = makeClient()
+        try await client.report(messages: Self.history(from: earlier), answer: message.text, reason: reason.rawValue)
+    }
+
     // MARK: - History
 
     /// The `messages` array sent to the server: alternating user/assistant turns built from
     /// finished messages only, starting and ending with `user`, at most `limit` entries
-    /// (oldest dropped), each at most `maxLength` characters.
+    /// (oldest dropped), each at most `maxLength` UTF-16 units.
     ///
     /// Failed or in-progress answers are skipped, and a question whose answer failed is
     /// replaced by the next question.
     nonisolated static func history(
         from messages: [ThreadMessage],
-        limit: Int = 40,
-        maxLength: Int = 20_000
+        limit: Int = TextLimit.chatTurns,
+        maxLength: Int = TextLimit.chatContent
     ) -> [ChatTurn] {
         var turns: [ChatTurn] = []
         for message in messages {
             let content = message.text.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !content.isEmpty else { continue }
-            let turn = ChatTurn(role: message.role, content: String(content.prefix(maxLength)))
+            let turn = ChatTurn(role: message.role, content: TextLimit.clip(content, maxUTF16: maxLength))
             switch message.role {
             case .user:
                 guard !message.state.isFailed else { continue }
