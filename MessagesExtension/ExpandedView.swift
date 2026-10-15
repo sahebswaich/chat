@@ -34,7 +34,7 @@ struct ExpandedView: View {
             focusComposerSoon()
         }
         .confirmationDialog(
-            "Report this answer?",
+            "Report this answer",
             isPresented: $model.isReporting,
             titleVisibility: .visible,
             presenting: model.reportTarget
@@ -46,7 +46,7 @@ struct ExpandedView: View {
             }
             Button("Cancel", role: .cancel) {}
         } message: { _ in
-            Text("Reports go to the people who run this Nimbus server and are reviewed within 24 hours.")
+            Text("Reports go to the person who runs this Nimbus server and are reviewed within 24 hours.")
         }
     }
 

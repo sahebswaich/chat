@@ -120,7 +120,7 @@ struct ChatBubble: View {
     private var answerText: Text {
         if markdown,
            let attributed = try? AttributedString(
-               markdown: message.text,
+               markdown: MarkdownLite.inlineFriendly(message.text),
                options: AttributedString.MarkdownParsingOptions(
                    interpretedSyntax: .inlineOnlyPreservingWhitespace,
                    failurePolicy: .returnPartiallyParsedIfPossible

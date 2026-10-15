@@ -70,8 +70,13 @@ final class MessagesModel {
     @ObservationIgnored private var pendingCardMessage: MSMessage?
     @ObservationIgnored private var toastTask: Task<Void, Never>?
     @ObservationIgnored private var fullCardTask: Task<Void, Never>?
+    /// When the last Send / Card / Insert started (see `canStartDelivery`).
+    @ObservationIgnored private var lastDeliveryStart = Date.distantPast
 
     private static let noConversationText = "Open a conversation in Messages first."
+    /// Messages reports a direct send as started almost at once, so without this a quick
+    /// double tap on Send would put the answer in the chat twice.
+    private static let deliveryCooldown: TimeInterval = 1.0
 
     init() {
         cards.onPrepared = { [weak self] answerID, card in
@@ -154,6 +159,9 @@ final class MessagesModel {
         // drawer it opens compact and any stale selection is ignored.
         if style == .expanded, let selectedMessageURL {
             openCard(from: selectedMessageURL)
+        } else if style == .compact, receivedCard != nil, !engine.isBusy {
+            // Opened from the drawer: a card read on an earlier visit isn't what this one is about.
+            closeReceivedCard()
         }
         let currentSession = session
         Task {
@@ -223,6 +231,10 @@ final class MessagesModel {
     /// The compact prompt bar: expand and bring up the keyboard.
     func startTyping() {
         pendingSummarize = false
+        if engine.messages.isEmpty, pastedContext == nil {
+            // A chip picked earlier without pasting shouldn't stick to a plain question.
+            composerStyle = .default
+        }
         expand(focusComposer: true)
     }
 
@@ -338,14 +350,26 @@ final class MessagesModel {
 
     func retry(_ message: ThreadMessage) {
         guard engine.messages.last?.id == message.id else { return }
+        guard canAsk else {
+            wantsSignIn = true
+            return
+        }
         engine.retry()
     }
 
     func regenerate() {
+        guard canAsk else {
+            wantsSignIn = true
+            return
+        }
         engine.regenerate()
     }
 
     func rewrite(_ kind: RewriteKind) {
+        guard canAsk else {
+            wantsSignIn = true
+            return
+        }
         engine.rewrite(kind)
     }
 
@@ -375,13 +399,13 @@ final class MessagesModel {
     /// Send as a normal text bubble. Called straight from the tap, because iOS only allows a
     /// direct send right after a touch; falls back to `insertText` when iOS refuses.
     func send(_ answer: ThreadMessage) {
-        guard !isDelivering else { return }
+        guard canStartDelivery else { return }
         guard let conversation = conversationProvider?() else {
             showToast(Self.noConversationText, systemImage: "exclamationmark.triangle")
             return
         }
+        beginDelivery()
         sendTick += 1
-        isDelivering = true
         let text = answer.text
         conversation.sendText(text) { @Sendable (error: (any Error)?) in
             Task { @MainActor in
@@ -392,12 +416,12 @@ final class MessagesModel {
 
     /// Put the answer in the message field to edit, then collapse.
     func insert(_ answer: ThreadMessage) {
-        guard !isDelivering else { return }
+        guard canStartDelivery else { return }
         guard let conversation = conversationProvider?() else {
             showToast(Self.noConversationText, systemImage: "exclamationmark.triangle")
             return
         }
-        isDelivering = true
+        beginDelivery()
         conversation.insertText(answer.text) { @Sendable (error: (any Error)?) in
             Task { @MainActor in
                 self.insertFinished(error: error)
@@ -409,15 +433,18 @@ final class MessagesModel {
     /// first (and Messages may then stage it instead of sending). Falls back to a text when no
     /// card can be made.
     func sendCard(_ answer: ThreadMessage) {
-        guard !isDelivering else { return }
+        guard canStartDelivery else { return }
+        guard let conversation = conversationProvider?() else {
+            showToast(Self.noConversationText, systemImage: "exclamationmark.triangle")
+            return
+        }
         let question = askedQuestion(for: answer)
         let text = answer.text
         sendTick += 1
-        isDelivering = true
+        beginDelivery()
 
         if case .ready(let card)? = cards.status(for: answer.id),
-           let message = cards.makeMessage(card: card, question: question, answer: text),
-           let conversation = conversationProvider?() {
+           let message = cards.makeMessage(card: card, question: question, answer: text) {
             pendingCardMessage = message
             conversation.send(message) { @Sendable (error: (any Error)?) in
                 Task { @MainActor in
@@ -543,6 +570,16 @@ final class MessagesModel {
         }
     }
 
+    /// Nothing is on its way, and the last delivery didn't start a moment ago.
+    private var canStartDelivery: Bool {
+        !isDelivering && Date().timeIntervalSince(lastDeliveryStart) >= Self.deliveryCooldown
+    }
+
+    private func beginDelivery() {
+        isDelivering = true
+        lastDeliveryStart = Date()
+    }
+
     private func endDelivery() {
         isDelivering = false
         cardInFlight = nil
@@ -629,6 +666,17 @@ final class MessagesModel {
     private func fullCardFailed(answerID: UUID) {
         guard receivedCard?.answerID == answerID else { return }
         receivedCard?.loadState = .failed
+    }
+
+    /// Leaves a received card's thread for a fresh start.
+    private func closeReceivedCard() {
+        fullCardTask?.cancel()
+        receivedCard = nil
+        engine.reset()
+        draft = ""
+        composerStyle = .default
+        pendingSummarize = false
+        wantsSignIn = false
     }
 
     // MARK: - Sign-in and consent

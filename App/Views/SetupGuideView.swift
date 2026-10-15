@@ -238,7 +238,7 @@ struct SetupGuideView: View {
             tip(
                 symbol: "doc.on.clipboard",
                 title: "Paste the chat",
-                text: "Copy what your friends said, tap Paste chat, and Nimbus can reply for you, explain it or fact-check it."
+                text: "Copy what your friends said, tap Paste, and Nimbus can reply for you, explain it or fact-check it."
             )
             tip(
                 symbol: "hand.draw",

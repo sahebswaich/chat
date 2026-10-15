@@ -213,7 +213,9 @@ struct SettingsView: View {
 
     // MARK: - Actions
 
+    /// Signs out here and in Messages (the keychain is shared); RootView then shows onboarding.
     private func signOut() {
+        dismiss()
         conversations.startNew(focusComposer: false)
         session.signOut()
     }

@@ -356,8 +356,13 @@ final class ChatEngine {
     }
 
     private func streamFailed(id: UUID, error: any Error) {
+        guard let mapped = NimbusError.from(error) else {
+            // Cancelled underneath us rather than by `cancel()`: settle what arrived so the
+            // thread isn't left looking busy.
+            streamEnded(id: id)
+            return
+        }
         streamTask = nil
-        guard let mapped = NimbusError.from(error) else { return }
         lastError = mapped
         if let index = messages.lastIndex(where: { $0.id == id }) {
             messages[index].state = .failed(mapped.errorDescription ?? "Something went wrong.")

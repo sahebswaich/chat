@@ -28,6 +28,9 @@ struct ComposerBar: View {
     }
 
     @State private var sendTick = 0
+    /// When ↑ was last tapped: the button turns into Stop right away, so a quick double tap
+    /// would otherwise cancel the answer it just asked for.
+    @State private var lastSubmitAt = Date.distantPast
 
     private var canSend: Bool {
         !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -61,6 +64,7 @@ struct ComposerBar: View {
     private var actionButton: some View {
         Button {
             if isStreaming {
+                guard Date().timeIntervalSince(lastSubmitAt) > 0.6 else { return }
                 sendTick += 1
                 onStop()
             } else {
@@ -85,6 +89,7 @@ struct ComposerBar: View {
 
     private func submit() {
         guard canSend, !isStreaming else { return }
+        lastSubmitAt = Date()
         sendTick += 1
         onSubmit()
     }

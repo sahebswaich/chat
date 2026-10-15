@@ -72,7 +72,7 @@ struct OnboardingView: View {
             Text("Nimbus")
                 .font(.system(size: 44, weight: .bold))
                 .foregroundStyle(Color.white)
-            Text("Your AI in iMessage")
+            Text("Your AI for iMessage")
                 .font(.title3.weight(.medium))
                 .foregroundStyle(Color.white.opacity(0.88))
         }

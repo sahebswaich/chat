@@ -27,6 +27,8 @@ struct ChatView: View {
 
     private var engine: ChatEngine { conversations.engine }
     private var style: ChatStyle { conversations.selectedStyle }
+    /// "Try again" is hidden when retrying can't help (daily limit, refusal, signed out).
+    private var canRetry: Bool { engine.lastError?.isRetryable ?? true }
 
     var body: some View {
         screen
@@ -100,9 +102,7 @@ struct ChatView: View {
                 reportTarget = message
                 showsReportOptions = true
             },
-            onRetry: { message in
-                regenerate(message)
-            }
+            onRetry: canRetry ? { (message: ThreadMessage) in regenerate(message) } : nil
         ) {
             actionBar
         }

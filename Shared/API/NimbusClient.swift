@@ -12,11 +12,26 @@ nonisolated struct NimbusClient: Sendable {
     ///   - credential: Supplies the bearer token and, unless `host` is given, the server.
     ///   - host: Overrides the server host (used before sign-in, or to fetch a card from the
     ///     server that made it).
-    init(credential: Credential?, host: String? = nil, session: URLSession = .shared) {
+    init(credential: Credential?, host: String? = nil, session: URLSession = NimbusClient.defaultSession) {
         self.credential = credential
         self.host = host
         self.session = session
     }
+
+    /// Seconds a chat stream may go without a byte before it counts as dropped. The server
+    /// sends a `: ping` comment after ~10 s of silence, so this only trips on a dead connection.
+    static let streamIdleTimeout: TimeInterval = 150
+
+    /// The session every request uses by default: no HTTP cache (usage and cards must be
+    /// fresh) and an idle timeout long enough for answers that think or search first.
+    static let defaultSession: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = NimbusClient.streamIdleTimeout
+        configuration.timeoutIntervalForResource = 15 * 60
+        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+        configuration.urlCache = nil
+        return URLSession(configuration: configuration)
+    }()
 
     /// The host requests go to: explicit host, else the credential's, else the baked-in one.
     var resolvedHost: String? {
@@ -181,7 +196,13 @@ nonisolated struct NimbusClient: Sendable {
         continuation: AsyncThrowingStream<ChatEvent, Error>.Continuation
     ) async throws {
         let body = try encode(chat)
-        var request = try makeRequest(path: "v1/chat", method: "POST", body: body, authenticated: true, timeout: 120)
+        var request = try makeRequest(
+            path: "v1/chat",
+            method: "POST",
+            body: body,
+            authenticated: true,
+            timeout: Self.streamIdleTimeout
+        )
         request.setValue("text/event-stream", forHTTPHeaderField: "Accept")
 
         let (bytes, response) = try await session.bytes(for: request)

@@ -9,11 +9,19 @@ nonisolated final class StubURLProtocol: URLProtocol {
         var headers: [String: String]
         /// Delivered one by one, so tests can split SSE events at awkward byte offsets.
         var chunks: [Data]
+        /// False leaves the response open after the chunks, like an answer still being written.
+        var finishes: Bool
 
-        init(status: Int = 200, headers: [String: String] = ["Content-Type": "text/event-stream"], chunks: [Data] = []) {
+        init(
+            status: Int = 200,
+            headers: [String: String] = ["Content-Type": "text/event-stream"],
+            chunks: [Data] = [],
+            finishes: Bool = true
+        ) {
             self.status = status
             self.headers = headers
             self.chunks = chunks
+            self.finishes = finishes
         }
     }
 
@@ -92,7 +100,9 @@ nonisolated final class StubURLProtocol: URLProtocol {
         for chunk in stub.chunks {
             client?.urlProtocol(self, didLoad: chunk)
         }
-        client?.urlProtocolDidFinishLoading(self)
+        if stub.finishes {
+            client?.urlProtocolDidFinishLoading(self)
+        }
     }
 
     override func stopLoading() {}

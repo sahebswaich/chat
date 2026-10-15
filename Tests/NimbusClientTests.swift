@@ -321,6 +321,35 @@ struct NimbusClientTests {
         #expect(ChatEngine.history(from: engine.messages) == [ChatTurn(role: .user, content: "something sketchy")])
     }
 
+    @Test func cancellingKeepsWhatArrivedAndStopsTheStream() async throws {
+        let host = "cancel.nimbus.test"
+        let partial = [
+            "event: meta", #"data: {"model":"claude-opus-5-5"}"#, "",
+            "event: delta", #"data: {"text":"Half an "}"#, "",
+        ].map { $0 + "\n" }.joined()
+        let client = makeClient(host, StubURLProtocol.Stub(chunks: [Data(partial.utf8)], finishes: false))
+        let engine = ChatEngine(surface: .messages, client: { client })
+
+        engine.ask("tell me a long story")
+        let deadline = ContinuousClock.now + .seconds(10)
+        while engine.latestAssistantMessage?.text.isEmpty ?? true, ContinuousClock.now < deadline {
+            try await Task.sleep(for: .milliseconds(20))
+        }
+        #expect(engine.phase == .writing)
+
+        engine.cancel()
+        #expect(!engine.isBusy)
+        #expect(engine.lastAnswer?.text == "Half an")
+        #expect(engine.completionTick == 0)
+        #expect(engine.errorTick == 0)
+
+        // The cancelled stream must not touch the thread afterwards.
+        try await Task.sleep(for: .milliseconds(200))
+        #expect(engine.phase == .done)
+        #expect(engine.lastError == nil)
+        #expect(engine.messages.count == 2)
+    }
+
     @Test func engineIgnoresBlankQuestions() {
         let engine = ChatEngine(surface: .app, client: { NimbusClient(credential: nil, host: "unused.nimbus.test") })
         engine.ask("   \n ")

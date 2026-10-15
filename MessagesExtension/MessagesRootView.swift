@@ -21,9 +21,7 @@ struct MessagesRootView: View {
             }
             .animation(.snappy(duration: 0.25), value: model.toast)
             .tint(NimbusTheme.accent)
-            .sensoryFeedback(.impact(weight: .light), trigger: model.engine.firstTokenTick)
-            .sensoryFeedback(.success, trigger: model.engine.completionTick)
-            .sensoryFeedback(.error, trigger: model.engine.errorTick)
+            .nimbusHaptics(for: model.engine)
             .sensoryFeedback(.impact(weight: .medium), trigger: model.sendTick)
             .onChange(of: model.engine.completionTick) {
                 model.answerDidFinish()
