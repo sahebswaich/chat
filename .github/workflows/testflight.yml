@@ -1,0 +1,81 @@
+name: TestFlight
+
+# Manual upload from GitHub instead of your Mac (./scripts/testflight.sh does the same locally).
+# Repository secrets needed (Settings → Secrets and variables → Actions):
+#   APPLE_TEAM_ID        10-character Team ID
+#   NIMBUS_BUNDLE_ID     e.g. com.sahebswaich.nimbus (must match the App Store Connect app)
+#   NIMBUS_API_HOST      your server host, e.g. nimbus.yourname.workers.dev
+#   ASC_KEY_ID           App Store Connect API key ID  (Users and Access → Integrations →
+#   ASC_ISSUER_ID        App Store Connect issuer ID    App Store Connect API → Team Keys,
+#   ASC_KEY_P8           contents of AuthKey_XXXX.p8    role: Admin — needed for cloud signing)
+# Your team also needs at least one registered device (run the app on your iPhone from Xcode once).
+
+on:
+  workflow_dispatch:
+
+jobs:
+  upload:
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Check secrets
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          NIMBUS_BUNDLE_ID: ${{ secrets.NIMBUS_BUNDLE_ID }}
+          NIMBUS_API_HOST: ${{ secrets.NIMBUS_API_HOST }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: |
+          missing=""
+          for v in APPLE_TEAM_ID NIMBUS_BUNDLE_ID NIMBUS_API_HOST ASC_KEY_ID ASC_ISSUER_ID ASC_KEY_P8; do
+            [ -n "${!v}" ] || missing="$missing $v"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::Missing repository secrets:$missing (see the comment at the top of testflight.yml)"
+            exit 1
+          fi
+
+      - name: Select Xcode 26
+        run: |
+          XC=/Applications/Xcode_26.6.app
+          [ -d "$XC" ] || XC=$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)
+          sudo xcode-select -s "$XC/Contents/Developer"
+          xcodebuild -version
+
+      - name: Write signing config
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          NIMBUS_BUNDLE_ID: ${{ secrets.NIMBUS_BUNDLE_ID }}
+          NIMBUS_API_HOST: ${{ secrets.NIMBUS_API_HOST }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: |
+          printf 'DEVELOPMENT_TEAM = %s\nNIMBUS_BUNDLE_ID = %s\nNIMBUS_API_HOST = %s\n' \
+            "$APPLE_TEAM_ID" "$NIMBUS_BUNDLE_ID" "$NIMBUS_API_HOST" > Config/Local.xcconfig
+          mkdir -p "$RUNNER_TEMP/keys"
+          printf '%s\n' "$ASC_KEY_P8" > "$RUNNER_TEMP/keys/AuthKey_${ASC_KEY_ID}.p8"
+          chmod 600 "$RUNNER_TEMP/keys/AuthKey_${ASC_KEY_ID}.p8"
+
+      - name: Archive and upload
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+        run: |
+          export ASC_KEY_PATH="$RUNNER_TEMP/keys/AuthKey_${ASC_KEY_ID}.p8"
+          export BUILD_NUMBER="${{ github.run_number }}.$(date -u +%H%M)"
+          ./scripts/testflight.sh
+
+      - name: Clean up key
+        if: always()
+        run: rm -rf "$RUNNER_TEMP/keys" Config/Local.xcconfig
+
+      - name: Upload logs
+        if: failure()
+        uses: actions/upload-artifact@v5
+        with:
+          name: testflight-logs
+          path: build/*.log
+          if-no-files-found: ignore
