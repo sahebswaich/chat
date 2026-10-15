@@ -1,0 +1,19 @@
+// Nimbus build configuration shared by every target.
+//
+// Don't put personal values here — run `scripts/setup-mac.sh` (or copy
+// Local.xcconfig.example to Local.xcconfig) to set your team, bundle id and server.
+
+// Base bundle identifier. Extensions append .messages / .widgets.
+NIMBUS_BUNDLE_ID = com.sahebswaich.nimbus
+
+// Host of the Nimbus server (Cloudflare Worker), without https://
+// (xcconfig treats // as a comment, so the scheme is added in code).
+NIMBUS_API_HOST = nimbus.example.workers.dev
+
+MARKETING_VERSION = 1.0
+CURRENT_PROJECT_VERSION = 1
+
+// Apple Developer Team ID (10 characters). Set in Local.xcconfig.
+DEVELOPMENT_TEAM =
+
+#include? "Local.xcconfig"

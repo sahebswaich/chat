@@ -1,0 +1,6 @@
+// Copy to Config/Local.xcconfig (git-ignored) and fill in.
+// scripts/setup-mac.sh writes this file for you.
+
+DEVELOPMENT_TEAM = ABCDE12345
+NIMBUS_BUNDLE_ID = com.yourname.nimbus
+NIMBUS_API_HOST = nimbus.yourname.workers.dev
