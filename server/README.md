@@ -38,10 +38,12 @@ npm install
 # 2. Sign in to Cloudflare (opens your browser; click Allow).
 npx wrangler login
 
-# 3. Write your secrets to a temporary file. Paste your Claude key where it says sk-ant-...
+# 3. Write your secrets to a private temporary file (mktemp makes one only you can read).
+#    Replace sk-ant-... with your Claude key (and the email) before pressing Return.
 #    The admin token is a random password for the owner commands; it is saved in step 5.
 ADMIN_TOKEN=$(openssl rand -hex 32)
-cat > /tmp/nimbus-secrets.env <<EOF
+SECRETS_FILE=$(mktemp)
+cat > "$SECRETS_FILE" <<EOF
 ANTHROPIC_API_KEY=sk-ant-...
 ADMIN_TOKEN=$ADMIN_TOKEN
 SUPPORT_EMAIL=you@example.com
@@ -49,8 +51,8 @@ EOF
 
 # 4. Deploy. The first deploy also creates the "nimbus" D1 database automatically.
 #    Note the https://nimbus.<your-subdomain>.workers.dev URL it prints.
-npx wrangler deploy --secrets-file /tmp/nimbus-secrets.env
-rm /tmp/nimbus-secrets.env
+npx wrangler deploy --secrets-file "$SECRETS_FILE"
+rm "$SECRETS_FILE"
 npx wrangler d1 migrations apply nimbus --remote      # creates the tables; answer "y"
 
 # 5. Save the server URL and admin token for the owner commands (this file is git-ignored).
@@ -67,8 +69,16 @@ The invite command prints a code like `K7QM-2XPA` and a link
 `https://nimbus.<your-subdomain>.workers.dev/join/K7QM-2XPA`. Open the link on your iPhone,
 or type the code in the app.
 
-**Updating later:** `git pull`, then `cd server && npm install && npm run deploy` (deploys the
-code, then applies any new database migrations). Secrets are kept between deploys.
+**Updating later:** `git pull`, then `cd server && npm install && npm run deploy` (applies any
+new database migrations, answer "y", then deploys the code, so new code never runs against an old
+schema). Secrets are kept between deploys.
+
+**Free plan CPU limit.** On the Workers Free plan each request gets 10 ms of CPU time. Waiting
+for Claude doesn't count, but reading Claude's stream does: in a local benchmark the SDK used
+about 1–8 ms for a short iMessage-style answer (~60 chunks) and 10–45 ms for a long app answer
+(1,500–3,000 chunks). Short answers fit; long ones can stop partway, with "exceeded CPU" in
+`npx wrangler tail`. If that happens, switch to the Workers Paid plan (Cloudflare dashboard →
+Workers & Pages → Plans; 30 s of CPU per request by default). No code change is needed.
 
 **Changing a secret:** `npx wrangler secret put ANTHROPIC_API_KEY` (or `ADMIN_TOKEN`,
 `SUPPORT_EMAIL`), paste the value, done. It takes effect within seconds; no redeploy. If you
@@ -186,9 +196,11 @@ The tests never call Claude: `ANTHROPIC_BASE_URL` points the SDK at a fake host 
   `upstream`, ...), never as an HTTP error status.
 * **Event order.** `meta`, then `status` events only when the state changes (`searching` when a
   web search starts, `writing` when text starts; it can go back to `searching` and then `writing`
-  again), `delta`s, then exactly one `done` or `error`, then the stream closes. A line starting
-  with `:` (`: keepalive`) is sent after 15 s without output so mobile networks keep the
-  connection open; SSE clients ignore it.
+  again), `delta`s, then exactly one `done` or `error`, then the stream closes. A comment line
+  `: ping` is sent whenever 10 s pass without output (the longest silence is about 12.5 s), so
+  the app's URLSession, mobile networks and proxies keep the connection open while Claude thinks
+  or searches; SSE clients ignore lines starting with `:`. The response has
+  `Cache-Control: no-cache, no-transform` so Cloudflare doesn't compress, and so buffer, the stream.
 * **Partial answers.** On `refusal` or `max_tokens` some `delta`s may already have been sent;
   the `error` event says the answer is incomplete or declined. `done.stopReason` is normally
   `end_turn`; it is `pause_turn` if a web search was still paused after 3 resumptions but some
@@ -208,7 +220,9 @@ The tests never call Claude: `ANTHROPIC_BASE_URL` points the SDK at a fake host 
   and ending with `user`, `content` a non-blank string of at most 20,000 characters (JavaScript
   length, i.e. UTF-16 code units). `context` ≤ 20,000. `style` defaults to `default`, `surface` to
   `messages`, `webSearch` to `false`; `null` counts as absent; unknown extra keys are ignored.
-  Bodies over 2 MB are rejected.
+  Bodies over 6 MB are rejected with `400 invalid_request`; the bytes are counted as they
+  arrive, so a missing or wrong `Content-Length` doesn't matter. (The largest valid chat body
+  is ~2.5 MB of JSON in a non-Latin script, ~4.9 MB if every character is `\uXXXX`-escaped.)
 * **Invite codes** are 8 random Crockford base32 characters (no I, L, O, U), stored without the
   dash and shown as `XXXX-XXXX`. Typed codes are uppercased, spaces/dashes removed, and the
   look-alikes `O → 0`, `I`/`L → 1` mapped. Malformed codes get `404 invalid_code`. Uses are taken

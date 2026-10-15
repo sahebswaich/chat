@@ -105,7 +105,8 @@ export async function listReports(env: AppEnv): Promise<Response> {
      ORDER BY r.id DESC LIMIT ${MAX_LIST}`,
   ).all<{
     id: number;
-    user_id: string;
+    /** NULL once the reporter deleted their account (DELETE /v1/me). */
+    user_id: string | null;
     user_name: string | null;
     messages: string;
     answer: string;

@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "wrangler d1 migrations apply nimbus --local && wrangler dev",
-    "deploy": "wrangler deploy && wrangler d1 migrations apply nimbus --remote",
+    "deploy": "wrangler d1 migrations apply nimbus --remote && wrangler deploy",
     "db:migrate": "wrangler d1 migrations apply nimbus --remote",
     "db:migrate:local": "wrangler d1 migrations apply nimbus --local",
     "test": "vitest run",

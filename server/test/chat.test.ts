@@ -1,7 +1,11 @@
+import { createExecutionContext, waitOnExecutionContext } from "cloudflare:test";
+import { env, exports } from "cloudflare:workers";
 import { describe, expect, it, vi } from "vitest";
+import worker from "../src/index";
 import {
   apiErrorResponse,
   ask,
+  BASE,
   call,
   chat,
   chatEvents,
@@ -202,6 +206,53 @@ describe("POST /v1/chat streaming", () => {
     expect({ ...second, messages: null }).toEqual({ ...first, messages: null });
   });
 
+  it("sends ': ping' comment lines while Claude is silent, so the connection stays open", async () => {
+    const token = await signUp("James");
+    vi.useFakeTimers({ toFake: ["setInterval", "clearInterval", "Date"] });
+    try {
+      let release!: () => void;
+      const gate = new Promise<void>((resolve) => (release = resolve));
+      // Claude thinks for a long time before the first byte of its answer.
+      mockClaude(async () => {
+        await gate;
+        return sseResponse(textAnswer(["finally"]));
+      });
+      // Run the Worker in this test's own I/O context (not via `exports`), so the
+      // gate promise and fake timers can drive it.
+      const ctx = createExecutionContext();
+      const res = await worker.fetch(
+        new Request(`${BASE}/v1/chat`, {
+          method: "POST",
+          headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
+          body: JSON.stringify(ask("think hard")),
+        }),
+        env,
+        ctx,
+      );
+      expect(res.status).toBe(200);
+      const reader = res.body!.getReader();
+      const decoder = new TextDecoder();
+      let seen = "";
+      while (!seen.includes("event: meta")) seen += decoder.decode((await reader.read()).value);
+
+      await vi.advanceTimersByTimeAsync(25_000);
+      release();
+      for (;;) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        seen += decoder.decode(value);
+      }
+      // Idle for 25 s → a ping at 10 s and at 20 s, all before the answer starts.
+      expect(seen.match(/^: ping$/gm)).toHaveLength(2);
+      expect(seen.indexOf(": ping")).toBeLessThan(seen.indexOf("event: delta"));
+      const events = parseSse(seen);
+      expect(events.map((e) => e.event)).toEqual(["meta", "status", "delta", "done"]);
+      await waitOnExecutionContext(ctx);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it("stops resuming after 3 continuations", async () => {
     const token = await signUp("James");
     const pausedWithText = (i: number) =>
@@ -274,6 +325,21 @@ describe("POST /v1/chat errors", () => {
     expect(first.at(-1)).toMatchObject({ event: "error", data: { code: "overloaded" } });
     const second = await chatEvents(token, ask("hi"));
     expect(second.at(-1)).toMatchObject({ event: "error", data: { code: "upstream" } });
+  });
+
+  it("never echoes the API key or upstream error text to the app", async () => {
+    const token = await signUp("James");
+    mockClaude(apiErrorResponse(401, "authentication_error", "invalid x-api-key sk-ant-test-key"));
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    const res = await chat(token, ask("hi"));
+    const text = await res.text();
+    expect(text).not.toContain("sk-ant-test-key");
+    expect(text).not.toContain("x-api-key");
+    expect(text).not.toContain("authentication_error");
+    expect(parseSse(text).at(-1)).toEqual({
+      event: "error",
+      data: { code: "upstream", message: "Something went wrong while getting the answer. Try again." },
+    });
   });
 
   it("maps a network failure to upstream", async () => {
@@ -411,6 +477,46 @@ describe("POST /v1/chat limits and validation", () => {
     }));
     const events = await chatEvents(token, { messages, context: "z".repeat(20_000), style: "explain", surface: "intent" });
     expect(events.at(-1)!.event).toBe("done");
+  });
+
+  it("accepts the maximum sizes in non-Latin text (3 UTF-8 bytes per character, > 2 MB of JSON)", async () => {
+    const token = await signUp("James");
+    mockClaude(sseResponse(textAnswer(["好"])));
+    const messages = Array.from({ length: 39 }, (_, i) => ({
+      role: i % 2 ? "assistant" : "user",
+      content: "語".repeat(20_000),
+    }));
+    const body = { messages, context: "話".repeat(20_000) };
+    expect(new TextEncoder().encode(JSON.stringify(body)).byteLength).toBeGreaterThan(2_000_000);
+    const events = await chatEvents(token, body);
+    expect(events.at(-1)!.event).toBe("done");
+  });
+
+  it("rejects a body over the size limit even without a content-length header", async () => {
+    const token = await signUp("James");
+    const claude = mockClaude();
+    const chunk = new TextEncoder().encode("x".repeat(1_000_000));
+    let sent = 0;
+    const body = new ReadableStream<Uint8Array>({
+      pull(controller) {
+        if (sent >= 9) return controller.close();
+        controller.enqueue(sent === 0 ? new TextEncoder().encode('{"messages":"') : chunk);
+        sent++;
+      },
+    });
+    const res = await exports.default.fetch(
+      new Request(`${BASE}/v1/chat`, {
+        method: "POST",
+        headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
+        body,
+        // @ts-expect-error: `duplex` is required for a streaming request body but missing from the types.
+        duplex: "half",
+      }),
+    );
+    expect(res.status).toBe(400);
+    expect(await errorOf(res)).toMatchObject({ code: "invalid_request", message: "Request body is too large." });
+    expect(claude.calls).toHaveLength(0);
+    expect(await usageCount("James")).toBe(0);
   });
 
   it("parses into the documented SSE framing", () => {

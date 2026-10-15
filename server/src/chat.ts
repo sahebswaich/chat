@@ -20,8 +20,14 @@ export const MAX_CONTEXT_CHARS = 20_000;
 export const MAX_CONTINUATIONS = 3;
 /** Beta header for the scalar `fallbacks: "default"` form (the array form uses -2026-06-01). */
 export const FALLBACK_BETA = "server-side-fallback-2026-07-01";
-/** Send an SSE comment if nothing was written for this long (keeps mobile connections alive). */
-const HEARTBEAT_MS = 15_000;
+/**
+ * After this long without output, an SSE comment line (`: ping`) is sent so the app's
+ * URLSession, mobile networks and proxies keep the connection open while Claude thinks
+ * or searches (which can take a while before the first text). Checked every
+ * HEARTBEAT_CHECK_MS, so the longest silence is about 12.5 s.
+ */
+export const HEARTBEAT_IDLE_MS = 10_000;
+const HEARTBEAT_CHECK_MS = 2_500;
 
 export interface ChatMessage {
   role: "user" | "assistant";
@@ -170,8 +176,8 @@ function streamAnswer(
   };
   const send = (event: string, data: unknown) => write(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`);
   const heartbeat = setInterval(() => {
-    if (Date.now() - lastWrite >= HEARTBEAT_MS - 1000) write(": keepalive\n\n");
-  }, HEARTBEAT_MS);
+    if (Date.now() - lastWrite >= HEARTBEAT_IDLE_MS) write(": ping\n\n");
+  }, HEARTBEAT_CHECK_MS);
 
   let textSent = false;
   let status: "searching" | "writing" | null = null;
@@ -230,7 +236,8 @@ function streamAnswer(
     status: 200,
     headers: {
       "content-type": "text/event-stream",
-      "cache-control": "no-cache",
+      // no-transform: Cloudflare (and other proxies) won't compress, and so won't buffer, the stream.
+      "cache-control": "no-cache, no-transform",
       "x-accel-buffering": "no",
     },
   });

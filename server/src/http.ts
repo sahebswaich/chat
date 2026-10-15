@@ -36,20 +36,54 @@ export function noContent(): Response {
 
 export const invalidRequest = (message: string) => new HttpError(400, "invalid_request", message);
 
-/** Upper bound for any request body (40 messages × 20k chars + context fits easily). */
-const MAX_BODY_BYTES = 2_000_000;
+/**
+ * Upper bound for any request body, in bytes. The largest valid /v1/chat body is
+ * 40 × 20k + 20k = 820k UTF-16 units of text, which is ~2.5 MB of JSON in a
+ * non-Latin script (3 UTF-8 bytes per unit) and ~4.9 MB if a client escapes
+ * everything as \uXXXX, so 6 MB keeps every valid request and still bounds memory.
+ */
+export const MAX_BODY_BYTES = 6_000_000;
+
+const tooLarge = () => invalidRequest("Request body is too large.");
+
+/**
+ * Reads the body as UTF-8 text, giving up as soon as it exceeds `max` bytes (the
+ * Content-Length header is optional and can't be trusted, so the bytes are counted).
+ */
+async function readBodyText(request: Request, max: number): Promise<string> {
+  const declared = Number(request.headers.get("content-length") ?? "0");
+  if (declared > max) throw tooLarge();
+  if (!request.body) return "";
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > max) {
+        reader.cancel().catch(() => {});
+        throw tooLarge();
+      }
+      chunks.push(value);
+    }
+  } catch (err) {
+    if (err instanceof HttpError) throw err;
+    throw invalidRequest("Could not read the request body.");
+  }
+  const bytes = new Uint8Array(size);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return new TextDecoder().decode(bytes);
+}
 
 /** Reads and parses a JSON object body, or throws 400 invalid_request. */
 export async function readJsonObject(request: Request): Promise<Record<string, unknown>> {
-  const declared = Number(request.headers.get("content-length") ?? "0");
-  if (declared > MAX_BODY_BYTES) throw invalidRequest("Request body is too large.");
-  let text: string;
-  try {
-    text = await request.text();
-  } catch {
-    throw invalidRequest("Could not read the request body.");
-  }
-  if (text.length > MAX_BODY_BYTES) throw invalidRequest("Request body is too large.");
+  const text = await readBodyText(request, MAX_BODY_BYTES);
   let value: unknown;
   try {
     value = JSON.parse(text);

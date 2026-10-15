@@ -207,7 +207,7 @@ export async function chatEvents(token: string, body: Record<string, unknown>) {
   const res = await chat(token, body);
   expect(res.status).toBe(200);
   expect(res.headers.get("content-type")).toBe("text/event-stream");
-  expect(res.headers.get("cache-control")).toBe("no-cache");
+  expect(res.headers.get("cache-control")).toBe("no-cache, no-transform");
   return parseSse(await res.text());
 }
 
