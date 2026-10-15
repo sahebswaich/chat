@@ -83,10 +83,25 @@ struct CardPayloadTests {
     }
 
     @Test func rejectsNonCardURLs() throws {
-        #expect(CardPayload(url: try #require(URL(string: "https://nimbus.test.dev/join/K7QM-2XPA"))) == nil)
-        #expect(CardPayload(url: try #require(URL(string: "nimbus://c/abc"))) == nil)
-        #expect(CardPayload(url: try #require(URL(string: "https://nimbus.test.dev/c/"))) == nil)
-        #expect(CardPayload(url: try #require(URL(string: "https://nimbus.test.dev/c/bad%20id"))) == nil)
+        let strings = [
+            "https://nimbus.test.dev/join/K7QM-2XPA",
+            "nimbus://c/abc",
+            "https://nimbus.test.dev/c/",
+            "https://nimbus.test.dev/c/bad%20id",
+            "https://nimbus.test.dev/c/..%2Fetc",
+        ]
+        for string in strings {
+            let url = try #require(URL(string: string))
+            #expect(CardPayload(url: url) == nil, "\(string)")
+        }
+    }
+
+    @Test func serverStyleCardURLParses() throws {
+        // What the server returns from POST /v1/cards (16-char base64url id), plus our query.
+        let card = CardPayload(id: "Zm9vYmFyYmF6cXV4", question: "q", answer: "a")
+        let url = card.url(host: "nimbus.test.dev")
+        #expect(url.absoluteString == "https://nimbus.test.dev/c/Zm9vYmFyYmF6cXV4?q=q&a=a&v=1")
+        #expect(url.scheme == "https")
     }
 
     @Test func missingAnswerMeansFetchTheFullCard() throws {

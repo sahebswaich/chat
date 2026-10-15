@@ -56,4 +56,28 @@ nonisolated struct NimbusActivityAttributes: ActivityAttributes, Sendable {
         self.question = question
     }
 }
+
+extension NimbusActivityAttributes.ContentState {
+    /// State for an answer in progress: the tail of the text (≤ 120 characters) as the preview.
+    nonisolated init(phase: Phase, answer: String) {
+        let trimmed = answer.trimmingCharacters(in: .whitespacesAndNewlines)
+        let words = trimmed.split(whereSeparator: { $0.isWhitespace }).count
+        let preview = trimmed.count > 120 ? "…" + String(trimmed.suffix(119)) : trimmed
+        self.init(phase: phase, preview: preview, wordCount: words)
+    }
+}
+
+extension NimbusActivityAttributes.ContentState.Phase {
+    /// The Live Activity phase for a `ChatEngine` phase (nil while idle).
+    nonisolated init?(_ phase: ChatPhase) {
+        switch phase {
+        case .idle: return nil
+        case .thinking: self = .thinking
+        case .searching: self = .searching
+        case .writing: self = .writing
+        case .done: self = .done
+        case .failed: self = .failed
+        }
+    }
+}
 #endif

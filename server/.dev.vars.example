@@ -1,11 +1,14 @@
 # Copy to .dev.vars for `npm run dev` (local only; never commit .dev.vars).
-# In production these are set with `npx wrangler secret put <NAME>`.
+# In production these are set with `npx wrangler secret put <NAME>` (or
+# `npx wrangler deploy --secrets-file <file>` on the very first deploy, see README.md).
 
 # Your Claude API key from https://platform.claude.com (Settings → API keys).
 ANTHROPIC_API_KEY=sk-ant-...
 
-# Any long random string; protects /admin/*. Generate one with:  openssl rand -base64 32
+# Any long random string; protects /admin/*. Generate one with:  openssl rand -hex 32
 ADMIN_TOKEN=change-me-to-a-long-random-string
 
-# Optional: point the server at a different Claude API base URL (normally leave unset).
-# ANTHROPIC_BASE_URL=https://api.anthropic.com
+# Because wrangler.jsonc lists the required secrets, wrangler only loads the two
+# keys above from this file. Pass optional settings on the command line instead:
+#   npx wrangler dev --var SUPPORT_EMAIL:you@example.com
+#   npx wrangler dev --var ANTHROPIC_BASE_URL:http://127.0.0.1:8800   (a mock Claude API)
