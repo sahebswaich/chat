@@ -103,8 +103,8 @@ if [ -n "$SERVER_URL" ] && [ -n "$ADMIN_TOKEN" ]; then
   # New tables first, so new code never runs against an old schema (a no-op when up to date).
   CI=true npx wrangler d1 migrations apply nimbus --remote >/dev/null 2>&1 || true
 else
-  dim "Nimbus answers with your Claude API key. Get one at https://console.anthropic.com → API Keys."
-  dim "(It's separate from a claude.ai subscription; you pay per use, about a cent per answer.)"
+  dim "Nimbus answers with your Claude API key. Get one at https://platform.claude.com → Settings → API keys."
+  dim "(It's separate from a claude.ai subscription; you pay per use, usually 1–3 cents per answer.)"
   ANTHROPIC_API_KEY=""
   while :; do
     read -r -s -p "  Claude API key (hidden): " ANTHROPIC_API_KEY; echo

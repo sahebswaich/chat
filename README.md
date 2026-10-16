@@ -11,16 +11,18 @@ shipped inside the app.
 | | |
 |---|---|
 | **iPhone / iPad** | iMessage app in the + drawer · full chat app · Siri / Action Button / Spotlight “Ask Nimbus” · Control Center button · Live Activity in the Dynamic Island while it thinks |
-| **Server** | Cloudflare Worker (free tier) · invite codes · per-person daily limits · streams Claude answers |
+| **Server** | Cloudflare Worker · invite codes · per-person daily limits · streams Claude answers |
 
 ## Setup on your Mac (one time, about 20 minutes)
 
 You need:
 * **Xcode 26 or newer**, signed in with your Apple ID (Xcode → Settings → Accounts).
 * An **Apple Developer Program** membership ($99/yr) for TestFlight.
-* A **Claude API key** from [console.anthropic.com](https://console.anthropic.com) → API Keys.
-  This is separate from a claude.ai subscription. You pay per use; a typical answer costs about a cent.
-* A free **Cloudflare** account ([dash.cloudflare.com/sign-up](https://dash.cloudflare.com/sign-up)).
+* A **Claude API key** from [platform.claude.com](https://platform.claude.com) → Settings → API keys.
+  This is separate from a claude.ai subscription. You pay per use, usually 1–3¢ per answer.
+* A **Cloudflare** account ([dash.cloudflare.com/sign-up](https://dash.cloudflare.com/sign-up)).
+  Free works for short iMessage answers. Long answers in the app can hit the free plan's 10 ms
+  CPU limit, which the $5/month Workers Paid plan removes (no code change).
 
 Then run:
 
@@ -43,11 +45,16 @@ project, makes your first invite code, and opens Xcode. Then:
    Apps → **+** → New App. Platform iOS, bundle ID `com.sahebswaich.nimbus` (or yours),
    and any unique name, e.g. “Nimbus Chat AI”.
 2. **Upload a build**: `./scripts/testflight.sh` (archives and uploads the iOS build).
-3. **Invite**: TestFlight tab → External Testing → **+** group “Friends” → add the build →
-   add testers by email (or turn on a public link with a tester limit). The first build of each
-   version goes through a quick Beta App Review (usually under a day). Use
-   `https://<your-server>/privacy` as the privacy policy URL.
-4. **Give each friend an invite code**:
+3. **Fill in Test Information** (TestFlight tab → Test Information): a short beta description,
+   your feedback email, privacy policy URL `https://<your-server>/privacy`, and under **Beta App
+   Review Information → notes** the **App Review** invite code that `setup-mac.sh` printed
+   (“Open Nimbus, enter this invite code, tick the consent box”). Apple's reviewer needs it
+   to get in.
+4. **Invite**: create an internal group first (Apple requires one; add yourself), then
+   External Testing → **+** group “Friends” → add the build → add testers by email (or a public
+   link with a tester limit). The first build of each version goes through Beta App Review,
+   usually within a day.
+5. **Give each friend an invite code**:
    ```bash
    cd server && npm run admin -- invite "James"
    ```
