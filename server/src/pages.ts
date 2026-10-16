@@ -235,6 +235,7 @@ export function privacyPage(host: string, email: string): Response {
   <ul class="plain">
     <li><b>Invite and account:</b> the name the owner gave your invite, the device name your app sent when you joined, when you joined and when you were last active. Your sign-in token is stored only as a one-way hash.</li>
     <li><b>Usage counters:</b> how many questions you asked each day, to enforce the daily limit.</li>
+    <li><b>Sign-in attempts:</b> to slow down guessing of invite codes, how many codes were tried from your network address in the current hour, stored as a one-way hash rather than the address itself. Old counts are deleted automatically.</li>
     <li><b>Reports:</b> if you tap Report on an answer, that conversation, the answer and your reason are stored so the owner can review it.</li>
     <li><b>Cards:</b> if you send an answer as a Nimbus card, the question and answer are stored so the card's link works for people who can't open iMessage apps (for example on a Mac). Anyone with the link can view that card.</li>
   </ul>

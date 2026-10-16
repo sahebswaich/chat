@@ -150,6 +150,11 @@ nonisolated struct NimbusClient: Sendable {
         if authenticated, credential == nil {
             throw NimbusError.notSignedIn
         }
+        if authenticated, let current = credential, let override = host,
+           NimbusConfig.normalizeHost(override) != NimbusConfig.normalizeHost(current.host) {
+            // A token only ever goes to the server that issued it.
+            throw NimbusError.invalidRequest("Nimbus won't send your sign-in to a different server.")
+        }
         guard let baseURL else {
             if credential == nil {
                 throw NimbusError.notSignedIn
@@ -196,6 +201,13 @@ nonisolated struct NimbusClient: Sendable {
         _ chat: ChatRequest,
         continuation: AsyncThrowingStream<ChatEvent, Error>.Continuation
     ) async throws {
+        // Nothing reaches the AI before the person agreed (App Review 5.1.2(i)); every surface
+        // (app, extension, Siri) streams through here.
+        if let current = credential, current.consentedAt == nil {
+            throw NimbusError.invalidRequest(
+                "Before Nimbus can answer, agree to sending your questions to Claude: open Nimbus in Messages, or sign out and sign in again."
+            )
+        }
         let body = try encode(chat)
         var request = try makeRequest(
             path: "v1/chat",

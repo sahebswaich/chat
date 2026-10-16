@@ -3,6 +3,7 @@ import { env } from "cloudflare:workers";
 import { describe, expect, it } from "vitest";
 import worker from "../src/index";
 import { admin, BASE, call, createInvite, errorOf, signUp } from "./helpers";
+import { REDEEM_ATTEMPTS_PER_HOUR, redeemClientKey } from "../src/users";
 
 describe("POST /v1/redeem", () => {
   it("redeems a code and returns a token, name and daily limit", async () => {
@@ -87,6 +88,98 @@ describe("POST /v1/redeem", () => {
       expect(err.code).toBe("invalid_request");
       expect(err.message).toBeTruthy();
     }
+  });
+});
+
+describe("POST /v1/redeem throttle", () => {
+  const from = (ip: string, code: string) =>
+    call("POST", "/v1/redeem", { body: { code }, headers: { "cf-connecting-ip": ip } });
+
+  it(`allows ${REDEEM_ATTEMPTS_PER_HOUR} wrong codes per address per hour, then 429s`, async () => {
+    // Codes that work don't count (friends joining from one Wi-Fi).
+    const { code: shared } = await createInvite("Party", { uses: REDEEM_ATTEMPTS_PER_HOUR + 2 });
+    for (let i = 0; i < REDEEM_ATTEMPTS_PER_HOUR + 2; i++) {
+      const ctx = createExecutionContext();
+      const res = await worker.fetch(
+        new Request(`${BASE}/v1/redeem`, {
+          method: "POST",
+          headers: { "content-type": "application/json", "cf-connecting-ip": "203.0.113.7" },
+          body: JSON.stringify({ code: shared }),
+        }),
+        env,
+        ctx,
+      );
+      await waitOnExecutionContext(ctx);
+      expect(res.status).toBe(200);
+    }
+    for (let i = 0; i < REDEEM_ATTEMPTS_PER_HOUR; i++) {
+      const res = await from("203.0.113.7", "ZZZZ-ZZZZ");
+      expect(res.status).toBe(404);
+    }
+    // Malformed input never reaches the database, so it isn't counted (and can't be).
+    expect((await from("203.0.113.7", "K7QM-2XP")).status).toBe(404);
+
+    const { code } = await createInvite("Kai");
+    const blocked = await from("203.0.113.7", code);
+    expect(blocked.status).toBe(429);
+    expect(blocked.headers.get("retry-after")).toMatch(/^[1-9][0-9]*$/);
+    expect(Number(blocked.headers.get("retry-after"))).toBeLessThanOrEqual(3600);
+    expect(await errorOf(blocked)).toMatchObject({ code: "too_many_attempts" });
+
+    // The invite wasn't touched, and another address can still use it.
+    expect((await from("198.51.100.20", code)).status).toBe(200);
+
+    // Only a hash is stored, never the address.
+    const dump = JSON.stringify((await env.DB.prepare("SELECT * FROM redeem_attempts").all()).results);
+    expect(dump).not.toContain("203.0.113.7");
+    expect(dump).not.toContain("198.51.100.20");
+  });
+
+  it("can't be raced past with parallel guesses", async () => {
+    const results = await Promise.all(
+      Array.from({ length: REDEEM_ATTEMPTS_PER_HOUR + 5 }, () => from("203.0.113.9", "ZZZZ-ZZZZ")),
+    );
+    const statuses = results.map((r) => r.status);
+    expect(statuses.filter((s) => s === 404)).toHaveLength(REDEEM_ATTEMPTS_PER_HOUR);
+    expect(statuses.filter((s) => s === 429)).toHaveLength(5);
+  });
+
+  it("counts an IPv6 /64 as one client", async () => {
+    for (let i = 0; i < REDEEM_ATTEMPTS_PER_HOUR; i++) {
+      expect((await from(`2001:db8:1:2::${i + 1}`, "ZZZZ-ZZZZ")).status).toBe(404);
+    }
+    expect((await from("2001:db8:1:2:ffff:ffff:ffff:ffff", "ZZZZ-ZZZZ")).status).toBe(429);
+    expect((await from("2001:db8:1:3::1", "ZZZZ-ZZZZ")).status).toBe(404);
+  });
+
+  it("drops earlier hours' counts", async () => {
+    await env.DB.prepare("INSERT INTO redeem_attempts (client, hour, count) VALUES ('old', '2020-01-01T00', 99)").run();
+    const ctx = createExecutionContext();
+    const res = await worker.fetch(
+      new Request(`${BASE}/v1/redeem`, {
+        method: "POST",
+        headers: { "content-type": "application/json", "cf-connecting-ip": "192.0.2.1" },
+        body: JSON.stringify({ code: "ZZZZ-ZZZZ" }),
+      }),
+      env,
+      ctx,
+    );
+    await waitOnExecutionContext(ctx);
+    expect(res.status).toBe(404);
+    const rows = (await env.DB.prepare("SELECT hour FROM redeem_attempts").all<{ hour: string }>()).results;
+    expect(rows).toHaveLength(1);
+    expect(rows[0]!.hour).toBe(new Date().toISOString().slice(0, 13));
+  });
+});
+
+describe("redeemClientKey", () => {
+  it("keeps IPv4 and reduces IPv6 to its /64", () => {
+    expect(redeemClientKey("203.0.113.7")).toBe("203.0.113.7");
+    expect(redeemClientKey("::ffff:203.0.113.7")).toBe("203.0.113.7");
+    expect(redeemClientKey("2001:DB8:0001:0002:aaaa:bbbb:cccc:dddd")).toBe("2001:db8:1:2::/64");
+    expect(redeemClientKey("2001:db8:1:2::1")).toBe("2001:db8:1:2::/64");
+    expect(redeemClientKey("2001:db8::1")).toBe("2001:db8:0:0::/64");
+    expect(redeemClientKey("::1")).toBe("0:0:0:0::/64");
   });
 });
 

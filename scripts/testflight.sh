@@ -31,6 +31,7 @@ VERSION=$(sed -n 's/^MARKETING_VERSION[[:space:]]*=[[:space:]]*//p' Config/Base.
 AUTH=()
 if [ -n "${ASC_KEY_ID:-}" ]; then
   [ -n "${ASC_ISSUER_ID:-}" ] && [ -n "${ASC_KEY_PATH:-}" ] || die "Set ASC_KEY_ID, ASC_ISSUER_ID and ASC_KEY_PATH together."
+  [ -f "$ASC_KEY_PATH" ] || die "ASC_KEY_PATH: no file at $ASC_KEY_PATH"
   KEY_PATH=$(cd "$(dirname "$ASC_KEY_PATH")" && pwd)/$(basename "$ASC_KEY_PATH")
   AUTH=(-authenticationKeyPath "$KEY_PATH" -authenticationKeyID "$ASC_KEY_ID" -authenticationKeyIssuerID "$ASC_ISSUER_ID")
 fi
@@ -42,13 +43,17 @@ rm -rf "$ARCHIVE" build/export
 mkdir -p build
 
 bold "▸ Archiving Nimbus $VERSION ($BUILD_NUMBER) for $BUNDLE_ID — server $API_HOST"
-set -o pipefail
+# Success is xcodebuild's own exit status (PIPESTATUS[0]), not text in its output or the
+# status of the tee/pretty filters. set +e so a failure reaches the messages below.
+set +e
 xcodebuild archive \
   -project Nimbus.xcodeproj -scheme Nimbus -configuration Release \
   -destination 'generic/platform=iOS' -archivePath "$ARCHIVE" \
   -allowProvisioningUpdates ${AUTH[@]+"${AUTH[@]}"} \
   CURRENT_PROJECT_VERSION="$BUILD_NUMBER" 2>&1 | tee build/archive.log | pretty
-[ -d "$ARCHIVE" ] || die "Archive failed — see build/archive.log"
+ARCHIVE_STATUS=${PIPESTATUS[0]}
+set -e
+[ "$ARCHIVE_STATUS" -eq 0 ] && [ -d "$ARCHIVE" ] || die "Archive failed (xcodebuild exit $ARCHIVE_STATUS) — see build/archive.log"
 
 cat > build/ExportOptions.plist <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
@@ -67,11 +72,16 @@ cat > build/ExportOptions.plist <<PLIST
 PLIST
 
 bold "▸ Uploading to App Store Connect"
+# With destination=upload, xcodebuild exits 0 only when the upload went through
+# (it prints "** EXPORT SUCCEEDED **"); any signing or upload error is a non-zero exit.
+set +e
 xcodebuild -exportArchive \
   -archivePath "$ARCHIVE" -exportOptionsPlist build/ExportOptions.plist -exportPath build/export \
   -allowProvisioningUpdates ${AUTH[@]+"${AUTH[@]}"} 2>&1 | tee build/export.log | pretty
+EXPORT_STATUS=${PIPESTATUS[0]}
+set -e
 
-if grep -q "EXPORT SUCCEEDED\|Upload succeeded\|Uploaded" build/export.log; then
+if [ "$EXPORT_STATUS" -eq 0 ]; then
   bold "✓ Uploaded Nimbus $VERSION ($BUILD_NUMBER)."
   echo "  In 5–15 minutes it shows up in App Store Connect → your app → TestFlight."
   echo "  Add it to your 'Friends' external group; the first build goes through a quick Beta App Review."

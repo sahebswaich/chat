@@ -28,7 +28,8 @@ and also configures the Xcode project. To do it by hand:
 and a Claude API key from [platform.claude.com](https://platform.claude.com) → Settings → API keys
 (this is separate from a claude.ai subscription; you pay per use).
 
-Open **Terminal** and run these one at a time:
+Open **Terminal** and run these one at a time. Lines starting with `#` are notes; don't paste
+them (macOS's zsh doesn't treat `#` as a comment when you type or paste commands).
 
 ```bash
 # 1. Install the server's tools (into server/node_modules; nothing global).
@@ -53,15 +54,16 @@ EOF
 #    Note the https://nimbus.<your-subdomain>.workers.dev URL it prints.
 npx wrangler deploy --secrets-file "$SECRETS_FILE"
 rm "$SECRETS_FILE"
-npx wrangler d1 migrations apply nimbus --remote      # creates the tables; answer "y"
+#    Then create the tables (answer "y"):
+npx wrangler d1 migrations apply nimbus --remote
 
 # 5. Save the server URL and admin token for the owner commands (this file is git-ignored).
 #    Replace the URL with the one from step 4.
 printf '{\n  "url": "%s",\n  "adminToken": "%s"\n}\n' "https://nimbus.<your-subdomain>.workers.dev" "$ADMIN_TOKEN" > .nimbus-admin.json
 chmod 600 .nimbus-admin.json
 
-# 6. Check it works and make your first invite.
-curl https://nimbus.<your-subdomain>.workers.dev/health        # → {"ok":true}
+# 6. Check it works (it prints {"ok":true}) and make your first invite.
+curl https://nimbus.<your-subdomain>.workers.dev/health
 npm run admin -- invite "Your Name"
 ```
 
@@ -130,15 +132,24 @@ reads it either way.)
 ## Owner CLI
 
 ```bash
-npm run admin -- invite "James"                    # 1 use, default daily limit
+# 1 use, default daily limit
+npm run admin -- invite "James"
 npm run admin -- invite "Family" --uses 5 --limit 50
-npm run admin -- invites                           # code, name, uses left, daily limit
-npm run admin -- revoke-invite K7QM-2XPA           # unused codes stop working; people who joined keep access
-npm run admin -- users                             # id, name, device, today's usage, last seen, status
-npm run admin -- revoke-user u_7k2m9qxz4t          # their token stops working immediately
-npm run admin -- reports                           # reported answers, newest first
-npm run admin -- users --json                      # any command: raw JSON
+# code, name, uses left, daily limit
+npm run admin -- invites
+# unused codes stop working; people who joined keep access
+npm run admin -- revoke-invite K7QM-2XPA
+# id, name, device, today's usage, last seen, status
+npm run admin -- users
+# their token stops working immediately
+npm run admin -- revoke-user u_7k2m9qxz4t
+# reported answers, newest first
+npm run admin -- reports
+# any command: raw JSON
+npm run admin -- users --json
 ```
+
+(Copy only the command lines: in macOS's zsh, a pasted `# note` is not a comment.)
 
 It reads `NIMBUS_URL` and `NIMBUS_ADMIN_TOKEN` from the environment, or `server/.nimbus-admin.json`
 (`{"url": "...", "adminToken": "..."}`). Node 20+, no dependencies.
@@ -146,11 +157,16 @@ It reads `NIMBUS_URL` and `NIMBUS_ADMIN_TOKEN` from the environment, or `server/
 ## Local development and tests
 
 ```bash
-cp .dev.vars.example .dev.vars        # put a real or dummy key in it
-npm run dev                           # applies migrations to a local D1, serves http://localhost:8787
-npm test                              # vitest inside workerd with a local D1; the Claude API is mocked
-npm run typecheck                     # tsc --noEmit (strict)
-npm run check                         # typecheck + tests + wrangler deploy --dry-run
+# then put a real or dummy key in .dev.vars
+cp .dev.vars.example .dev.vars
+# applies migrations to a local D1, serves http://localhost:8787
+npm run dev
+# vitest inside workerd with a local D1; the Claude API is mocked
+npm test
+# tsc --noEmit (strict)
+npm run typecheck
+# typecheck + tests + wrangler deploy --dry-run
+npm run check
 ```
 
 The tests never call Claude: `ANTHROPIC_BASE_URL` points the SDK at a fake host and
@@ -226,7 +242,12 @@ The tests never call Claude: `ANTHROPIC_BASE_URL` points the SDK at a fake host 
 * **Invite codes** are 8 random Crockford base32 characters (no I, L, O, U), stored without the
   dash and shown as `XXXX-XXXX`. Typed codes are uppercased, spaces/dashes removed, and the
   look-alikes `O → 0`, `I`/`L → 1` mapped. Malformed codes get `404 invalid_code`. Uses are taken
-  with an atomic `UPDATE … WHERE uses_left > 0`.
+  with an atomic `UPDATE … WHERE uses_left > 0`. Guessing is throttled: each client address
+  (`CF-Connecting-IP`; IPv6 counted per /64) may try 10 wrong codes per UTC hour (codes that work
+  don't count), then gets `429 too_many_attempts` with `Retry-After`. Attempts are counted in the
+  `redeem_attempts` table (migration `0004`, keyed by a SHA-256 hash of the hour and address,
+  earlier hours deleted as new ones start) before the code is looked up, so parallel guesses can't
+  race past the limit; if the table is missing the throttle is skipped rather than blocking sign-ins.
 * **Tokens** are 32 random bytes, base64url (43 characters). Only their SHA-256 hash is stored;
   lookup is by hash. Revoked users get `401 unauthorized`. `last_seen_at` is updated on every
   authenticated request.

@@ -22,6 +22,7 @@ final class ConversationController {
     private(set) var focusRequest = 0
 
     @ObservationIgnored private var wantsFocus = false
+    @ObservationIgnored private var pendingDraft: String?
     @ObservationIgnored private var stored: StoredConversation? = nil
     private let modelContext: ModelContext
 
@@ -54,13 +55,20 @@ final class ConversationController {
         engine.load(conversation.messages, style: style, context: conversation.pastedContext)
     }
 
-    /// Starts an empty, unsaved thread.
-    func startNew(focusComposer: Bool) {
+    /// Starts an empty, unsaved thread, optionally with text waiting in the composer.
+    func startNew(focusComposer: Bool, draft: String? = nil) {
         save(stoppingAnswer: true)
         detachCurrent()
-        if focusComposer {
+        pendingDraft = draft
+        if focusComposer || draft != nil {
             requestComposerFocus()
         }
+    }
+
+    /// Text to put in the composer with the next focus request (once).
+    func consumeDraft() -> String? {
+        defer { pendingDraft = nil }
+        return pendingDraft
     }
 
     /// Asks the chat screen to put the keyboard up (now, or as soon as it appears).

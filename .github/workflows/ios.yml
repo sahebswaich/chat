@@ -32,6 +32,8 @@ jobs:
           fi
           xcodebuild -version
           xcrun simctl list runtimes | grep -i ios || true
+          # The steps below pipe into xcbeautify (preinstalled on GitHub's macOS images).
+          command -v xcbeautify >/dev/null || brew install xcbeautify
 
       - name: Build (iOS Simulator, Debug)
         run: |

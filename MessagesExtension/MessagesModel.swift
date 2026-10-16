@@ -160,6 +160,10 @@ final class MessagesModel {
     func becomeActive(selectedMessageURL: URL?, style: MSMessagesAppPresentationStyle) {
         presentationStyle = style
         session.reload()
+        if !session.isSignedIn {
+            // Signed out or deleted the account in the app: this extension's history goes too.
+            recents.clear()
+        }
         // Tapping a bubble opens the extension expanded with `selectedMessage` set; from the
         // drawer it opens compact and any stale selection is ignored.
         if style == .expanded, let selectedMessageURL {
@@ -381,7 +385,15 @@ final class MessagesModel {
     func report(_ message: ThreadMessage, reason: ReportReason) {
         reportTarget = nil
         guard session.isSignedIn else {
-            showToast("Sign in to Nimbus to report answers.", systemImage: "person.crop.circle.badge.exclamationmark")
+            // Signed-out readers of a received card can still reach the server's support page,
+            // which explains how to report it.
+            if let host = receivedCard?.host ?? NimbusConfig.defaultHost,
+               let url = NimbusConfig.webURL(path: "/support", host: host) {
+                showToast("Opening Nimbus support so you can report this.", systemImage: "flag")
+                open(url)
+            } else {
+                showToast("Sign in to Nimbus to report answers.", systemImage: "person.crop.circle.badge.exclamationmark")
+            }
             return
         }
         Task {

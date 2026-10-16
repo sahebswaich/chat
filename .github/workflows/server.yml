@@ -12,9 +12,11 @@ on:
         type: boolean
         default: false
 
+# Pushes cancel older test runs; a manual (deploy) run has its own group and is never cancelled
+# halfway between `wrangler deploy` and the migrations.
 concurrency:
-  group: server-${{ github.ref }}
-  cancel-in-progress: true
+  group: server-${{ github.ref }}-${{ github.event_name == 'workflow_dispatch' && 'dispatch' || 'ci' }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
 
 defaults:
   run:

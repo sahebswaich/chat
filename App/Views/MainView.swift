@@ -61,8 +61,8 @@ struct MainView: View {
                 switchInvite(request)
             }
             Button("Cancel", role: .cancel) {}
-        } message: { _ in
-            Text("You're signed in as \(session.name ?? "a friend"). Switching uses the new invite here and in Messages.")
+        } message: { request in
+            Text(joinConfirmationText(for: request))
         }
         .alert("Couldn't use that invite", isPresented: $showsJoinError) {
             Button("OK", role: .cancel) {}
@@ -146,8 +146,8 @@ struct MainView: View {
 
     // MARK: - Navigation
 
-    private func newChat(focus: Bool) {
-        conversations.startNew(focusComposer: focus)
+    private func newChat(focus: Bool, draft: String? = nil) {
+        conversations.startNew(focusComposer: focus, draft: draft)
         selection = conversations.currentID
         compactColumn = .detail
     }
@@ -177,14 +177,26 @@ struct MainView: View {
             router.pending = nil
             newChat(focus: true)
         case .ask(let question):
+            // Prefilled, not sent: a web page shouldn't be able to spend someone's daily
+            // answers or plant questions in their history by opening nimbus://ask.
             router.pending = nil
-            newChat(focus: false)
-            conversations.ask(question)
+            newChat(focus: true, draft: question)
         case .join(let code, let host):
             router.pending = nil
             joinRequest = JoinRequest(code: code, host: host)
             showsJoinConfirmation = true
         }
+    }
+
+    /// Names the server when the invite is for a different one, so a link can't quietly move
+    /// someone's questions to a server they don't know.
+    private func joinConfirmationText(for request: JoinRequest) -> String {
+        let intro = "You're signed in as \(session.name ?? "a friend"). Switching uses the new invite here and in Messages."
+        guard let raw = request.host, let newHost = NimbusConfig.normalizeHost(raw), newHost != session.host else {
+            return intro
+        }
+        let current = session.host ?? "your current one"
+        return intro + " Your questions would then go to the server at \(newHost) instead of \(current). Only switch if you trust it."
     }
 
     private func switchInvite(_ request: JoinRequest) {

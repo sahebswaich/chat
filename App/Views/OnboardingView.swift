@@ -275,6 +275,11 @@ struct OnboardingView: View {
         if let host {
             linkHost = host
             customHost = host
+            if host != NimbusConfig.defaultHost {
+                // Another server (named under the code boxes): agree to its terms, linked below,
+                // before the code is sent there.
+                agreed = false
+            }
         }
         if agreed {
             redeem()

@@ -44,7 +44,7 @@ const routes: Route[] = [
     handler: (_req, env, _ctx, [id, ext]) => handleGetCard(env, id!, ext === ".json"),
   },
 
-  { method: "POST", pattern: /^\/v1\/redeem$/, handler: (req, env) => handleRedeem(req, env) },
+  { method: "POST", pattern: /^\/v1\/redeem$/, handler: (req, env, ctx) => handleRedeem(req, env, ctx) },
   { method: "GET", pattern: /^\/v1\/me$/, handler: (req, env, ctx) => handleMe(req, env, ctx) },
   { method: "DELETE", pattern: /^\/v1\/me$/, handler: (req, env, ctx) => handleDeleteMe(req, env, ctx) },
   { method: "POST", pattern: /^\/v1\/chat$/, handler: (req, env, ctx) => handleChat(req, env, ctx) },

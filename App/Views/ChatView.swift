@@ -333,9 +333,14 @@ struct ChatView: View {
 
     private func applyFocusRequest() {
         guard conversations.consumeFocusRequest() else { return }
+        let prefill = conversations.consumeDraft()
         Task {
-            // Let a navigation push finish before the keyboard comes up.
+            // Let a navigation push finish before the keyboard comes up (and after the
+            // thread switch has cleared the old draft).
             try? await Task.sleep(for: .milliseconds(350))
+            if let prefill {
+                draft = prefill
+            }
             composerFocused = true
         }
     }

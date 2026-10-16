@@ -32,7 +32,7 @@ struct NimbusClientTests {
     ]
 
     private func credential(_ host: String) -> Credential {
-        Credential(host: host, token: "tok_test", name: "Tester", dailyLimit: 200)
+        Credential(host: host, token: "tok_test", name: "Tester", dailyLimit: 200, consentedAt: Date())
     }
 
     private func makeClient(_ host: String, _ stub: StubURLProtocol.Stub, signedIn: Bool = true) -> NimbusClient {
@@ -162,6 +162,38 @@ struct NimbusClientTests {
         let error = thrown as? NimbusError
         #expect(error == NimbusError.notSignedIn)
         #expect(StubURLProtocol.requests(host: "nobody.nimbus.test").isEmpty)
+    }
+
+    @Test func streamWithoutConsentFailsFast() async throws {
+        let host = "no-consent.nimbus.test"
+        StubURLProtocol.register(StubURLProtocol.Stub(chunks: StubURLProtocol.chunks(Self.contractStream, size: 64)), host: host)
+        let client = NimbusClient(
+            credential: Credential(host: host, token: "tok_test", name: "Tester", dailyLimit: 200),
+            host: host,
+            session: StubURLProtocol.makeSession()
+        )
+        var thrown: (any Error)?
+        do {
+            for try await _ in client.stream(request()) {}
+        } catch {
+            thrown = error
+        }
+        #expect(thrown is NimbusError)
+        #expect(StubURLProtocol.requests(host: host).isEmpty)
+    }
+
+    @Test func tokenIsNeverSentToAnotherHost() async throws {
+        let other = "other.nimbus.test"
+        StubURLProtocol.register(jsonStub(200, #"{"name":"James","usedToday":1,"dailyLimit":200,"supportEmail":""}"#), host: other)
+        let client = NimbusClient(
+            credential: credential("mine.nimbus.test"),
+            host: other,
+            session: StubURLProtocol.makeSession()
+        )
+        await #expect(throws: NimbusError.self) {
+            _ = try await client.me()
+        }
+        #expect(StubURLProtocol.requests(host: other).isEmpty)
     }
 
     // MARK: - JSON endpoints

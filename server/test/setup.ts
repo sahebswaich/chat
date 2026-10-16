@@ -2,7 +2,7 @@ import { applyD1Migrations } from "cloudflare:test";
 import { env } from "cloudflare:workers";
 import { afterEach, beforeEach, vi } from "vitest";
 
-const TABLES = ["invites", "users", "usage", "reports", "cards"];
+const TABLES = ["invites", "users", "usage", "reports", "cards", "redeem_attempts"];
 
 beforeEach(async () => {
   await applyD1Migrations(env.DB, env.TEST_MIGRATIONS);

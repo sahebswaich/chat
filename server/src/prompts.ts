@@ -74,7 +74,7 @@ const MONTHS = [
 
 /** Neutralises tags the pasted text could use to break out of its <conversation> block. */
 function fencePasted(text: string): string {
-  return text.replace(/<\s*(\/?)\s*conversation\s*>/gi, "‹$1conversation›");
+  return text.replace(/<\s*(\/?)\s*conversation\b[^>]*>/gi, "‹$1conversation›");
 }
 
 /**

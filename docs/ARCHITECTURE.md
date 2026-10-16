@@ -61,7 +61,9 @@ with a suitable HTTP status. Authenticated routes take `Authorization: Bearer <t
 ### `POST /v1/redeem`
 Request `{"code": "K7QM-2XPA", "device": "Saheb's iPhone"}` (code is case-insensitive;
 dashes/spaces ignored). Response `200 {"token": "<opaque>", "name": "James", "dailyLimit": 200}`.
-Errors: `400 invalid_request`, `404 invalid_code`, `410 code_used_up`.
+Errors: `400 invalid_request`, `404 invalid_code`, `410 code_used_up`, `429 too_many_attempts`
+(more than 10 wrong codes tried from one IP address, or IPv6 /64, in the current UTC hour;
+`Retry-After` says when the hour ends).
 
 ### `GET /v1/me`
 Response `200 {"name": "James", "usedToday": 12, "dailyLimit": 200, "supportEmail": "owner@example.com"}`

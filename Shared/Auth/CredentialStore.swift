@@ -6,7 +6,7 @@ import Security
 /// Uses the shared access group (`NimbusConfig.keychainGroup`) so the app and the iMessage
 /// extension see the same sign-in. When the keychain refuses for lack of entitlements
 /// (`errSecMissingEntitlement`, typical for unsigned simulator builds) it retries without the
-/// group and finally falls back to `UserDefaults.standard`.
+/// group and finally, on the simulator only, falls back to `UserDefaults.standard`.
 nonisolated enum CredentialStore {
     static let service = "nimbus.credential"
     static let account = "default"
@@ -57,7 +57,13 @@ nonisolated enum CredentialStore {
             }
             throw StoreError.keychain(status)
         }
+        #if targetEnvironment(simulator)
+        // Unsigned simulator builds have no keychain entitlement at all.
         UserDefaults.standard.set(data, forKey: defaultsKey)
+        #else
+        // Never put the token in plain UserDefaults on a device.
+        throw StoreError.keychain(missingEntitlement)
+        #endif
     }
 
     static func clear() {

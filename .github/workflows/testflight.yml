@@ -65,7 +65,9 @@ jobs:
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
         run: |
           export ASC_KEY_PATH="$RUNNER_TEMP/keys/AuthKey_${ASC_KEY_ID}.p8"
-          export BUILD_NUMBER="${{ github.run_number }}.$(date -u +%H%M)"
+          # No BUILD_NUMBER override: testflight.sh's default (UTC yymmdd.HHMM) is the same
+          # scheme your Mac uses, so build numbers keep going up whichever way you upload.
+          # (run_number-based numbers like 12.1530 would sort below every Mac upload.)
           ./scripts/testflight.sh
 
       - name: Clean up key

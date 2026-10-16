@@ -73,7 +73,7 @@ final class NimbusSession {
     ///   - host: Server from a join link or typed by the person; defaults to the current or
     ///     baked-in host.
     ///   - consentedAt: When the person ticked "I agree…" (call only after they did).
-    func signIn(code: String, host: String? = nil, consentedAt: Date = Date()) async throws {
+    func signIn(code: String, host: String? = nil, consentedAt: Date) async throws {
         guard let normalized = InviteCode.normalize(code) else {
             throw NimbusError.invalidCode
         }

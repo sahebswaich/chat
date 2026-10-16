@@ -8,14 +8,101 @@ import { isRecord, newToken, newUserId, normalizeInviteCode, nowIso, sha256Hex }
 const MAX_REPORT_MESSAGES = 40;
 const MAX_REPORT_CHARS = 20_000;
 
+/**
+ * Wrong (well-formed) invite codes one client (IP address, or IPv6 /64) may try per UTC
+ * hour; codes that work don't count. Plenty for typos; turns guessing 32^8 codes into
+ * millennia per address.
+ */
+export const REDEEM_ATTEMPTS_PER_HOUR = 10;
+
+/** The throttle key for a client address: IPv4 as is, IPv6 reduced to its /64 network. */
+export function redeemClientKey(ip: string): string {
+  const addr = ip.trim().toLowerCase();
+  if (!addr.includes(":")) return addr;
+  // IPv4-mapped IPv6 (::ffff:1.2.3.4): use the IPv4 address.
+  if (addr.includes(".")) return addr.slice(addr.lastIndexOf(":") + 1);
+  const halves = addr.split("::");
+  const head = halves[0] ? halves[0].split(":") : [];
+  const tail = halves.length > 1 && halves[1] ? halves[1].split(":") : [];
+  const zeros: string[] = halves.length > 1 ? Array(Math.max(8 - head.length - tail.length, 0)).fill("0") : [];
+  const groups = [...head, ...zeros, ...tail].slice(0, 4).map((g) => g.replace(/^0+(?=.)/, ""));
+  return `${groups.join(":")}::/64`;
+}
+
+interface RedeemAttempt {
+  client: string;
+  hour: string;
+}
+
+/**
+ * Counts one redemption attempt for the caller and throws 429 once the hourly limit is
+ * passed. Counted before the code is looked up, so parallel guesses can't slip past it;
+ * a successful redemption gives its attempt back (`refundRedeemAttempt`). Fails open (a
+ * missing table or D1 hiccup must not block sign-ins) and then returns null.
+ */
+async function countRedeemAttempt(request: Request, env: AppEnv, ctx: ExecutionContext): Promise<RedeemAttempt | null> {
+  // Always set by Cloudflare (and not settable by clients); absent only in local tests.
+  const ip = request.headers.get("cf-connecting-ip");
+  if (!ip) return null;
+  const now = new Date();
+  const hour = now.toISOString().slice(0, 13);
+  const client = await sha256Hex(`${hour}|${redeemClientKey(ip)}`);
+  let count: number;
+  try {
+    const row = await env.DB.prepare(
+      `INSERT INTO redeem_attempts (client, hour, count) VALUES (?1, ?2, 1)
+       ON CONFLICT (client, hour) DO UPDATE SET count = count + 1
+       RETURNING count`,
+    )
+      .bind(client, hour)
+      .first<{ count: number }>();
+    count = row?.count ?? 0;
+  } catch (err) {
+    console.error("redeem throttle unavailable", err);
+    return null;
+  }
+  if (count === 1) {
+    // First attempt from this client this hour: drop earlier hours' counts.
+    ctx.waitUntil(
+      env.DB.prepare("DELETE FROM redeem_attempts WHERE hour < ?1")
+        .bind(hour)
+        .run()
+        .catch((err: unknown) => console.error("redeem throttle cleanup failed", err)),
+    );
+  }
+  if (count > REDEEM_ATTEMPTS_PER_HOUR) {
+    const nextHour = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours() + 1);
+    const wait = Math.max(Math.ceil((nextHour - now.getTime()) / 1000), 1);
+    throw new HttpError(
+      429,
+      "too_many_attempts",
+      "Too many invite code attempts. Wait a bit and try again, or ask for a new invite link.",
+      undefined,
+      { "retry-after": String(wait) },
+    );
+  }
+  return { client, hour };
+}
+
+function refundRedeemAttempt(env: AppEnv, ctx: ExecutionContext, attempt: RedeemAttempt | null): void {
+  if (!attempt) return;
+  ctx.waitUntil(
+    env.DB.prepare("UPDATE redeem_attempts SET count = count - 1 WHERE client = ?1 AND hour = ?2 AND count > 0")
+      .bind(attempt.client, attempt.hour)
+      .run()
+      .catch((err: unknown) => console.error("redeem throttle refund failed", err)),
+  );
+}
+
 /** POST /v1/redeem {"code", "device"} → {"token", "name", "dailyLimit"} */
-export async function handleRedeem(request: Request, env: AppEnv): Promise<Response> {
+export async function handleRedeem(request: Request, env: AppEnv, ctx: ExecutionContext): Promise<Response> {
   const body = await readJsonObject(request);
   const rawCode = requiredString(body, "code", 64);
   const device = optionalString(body, "device", 200)?.trim() || null;
 
   const code = normalizeInviteCode(rawCode);
   if (!code) throw new HttpError(404, "invalid_code", "That invite code doesn't exist. Check it and try again.");
+  const attempt = await countRedeemAttempt(request, env, ctx);
 
   // Atomically take one use; only succeeds while uses are left.
   const invite = await env.DB.prepare(
@@ -43,6 +130,7 @@ export async function handleRedeem(request: Request, env: AppEnv): Promise<Respo
     await env.DB.prepare("UPDATE invites SET uses_left = uses_left + 1 WHERE code = ?1").bind(code).run();
     throw err;
   }
+  refundRedeemAttempt(env, ctx, attempt);
 
   return json({
     token,
