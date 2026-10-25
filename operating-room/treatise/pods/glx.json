@@ -1,0 +1,360 @@
+[
+  {
+    "id": "glx-exchange",
+    "name": "GLX equity-perp product",
+    "tagline": "Cash-settled, no-expiry perps on US stocks, 1 share per contract",
+    "era": "2025-11 → 2026-06",
+    "status": "superseded by American Perpetual",
+    "summary": "The contract every Greyline/GLX model shared: a Security Futures Product on single US stocks and SPY/QQQ, 23×5 hours, hourly pure-premium funding, square-root margin and a flat 2/5 bps (retail) and 0/2 bps (market maker) fee. A 500 ms Backstop Liquidity Provider auction ported from MIAX PRIME replaced ADL from January to April 2026, then was dropped for on-book liquidation in May.",
+    "ideas": [
+      {
+        "name": "Thematic basket perps",
+        "one_liner": "10+ stock baskets ('AI', 'SMRs') as a CFTC-only wedge, a 'horse in the race'",
+        "date": "2025-11"
+      },
+      {
+        "name": "Continuous Single Stock Future",
+        "one_liner": "10-year expiry security future with daily adjustment as funding, 6.6x",
+        "date": "2025-11"
+      },
+      {
+        "name": "Hourly pure-premium funding",
+        "one_liner": "Funding Rate = TWAP((Mark − Index)/Index)/24, no cap, no interest term",
+        "date": "2026-03"
+      },
+      {
+        "name": "Square-root margin",
+        "one_liner": "IMF = max(floor, k × √Q); small size 25x, 2.5M NVDA shares 6.3x",
+        "date": "2026-03"
+      },
+      {
+        "name": "BLP liquidation auction",
+        "one_liner": "Sealed 500 ms auction for market makers, floor 5% from mark, zero fees, no ADL",
+        "date": "2026-01"
+      },
+      {
+        "name": "Exhibit N capacity tiers",
+        "one_liner": "Broker insurance fund $50M→$1B+ buys a gentler margin slope",
+        "date": "2026-04"
+      },
+      {
+        "name": "24/7 via Discovery Bounds",
+        "one_liner": "trade.xyz-style ratcheting mark band while the stock market is closed",
+        "date": "2026-03"
+      }
+    ],
+    "numbers": [
+      {
+        "value": "23×5",
+        "label": "trading hours; 23 hourly funding rates a day"
+      },
+      {
+        "value": "2/5 bps · 0/2 bps",
+        "label": "retail and market-maker maker/taker fees"
+      },
+      {
+        "value": "3.4 bps",
+        "label": "blended fee per trade"
+      },
+      {
+        "value": "500 ms",
+        "label": "BLP auction window, 5% max concession"
+      },
+      {
+        "value": "2.5M shares",
+        "label": "position limit per account per product"
+      }
+    ],
+    "people": [
+      "Saheb Swaich — designer of the spec and risk engine",
+      "Citadel Securities, SIG, Jane Street, DRW, Jump — Founding BLP cohort"
+    ],
+    "next_moves": [
+      "Lock one √Q parameter set (k by group, MMF floor 0.5% vs 2%) and retire the other four versions",
+      "Decide whether the BLP auction returns as a V2 filing or stays shelved",
+      "Fix the 23-vs-ICE-covered-hours funding count in the rulebook text"
+    ],
+    "feeds": [
+      "ap",
+      "glx-reg",
+      "glx-tech"
+    ],
+    "chapter": "glx"
+  },
+  {
+    "id": "glx-miax",
+    "name": "GLX × MIAX relationship",
+    "tagline": "From joint venture to alliance to licence on MIAX's DCM/DCO/FCM",
+    "era": "2025-12 → 2026-06",
+    "status": "superseded by American Perpetual",
+    "summary": "Every GLX model ran through MIAX, the only US group with a DCM, a leverage-capable DCO and an FCM. The deal moved from a NewCo JV (Dec 2025) to an exclusive indefinite Strategic Alliance with Greyline Markets as introducing broker (Jan–Apr 2026), to a plan to buy MIAX Futures and Dorman (May), to a 36% royalty licence; the 20 May 2026 MIAX Futures–OCC agreement bridges to American Perpetual.",
+    "ideas": [
+      {
+        "name": "NewCo joint venture MOU",
+        "one_liner": "Greyline ≥40%/≥80% of NewCo; MIAX contributes licences and Onyx",
+        "date": "2025-12"
+      },
+      {
+        "name": "Strategic Alliance Agreement",
+        "one_liner": "Indefinite mutual exclusivity across all asset classes; 80/20 then 90/10 + 20% royalty",
+        "date": "2026-01"
+      },
+      {
+        "name": "MIAX Skunk Works",
+        "one_liner": "2–4 MIAX/VeriClear/Dorman staff on 0.25–0.50% Greyline equity",
+        "date": "2026-03"
+      },
+      {
+        "name": "Path to Close",
+        "one_liner": "Nine instruments via MIAX Products, LLC in 50 days",
+        "date": "2026-04"
+      },
+      {
+        "name": "Buy the stack",
+        "one_liner": "§38.3(d) transfer of MIAX Futures + Dorman into GLX for $265–765M",
+        "date": "2026-05"
+      },
+      {
+        "name": "Licensor seat",
+        "one_liner": "36% of the gross fee pool in perpetuity under a binding term sheet",
+        "date": "2026-05"
+      }
+    ],
+    "numbers": [
+      {
+        "value": "36%",
+        "label": "GLX royalty on gross fee pool (May 2026)"
+      },
+      {
+        "value": "90/10 + 20%",
+        "label": "Mar–Apr split on own flow plus royalty on other flow"
+      },
+      {
+        "value": "9",
+        "label": "instruments in the Path to Close stack"
+      },
+      {
+        "value": "20 May 2026",
+        "label": "MIAX Futures–OCC clearing and settlement agreement"
+      }
+    ],
+    "people": [
+      "John Smollen — MIAX EVP New Product Development; warm-intro layer to Citadel/SIG/Jane Street/DRW/Jump",
+      "Joe Ferraro III — SVP & Deputy GC, MIH; President, MIAX Products",
+      "Tom Gallagher — MIAX Chairman & CEO",
+      "Zach Dexter — ex-LedgerX/MIAXdx CEO; target COO"
+    ],
+    "next_moves": [
+      "Confirm which instrument MIAX actually signed: alliance, term sheet or neither",
+      "Settle VeriClear vs OCC clearing given the 20 May 2026 OCC agreement",
+      "Re-run Smollen's SIG-first introduction sequence for the Founding cohort"
+    ],
+    "feeds": [
+      "ap",
+      "glx-exchange",
+      "glx-capital"
+    ],
+    "chapter": "glx"
+  },
+  {
+    "id": "glx-capital",
+    "name": "GLX capital and raise",
+    "tagline": "From a $20M seed to a $1B Series A to royalty points",
+    "era": "2025-11 → 2026-06",
+    "status": "superseded by American Perpetual",
+    "summary": "The raise tracked the business model: $20–40M (Nov 2025), $100M Series Seed, $50M at $400M pre (Jan), a $12M MIAX SAFE plus performance warrants and a $25M Founding BLP SAFE (Mar–Apr), $100M or $1B at $11B post with Silver Lake LTC (May), and finally a sale of up to 3.5 of 36 royalty points at $30M per half-point to Silver Lake LTC and Egon Durban.",
+    "ideas": [
+      {
+        "name": "Licence-resale floor",
+        "one_liner": "Own DCM/DCO/FCM licences resell for $150–200M — 'a risk free option'",
+        "date": "2025-11"
+      },
+      {
+        "name": "Liquidity-for-equity",
+        "one_liner": "Only firms committing liquidity may invest in the round",
+        "date": "2026-02"
+      },
+      {
+        "name": "Founding BLP SAFE",
+        "one_liner": "No cap, converts at 95% of Series A; $25M across ~5 firms",
+        "date": "2026-04"
+      },
+      {
+        "name": "MIAX SAFE + Performance Warrants",
+        "one_liner": "$12M at 15% discount; 3.5% FD penny warrants in four milestones",
+        "date": "2026-04"
+      },
+      {
+        "name": "Royalty-point sale",
+        "one_liner": "≤3.5 of 36 points at $30M per half-point, proceeds free and clear",
+        "date": "2026-05"
+      }
+    ],
+    "numbers": [
+      {
+        "value": "$1B at $11B post",
+        "label": "buy-the-stack Series A ask"
+      },
+      {
+        "value": "$12M",
+        "label": "MIAX SAFE (15% discount, no cap)"
+      },
+      {
+        "value": "$25M",
+        "label": "Founding BLP SAFE target"
+      },
+      {
+        "value": "$2.16B",
+        "label": "whole-royalty value implied by $30M per half-point"
+      }
+    ],
+    "people": [
+      "Egon Durban — Silver Lake Co-CEO; Long-Term Capital",
+      "Dooley — SIG contact, introduction to Durban",
+      "Bridget Harris — Founders Fund; 26 Nov 2025 letter"
+    ],
+    "next_moves": [
+      "Reconcile the $100M vs $1B Series A figures before any reuse",
+      "Carry the liquidity-for-equity SAFE design into the AP market-maker programme",
+      "Refresh the ~140-name VC list's 'Messaged no response' row"
+    ],
+    "feeds": [
+      "ap",
+      "glx-miax"
+    ],
+    "chapter": "glx"
+  },
+  {
+    "id": "glx-tech",
+    "name": "GLX tech and Greyline Solutions",
+    "tagline": "Shadow ledger as the rulebook running in code, sold to every broker",
+    "era": "2026-01 → 2026-06",
+    "status": "superseded by American Perpetual",
+    "summary": "MIAX adds mark and funding engines and a PRIME auction port to Onyx; Dorman stays minimal; Greyline and Connamara build the broker-side brain — a per-customer shadow ledger, margin engine, liquidation controller and funding calculator. Packaged as the 12-component Greyline Solutions for any broker, with an open C++/EP3 vs Java/Disruptor decision left to Connamara's Dan; Connamara was later an acquisition target, then 'a vendor doc'.",
+    "ideas": [
+      {
+        "name": "Shadow ledger",
+        "one_liner": "Real-time per-customer book; sole gate for pre-trade margin; enables intraday pyramiding",
+        "date": "2026-01"
+      },
+      {
+        "name": "Greyline Solutions",
+        "one_liner": "12 components, one contract, one counterparty for any broker",
+        "date": "2026-04"
+      },
+      {
+        "name": "Unified frontend",
+        "one_liner": "Themable React library — 'Robinhood looks like Robinhood'",
+        "date": "2026-04"
+      },
+      {
+        "name": "AI-agent-ready API",
+        "one_liner": "OpenAPI 3.1 at /v1/openapi.json that 'any AI agent can ingest'",
+        "date": "2026-03"
+      },
+      {
+        "name": "USDC on-ramp",
+        "one_liner": "Circle Mint + CCTP burned to USD at Dorman's BMO Harris account",
+        "date": "2026-03"
+      },
+      {
+        "name": "Connamara → GLX Tech",
+        "one_liner": "Acqui-hire of 12+ Chicago engineers for ~$40–60M",
+        "date": "2026-05"
+      }
+    ],
+    "numbers": [
+      {
+        "value": "60–80K",
+        "label": "lines of code in the Jan 2026 build estimate"
+      },
+      {
+        "value": "3:10 PM / 3:30 PM ET",
+        "label": "daily allocation file / VeriClear Fedwire"
+      },
+      {
+        "value": "12",
+        "label": "components in Greyline Solutions"
+      }
+    ],
+    "people": [
+      "Dan — Connamara leader; owns the shadow-ledger language decision",
+      "Brett Harrison — ex-President FTX US, Architect founder; frontend and Solutions",
+      "Maureen — Connamara; NFA Board Chair 2020–2024"
+    ],
+    "next_moves": [
+      "Get Dan's EP3 vs Java/Disruptor decision on the shadow ledger",
+      "Resolve the USDC wallet-custody contradiction before any crypto rail ships",
+      "Standardise stock-split handling at DCM/DCO level, not IB level"
+    ],
+    "feeds": [
+      "ap",
+      "glx-exchange"
+    ],
+    "chapter": "glx"
+  },
+  {
+    "id": "glx-reg",
+    "name": "GLX regulatory pathway and fee exemption",
+    "tagline": "Two SFP asks plus a fee reset make 1-share perps legal",
+    "era": "2025-12 → 2026-06",
+    "status": "superseded by American Perpetual",
+    "summary": "Classify equity perps as Security Futures Products and ask for two things: replace the 15% customer-margin floor with √Q margin (SEC §36 + CFTC 41.42(d)) and confirm funding satisfies 'future delivery' (CFTC §4(c)(1)(B) + SEC interpretation). Recalibrate the SEC §31, NFA and FINRA fees that would cost $221B/yr at $1Q down to $400M; tax as §1234B security futures with an open §871(m) question.",
+    "ideas": [
+      {
+        "name": "True perpetual SFP",
+        "one_liner": "File with no nominal expiry; add one only if regulators insist",
+        "date": "2025-12"
+      },
+      {
+        "name": "Margin-floor exemption",
+        "one_liner": "√Q margin in place of the 15% statutory floor",
+        "date": "2026-04"
+      },
+      {
+        "name": "Futurity interpretation",
+        "one_liner": "'Funding is… the economic substitute for expiry'",
+        "date": "2026-06"
+      },
+      {
+        "name": "SFP fee exemption",
+        "one_liner": "§31 full exemption; NFA and FINRA TAF at $0.00008 per round-turn",
+        "date": "2026-05"
+      },
+      {
+        "name": "Class authority",
+        "one_liner": "'Reviewed once, self-certified forever' after the 30 May 2026 CFTC statement",
+        "date": "2026-06"
+      }
+    ],
+    "numbers": [
+      {
+        "value": "7–11 months",
+        "label": "alliance close to first trades"
+      },
+      {
+        "value": "$221B → $400M",
+        "label": "annual regulatory fees at $1Q, today vs asked"
+      },
+      {
+        "value": "15%",
+        "label": "SFP customer-margin floor to be replaced"
+      }
+    ],
+    "people": [
+      "Michael Selig — CFTC Chairman, sole Commissioner",
+      "Paul Atkins — SEC Chairman",
+      "Teply (SEC), Tente (CFTC) — joint-staff counterparts"
+    ],
+    "next_moves": [
+      "Book the Round 1 joint meeting with CFTC DMO, DCR and SEC Trading & Markets",
+      "Pick one §31 ask: reduced rate or full §31(f) exemption",
+      "Open an IRS pre-submission conference on the §871(m) funding-window base"
+    ],
+    "feeds": [
+      "ap",
+      "glx-exchange"
+    ],
+    "chapter": "glx"
+  }
+]

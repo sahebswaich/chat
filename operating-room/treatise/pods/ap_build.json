@@ -1,0 +1,307 @@
+[
+  {
+    "id": "ap",
+    "name": "American Perpetual — product & clearing",
+    "tagline": "No-expiry single-stock future, held by hourly funding, cleared at OCC",
+    "era": "2026-07 → 2026-09",
+    "status": "active",
+    "summary": "A cash-settled, no-expiry security future on 100 shares of a U.S. stock or ETF, held to its stock by an hourly funding rate (TWAP of (Mark − Index)/Index ÷ 24) and listed as one 101-name class on MIAX Futures. OCC clears funding as ordinary variation inside daily settlement, so there is no liquidation engine, insurance fund or auto-deleveraging. Fully specified (124-page spec, 38-page OCC Clearing Brief); nothing filed or signed as of Sep 30, 2026.",
+    "ideas": [
+      {
+        "name": "Funding is variation",
+        "one_liner": "Hourly funding novated at OCC and paid inside next-day variation as its own DDS line",
+        "date": "2026-07"
+      },
+      {
+        "name": "The machine in six lines",
+        "one_liner": "Index = NBBO mid; Mark = median(last, bid, offer); rate = TWAP(premium ratio) ÷ 24, final at the lock",
+        "date": "2026-09"
+      },
+      {
+        "name": "OCC computes the cash, not the rate",
+        "one_liner": "Exchange furnishes position-free rows; OCC applies them to its book with a per-name zero-sum check",
+        "date": "2026-09"
+      },
+      {
+        "name": "Four corporate-action lanes",
+        "one_liner": "Adjust only where arithmetic is exact (cash, whole splits); otherwise terminate and relist",
+        "date": "2026-07"
+      },
+      {
+        "name": "Turnkey §871(m)",
+        "one_liner": "The ex-date per-share factor is also the withholding base: factor × 100 × contracts",
+        "date": "2026-07"
+      },
+      {
+        "name": "Two levels of one number",
+        "one_liner": "25,000-contract limit or accountability at 25,000, applied at all times",
+        "date": "2026-09"
+      },
+      {
+        "name": "Margin in four layers",
+        "one_liner": "STANS, OFRA scan ranges, the 15% federal floor, and portfolio margin beside stock and options",
+        "date": "2026-09"
+      },
+      {
+        "name": "No liquidation engine",
+        "one_liner": "Losses mutualized by a CCP, never socialized by haircutting winners",
+        "date": "2026-07"
+      }
+    ],
+    "numbers": [
+      {
+        "value": "101",
+        "label": "inaugural names, SPY through MIAX, in one request"
+      },
+      {
+        "value": "33 / 68",
+        "label": "names on accountability / on the 25,000-contract limit"
+      },
+      {
+        "value": "100 shares",
+        "label": "contract unit, never resized; $0.01 tick = $1.00"
+      },
+      {
+        "value": "5 s · ÷24",
+        "label": "funding sample cadence and the only divisor in the system"
+      },
+      {
+        "value": "$10.50",
+        "label": "one worked hour: +0.000042 × $250 × 10 × 100"
+      },
+      {
+        "value": "23",
+        "label": "funding locks per Trading Day on the SIP 23×5 tape"
+      },
+      {
+        "value": "15%",
+        "label": "federal SFP margin floor (20% FINRA securities account)"
+      },
+      {
+        "value": "3:59:30–4:00:00",
+        "label": "daily settlement window (VWAP of the Mark, ET)"
+      }
+    ],
+    "people": [
+      "Saheb Swaich — founder, American Perpetual LLC (originator and licensor)",
+      "MIAX Futures Exchange, LLC — listing DCM on Onyx; sole petitioner of record",
+      "OCC (The Options Clearing Corporation) — clearinghouse on Ovation",
+      "Miami International Holdings — MIAX parent; Reference Security No. 101"
+    ],
+    "next_moves": [
+      "Get OCC to agree that funding is variation (link 12)",
+      "Confirm OCC accepts the 99991231 / 9999-12-31 no-maturity sentinels on every surface",
+      "Confirm OCC clears through the full 23×5 session",
+      "Amend the May 20, 2026 MIAX–OCC clearing agreement to reach security futures",
+      "Prove the money chain end to end in OCC's external testing window"
+    ],
+    "feeds": [
+      "ap-reg",
+      "ap-ops",
+      "ap-mppla",
+      "glx-exchange"
+    ],
+    "chapter": "ap"
+  },
+  {
+    "id": "ap-reg",
+    "name": "American Perpetual — regulatory road",
+    "tagline": "Recognition, not relief: a security future under existing law",
+    "era": "2026-05 → 2026-09",
+    "status": "active",
+    "summary": "The perpetual is argued to be a security future because funding supplies 'future delivery' as continuous convergence, so CEA §1a(47)(B)(i) excludes it from 'swap'. No exemption, no-action or pilot is sought. The path is a confidential Harmonization letter to both Chairmen, then one §41.23(b) request for all 101 names, Form 19b-7 and Form 19b-4 (Rule 3.3.2) on the same day, with the Kalshi BTC-perp order (May 29, 2026) cited as persuasive. Every paper was drafted and unfiled at Sep 30, 2026.",
+    "ideas": [
+      {
+        "name": "Futurity by funding",
+        "one_liner": "Funding enforces convergence every hour, supplying the 'future delivery' element",
+        "date": "2026-09"
+      },
+      {
+        "name": "Harmonization letter",
+        "one_liner": "17-page confidential letter to SEC Chair Atkins and CFTC Chair Selig under the Mar 11, 2026 MOU",
+        "date": "2026-09"
+      },
+      {
+        "name": "One §41.23(b) request for 101",
+        "one_liner": "Voluntary CFTC approval front-loads an order; later names certify forward the day before",
+        "date": "2026-09"
+      },
+      {
+        "name": "Form 19b-7 once",
+        "one_liner": "Listing standards and Chapter 43 effective on the CFTC's approval; SEC 60-day abrogation window",
+        "date": "2026-09"
+      },
+      {
+        "name": "Rule 3.3.2 and Security Futures Dealers",
+        "one_liner": "Form 19b-4 margin rule on its own §19(b)(2) clock; does not gate day one",
+        "date": "2026-09"
+      },
+      {
+        "name": "Rulebook Chapter 43",
+        "one_liner": "Rules 43.1–43.25 plus Rule 6.21 public funding endpoint, drafted by AP (v2.8)",
+        "date": "2026-09"
+      },
+      {
+        "name": "FINRA 4210 ask",
+        "one_liner": "Conform the securities-account level from 20% to the federal 15%",
+        "date": "2026-09"
+      },
+      {
+        "name": "ISG surveillance as is",
+        "one_liner": "Existing membership covers each name: no filing, no approval, no fee, no new agreement",
+        "date": "2026-09"
+      }
+    ],
+    "numbers": [
+      {
+        "value": "45 days",
+        "label": "CFTC §40.5 review clock, extendable; MIAX does not object"
+      },
+      {
+        "value": "60 days",
+        "label": "SEC window to abrogate Form 19b-7 after CFTC action"
+      },
+      {
+        "value": "45–90 days",
+        "label": "SEC §19(b)(2) clock for Rule 3.3.2; MIAX does not consent to extension"
+      },
+      {
+        "value": "6",
+        "label": "conjunctive listing conditions (7M public shares, 2,000 holders, 27.5M volume, $5 close…)"
+      },
+      {
+        "value": "15% vs 20%",
+        "label": "federal floor vs FINRA 4210 securities account"
+      },
+      {
+        "value": "10 years",
+        "label": "confidential treatment requested for the Harmonization letter"
+      },
+      {
+        "value": "0",
+        "label": "regulatory papers filed or sent at Sep 30, 2026"
+      }
+    ],
+    "people": [
+      "Saheb Swaich — founder; supplies factual explanations to staff via MIAX (launch cooperation)",
+      "Paul S. Atkins — SEC Chairman, addressee of the Harmonization letter",
+      "Michael S. Selig — CFTC Chairman, addressee; defendant in CME v. Selig",
+      "Christopher Kirkpatrick — CFTC Secretary, addressee of the §41.23(b) request"
+    ],
+    "next_moves": [
+      "Send the Harmonization letter as soon as OCC agrees (link 27)",
+      "Hold the joint SEC–CFTC staff meeting and hand FINRA/NFA the disclosure brief (link 28)",
+      "Confirm the Dec 11, 2020 Section 6(g) notice or file a fresh Form 1-N",
+      "File the §41.23(b) request, Form 19b-7 and Form 19b-4 on the same day (link 31)",
+      "Ask FINRA to amend Rule 4210(c)(5) and (f)(10) from 20% to 15%"
+    ],
+    "feeds": [
+      "ap",
+      "ap-ops"
+    ],
+    "chapter": "apreg"
+  },
+  {
+    "id": "ap-ops",
+    "name": "American Perpetual — platform & operations",
+    "tagline": "Onyx delta, sentinels, 66-link launch, runbooks an AI agent runs",
+    "era": "2026-07 → 2026-09",
+    "status": "active",
+    "summary": "The Onyx change set is a pinned delta on MIAX's v1.3a interfaces: one new feed message (18, Funding Rate), per-surface 'never expires' sentinels (65535 = June 6, 2149; 9999-12-31; 99991231), ticker+P symbols and a second Onyx instance for the SIP 23×5 session from Dec 6, 2026. Operations are 'autonomous by design': every step is a record-in, record-out job with a check, failures are designed out, and people sign only 15 legally reserved acts. An AI agent can run the runbooks as written. Launch is ten chains of 66 numbered links, and later classes (crypto majors first) reuse the same rails.",
+    "ideas": [
+      {
+        "name": "Message 18 'Funding Rate'",
+        "one_liner": "Predicted value every 5 s, settled value at each :00, on both ToM and DoM",
+        "date": "2026-07"
+      },
+      {
+        "name": "Per-surface sentinels",
+        "one_liner": "Say 'never expires' with each field's maximum, never zero (65535, 999912, 99991231, 9999-12-31)",
+        "date": "2026-07"
+      },
+      {
+        "name": "Second Onyx instance",
+        "one_liner": "The perpetual's own day, recycled in the tape's 8–9 p.m. break",
+        "date": "2026-07"
+      },
+      {
+        "name": "Failures designed out",
+        "one_liner": "Each failure has a check and a recovery that run on their own; the desk reviews the log",
+        "date": "2026-09"
+      },
+      {
+        "name": "Autonomous by design",
+        "one_liner": "Every step is a job with a record in, a record out and a check; a person signs 15 acts",
+        "date": "2026-09"
+      },
+      {
+        "name": "AI agent runs the runbooks",
+        "one_liner": "Load the _AI_READABLE folder; the agent prepares each record and stops where a person signs",
+        "date": "2026-09"
+      },
+      {
+        "name": "Ten chains, 66 links",
+        "one_liner": "Launch as parallel chains with three hard gates: OCC agrees, filings, order plus go check",
+        "date": "2026-09"
+      },
+      {
+        "name": "Every later class on the same rails",
+        "one_liner": "New class = new reference feed + multiplier; crypto majors BTC·ETH·SOL·XRP next",
+        "date": "2026-09"
+      }
+    ],
+    "numbers": [
+      {
+        "value": "66",
+        "label": "numbered launch links across ten chains"
+      },
+      {
+        "value": "15",
+        "label": "acts a person always signs"
+      },
+      {
+        "value": "65535",
+        "label": "two-byte sentinel date = June 6, 2149"
+      },
+      {
+        "value": "21",
+        "label": "MIAX web surfaces that change (Annex E)"
+      },
+      {
+        "value": "Nov 8, 2026",
+        "label": "Financials production date in MIAX's Sep 28 Technical Alert"
+      },
+      {
+        "value": "Dec 6, 2026",
+        "label": "SIP 23×5 production begins, the perpetual's session"
+      },
+      {
+        "value": "1H 2027",
+        "label": "projected Ovation go-live; launch keyed to it"
+      },
+      {
+        "value": "~91%",
+        "label": "listable crypto spot flow in BTC · ETH · SOL · XRP"
+      }
+    ],
+    "people": [
+      "Saheb Swaich — founder; walkthroughs only, until first listing and never beyond the longstop",
+      "MIAX release engineering — owns the Onyx build",
+      "MIAX Market Regulation, Operations desk, Market Data, OCC liaison — run the runbooks",
+      "Connamara Systems — backup one-team street-build integrator"
+    ],
+    "next_moves": [
+      "Have MIAX engineering confirm the second Onyx production instance first",
+      "Pin message 18 and the release after v1.3a",
+      "Load the _AI_READABLE folder into an agent and dry-run the runbooks",
+      "Run the Firm Test Bed scenarios (lock, paused hour, ex-date, split, termination, successor)",
+      "Draft the crypto-majors class package on the same rails"
+    ],
+    "feeds": [
+      "ap",
+      "ap-reg",
+      "ap-mppla"
+    ],
+    "chapter": "ap"
+  }
+]

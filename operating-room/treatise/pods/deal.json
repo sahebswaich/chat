@@ -1,0 +1,167 @@
+[
+  {
+    "id": "ap-llc",
+    "name": "American Perpetual LLC",
+    "tagline": "A Delaware LLC that holds the royalty and does nothing else",
+    "era": "2026-06 → ",
+    "status": "active",
+    "summary": "Single-member Delaware LLC (organized 2026-06-01, file no. 10643461), owned 100% by Saheb, whose only asset is the perpetual-futures IP and the MIAX royalty it earns. The royalty flows through a paying-agent collection account and a fixed administrator waterfall; the $40M signing payment never touches the company. The September papers recapitalize it into 100,000,000 Units for one 10% secondary sale.",
+    "ideas": [
+      {"name": "The rent, not the building", "one_liner": "Own the fee stream of an exchange category without running the exchange.", "date": "2026-06"},
+      {"name": "Money flows through, never pools", "one_liner": "Royalty to a paying agent's account; administrator waterfall of withholding, reserve, capped costs, then pro-rata.", "date": "2026-06"},
+      {"name": "36 royalty points", "one_liner": "June denomination: 36,000,000 Units, one point = 1% of the Gross Fee Pool.", "date": "2026-06"},
+      {"name": "100M-unit recapitalization", "one_liner": "1,000,000 Units = 1%; Saheb's sales capped at 10,000,000 Units (OA §5.5).", "date": "2026-09"},
+      {"name": "Hashed delivery as consideration", "one_liner": "SHA-256 manifests record every file delivered; MIAX signs an acknowledgment quoting the hash.", "date": "2026-08"}
+    ],
+    "numbers": [
+      {"value": "100,000,000", "label": "Units after recapitalization (1,000,000 = 1%)"},
+      {"value": "$250,000 / 25 bps", "label": "Cap on provider fees, the greater of the two (OA §6.8)"},
+      {"value": "10643461", "label": "Delaware file number, organized 2026-06-01"},
+      {"value": "$400", "label": "Delaware annual LLC tax in September papers ($300 in June A&R)"}
+    ],
+    "people": [
+      "Saheb Swaich — Founder, sole Member, Managing Member, Manager-designate and Partnership Representative",
+      "Nat Smith (Northwest Registered Agent Service, Inc.) — organizer at formation"
+    ],
+    "next_moves": [
+      "Execute the IP Assignment and the sole-member written consent",
+      "Open the paying-agent collection account before signing, or plan a later direction for line 1 (F-33)",
+      "Conform member-managed vs Manager wording across the instruments and the A&R (F-37)",
+      "Engage the paying agent, administrator and CPA before the first royalty"
+    ],
+    "feeds": ["ap-mppla", "ap-ten-percent", "ap"],
+    "chapter": "deal"
+  },
+  {
+    "id": "ap-mppla",
+    "name": "MIAX license (MPPLA v2.8)",
+    "tagline": "Sixty percent of perpetual fees, no end date, $40M at signing",
+    "era": "2026-05 → 2026-09-30 (final text, unsigned)",
+    "status": "active",
+    "summary": "One master license from American Perpetual LLC to MIAX Futures Exchange, LLC, written on Bloomberg Index Services' master-license form. MIAX pays 60% of transaction fees actually collected on every perpetual product, net only of Section 31, with no end date and no exit for MIAX, plus $40,000,000 at signing to Saheb personally. Exclusivity is held by paying; the final text is dated 30 September 2026 and no signature is recorded.",
+    "ideas": [
+      {"name": "36% of the Gross Fee Pool", "one_liner": "May binding term sheet: monthly royalty, 15-year term plus 5-year renewals while open interest exists.", "date": "2026-05"},
+      {"name": "One rate on every perpetual product", "one_liner": "Perpetual Product defined by function (no expiry, funding payment, or perpetual label), on any underlying.", "date": "2026-09"},
+      {"name": "Covered Fees net only of Section 31", "one_liner": "Fees actually collected after rebates; no MIAX cost, including market data, reduces the base.", "date": "2026-09"},
+      {"name": "No end date, no exit for MIAX", "one_liner": "Parties 'perpetually bound'; only AP may end it, for breach, insolvency, or nothing listed in five years.", "date": "2026-09"},
+      {"name": "Exclusivity held by paying", "one_liner": "Releases after 18 months with no listing or 12 straight quarters with no royalty; royalty unchanged.", "date": "2026-09"},
+      {"name": "$40M signing payment to the founder", "one_liner": "Receivable assigned to Saheb inside the master; license effective only on his receipt.", "date": "2026-09"},
+      {"name": "MIH payment guaranty", "one_liner": "Parent guarantees signing payment and royalty while MIAX is in its group, through bankruptcy.", "date": "2026-09"},
+      {"name": "'American Perpetual' as a product-class name", "one_liner": "Term sheet class designation like American/European style; final text keeps a credit line.", "date": "2026-05"}
+    ],
+    "numbers": [
+      {"value": "60%", "label": "Royalty on Covered Fees, flat, every perpetual product"},
+      {"value": "$40,000,000", "label": "Signing payment to Saheb ($5M + $1M → $6M → $10M → $40M)"},
+      {"value": "0.63 bps", "label": "Launch fee pool on notional ($1.50/side, $0.40 market maker)"},
+      {"value": "$378M/yr", "label": "AP royalty at $10T annual notional, launch schedule"},
+      {"value": "18 months / 12 quarters", "label": "Longstop and no-royalty release of exclusivity"},
+      {"value": "3 months", "label": "AP liability cap, payments before first loss (Bloomberg measure)"},
+      {"value": "8 pages, 4 papers", "label": "Signing Set: master, Delivery Acknowledgment, Payment Direction, Guaranty"}
+    ],
+    "people": [
+      "Saheb Swaich — Founder & Managing Member, signs for AP and as payee",
+      "Joe Ferraro — President, MIAX Products; the room's MIAX contact since 15 July 2026",
+      "MIAX Futures Exchange, LLC — licensee and payor",
+      "Miami International Holdings, Inc. — guarantor"
+    ],
+    "next_moves": [
+      "Get MIAX's commercial yes on page one, or its counsel's conformed form",
+      "Fill MIAX's signatories, notice blocks and the Payment Direction lines; re-bind the Signing Set",
+      "Decide whether to send the 30 September cut to replace the 28 September cut MIAX holds",
+      "Collect MIAX's three answers and three papers, and OCC's two points",
+      "Carve Rei's crypto perps and any retained-IP venture out of ¶1 and the IP Assignment before signing"
+    ],
+    "feeds": ["ap", "ap-llc", "ap-ten-percent", "glx", "rei"],
+    "chapter": "deal"
+  },
+  {
+    "id": "ap-ten-percent",
+    "name": "The 10% secondary",
+    "tagline": "Sell 10% of the company once, after clearance, to permanent capital",
+    "era": "2026-09 → ",
+    "status": "active",
+    "summary": "One founder-direct sale of 10,000,000 of 100,000,000 Units to one very large, long-horizon buyer, with no posted price, closing only after the royalty agreement is executed and SEC/CFTC clearances issue (MIPA §8(j)–(k)). Saheb sells duration for liquidity and keeps 90% and control. The Investor Master values the company at 15–25× the royalty.",
+    "ideas": [
+      {"name": "6% of the 60%", "one_liner": "Sell 10% of the entity, which is 6 points of the 60% royalty.", "date": "2026-09"},
+      {"name": "Sale only at certainty", "one_liner": "Units close against an executed agreement and issued clearances, never a filing calendar.", "date": "2026-09"},
+      {"name": "Buyer's tax table", "one_liner": "What the U.S. takes per $1 of royalty, by buyer type, from 0¢ to 30¢ of gross.", "date": "2026-09"}
+    ],
+    "numbers": [
+      {"value": "10,000,000 Units", "label": "The one sale (10% of the company)"},
+      {"value": "15–25×", "label": "Reference valuation band on the royalty"},
+      {"value": "$1.8–6.0B", "label": "The 10% at the year-one objective ($20–40T)"},
+      {"value": "$13.3–22.2B", "label": "The 10% at parity ($148T)"},
+      {"value": "$1.38B / $2.56B / $6.21B", "label": "Five-year cash to the 10%: slow, base, crypto-like"},
+      {"value": "8–10%", "label": "Target buyer's return requirement"}
+    ],
+    "people": [
+      "Saheb Swaich — seller, Manager",
+      "Target buyer — sovereign-wealth-scale institution, large family office, insurer or politically prominent principal (unnamed)"
+    ],
+    "next_moves": [
+      "Choose the buyer and the price for the 10%",
+      "Fill the 10,000,000 Units left '[#]' in the closing papers (F-35)",
+      "Choose the §704(c) method with the tax advisers (F-42)",
+      "Engage a MIPA lawyer loyal only to Saheb"
+    ],
+    "feeds": ["ap-llc", "ap-mppla"],
+    "chapter": "deal"
+  },
+  {
+    "id": "silver-lake-june",
+    "name": "Silver Lake package (June 2026)",
+    "tagline": "3.5 of 36 royalty points for $210 million",
+    "era": "2026-06",
+    "status": "superseded by the American Perpetual 10% secondary",
+    "summary": "A fully drafted, unsigned Phase-One closing package for 'Silver Lake LTC': Saheb sells 3.5 of 36 royalty points (9.7222%) for $210,000,000 to a Silver Lake–designated Cayman vehicle, with the buyer knowingly carrying SEC/CFTC approval risk at a discounted price. Royalty was 36% of the Gross Fee Pool under the May term sheet, distributed monthly. No executed document shows Silver Lake engaged.",
+    "ideas": [
+      {"name": "Buyer bears approval risk at a discount", "one_liner": "'Whether SEC/CFTC approval comes is the bet you are knowingly making.'", "date": "2026-06"},
+      {"name": "Phase One / Phase Two", "one_liner": "An almost empty closing now; an institutional distribution engine switched on when the royalty arrives.", "date": "2026-06"},
+      {"name": "Built to be banked or securitized", "one_liner": "Bankruptcy-remote rail with monthly distributions.", "date": "2026-06"}
+    ],
+    "numbers": [
+      {"value": "$210,000,000", "label": "Price for 3.5 points"},
+      {"value": "$60,000,000", "label": "Price per royalty point"},
+      {"value": "≈$2.16B", "label": "Implied value of the whole 36-point royalty"},
+      {"value": "~23.8% + state", "label": "Founder tax assumed in June (capital gain; later reversed)"}
+    ],
+    "people": [
+      "Silver Lake ('Silver Lake LTC') — proposed buyer through a Cayman vehicle",
+      "Egon Durban — named addressee of the GLX-era royalty offer (per GLX notes)"
+    ],
+    "next_moves": [
+      "Confirm whether Silver Lake ever engaged, and close the file",
+      "Reuse the June MIPA form only after conforming it to the September structure"
+    ],
+    "feeds": ["glx", "ap-llc", "ap-ten-percent"],
+    "chapter": "deal"
+  },
+  {
+    "id": "retained-ip",
+    "name": "June retained-IP ventures",
+    "tagline": "Five ventures Saheb kept out of the June IP assignment",
+    "era": "2026-06",
+    "status": "parked",
+    "summary": "The June IP Assignment's Schedule B kept five future ventures outside American Perpetual: an FCM/broker-dealer, a perpetual trading app, a white-label platform for carrying firms, a DCM/DCO operating company, and trading strategies. The September IP Assignment retired the carve-out and sweeps in all pre-formation perpetual work; counsel flag F-41 asks whether to confine it.",
+    "ideas": [
+      {"name": "FCM / broker-dealer", "one_liner": "Own or operate an FCM or broker-dealer, including a dual-registered FCM-BD.", "date": "2026-06"},
+      {"name": "Customer-facing trading app", "one_liner": "A front end for perpetual and other derivatives.", "date": "2026-06"},
+      {"name": "White-label integration platform", "one_liner": "Turnkey distribution or SaaS for carrying firms and integrators.", "date": "2026-06"},
+      {"name": "DCM/DCO operating company", "one_liner": "Acquire, own or operate an exchange or clearinghouse other than MIAX.", "date": "2026-06"},
+      {"name": "Trading strategies", "one_liner": "Quantitative, arbitrage and market-making methods.", "date": "2026-06"}
+    ],
+    "numbers": [
+      {"value": "5", "label": "Ventures retained in June Schedule B"},
+      {"value": "0", "label": "Retained IP disclosed in the September form ('none')"}
+    ],
+    "people": [
+      "Saheb Swaich — assignor and owner of the retained ventures"
+    ],
+    "next_moves": [
+      "Decide F-41: confine 'the Works' to the company's business before signing",
+      "Restore any carve-out still intended, including Rei's crypto perps"
+    ],
+    "feeds": ["glx", "rei", "ap-llc", "ap-mppla"],
+    "chapter": "deal"
+  }
+]

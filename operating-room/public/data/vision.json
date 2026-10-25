@@ -1,0 +1,79 @@
+{
+ "kicker": "The unified vision",
+ "compiled": "October 2026",
+ "thesis": "One account, one coin, one rail. Rei (XR) is the prime coin. American Perpetual is the regulated rail that lists perpetuals on everything through MIAX and OCC. Every earlier idea is a pod pushing the same X toward infinity.",
+ "abstract": "Every crypto idea Saheb has written down since 2021, read in full and unified: the main coin over product coins, the fund that wanted to be a bank, the exchange where the house earns the fees, and where they land in October 2026 — Rei (零 · XR), a coin whose supply steps up the primes, and American Perpetual, a licence to 60% of MIAX's fees on every perpetual product.",
+ "stats": [
+  {
+   "value": "60%",
+   "label": "of MIAX's perp fees, no end date"
+  },
+  {
+   "value": "$40M",
+   "label": "signing payment (MPPLA v2.8)"
+  },
+  {
+   "value": "2·3·5·7…",
+   "label": "Rei supply steps, one prime at a time"
+  }
+ ],
+ "cover_stats": [
+  {
+   "value": "60%",
+   "label": "of the fees MIAX collects on every perpetual product"
+  },
+  {
+   "value": "$40M",
+   "label": "signing payment in the final signing set (30 Sep 2026)"
+  },
+  {
+   "value": "101",
+   "label": "US stocks and ETFs at launch, SPY through MIAX"
+  },
+  {
+   "value": "Nov 1 2027",
+   "label": "proposed Rei (XR) launch ladder on MIAX"
+  }
+ ],
+ "eras": [
+  {
+   "when": "2021 – 2022",
+   "name": "Manifest",
+   "text": "Redeemable NFTs and streetwear; the World of Ohm single currency; ManifestOS and its C-Prime language."
+  },
+  {
+   "when": "2023",
+   "name": "The main coin",
+   "text": "Saheb's rule of tokenomics, Coin Denominated Reality, the Z stablecoin and BTCZPERP."
+  },
+  {
+   "when": "2024",
+   "name": "The fund",
+   "text": "Andromeda Capital Partners, the Sol trade, ACM, 3S Capital and the goal of a legal crypto prime bank; RIFT revenue-share films."
+  },
+  {
+   "when": "2025",
+   "name": "Rails",
+   "text": "StableStation, a USDC ramp to fund Hyperliquid accounts; the XR glasses note; the first perps folder in November."
+  },
+  {
+   "when": "Nov 2025 – Jun 2026",
+   "name": "Greyline → GLX",
+   "text": "An equity-perp exchange with MIAX: alliance, introducing broker, buy-the-stack, then licensor."
+  },
+  {
+   "when": "Jun – Sep 2026",
+   "name": "American Perpetual",
+   "text": "OCC clearing, 101 names, drafted filings, and a licence to 60% of MIAX's perpetual fees."
+  },
+  {
+   "when": "Oct 2026",
+   "name": "Rei (XR)",
+   "text": "The prime coin: supply up the primes, an XR/USD book on MIAX, one account with stock perps."
+  }
+ ],
+ "core": {
+  "symbol": "X → ∞",
+  "caption": "The prime vision"
+ }
+}

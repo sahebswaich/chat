@@ -1,0 +1,187 @@
+[
+  {
+    "id": "org-rei",
+    "name": "Rei (XR)",
+    "short": "Rei · XR",
+    "tagline": "The prime coin: supply up the primes, one account with everything",
+    "status": "active",
+    "era": "Oct 2026 →",
+    "summary": "Rei (零), ticker XR, is the coin the whole system is denominated in. Supply steps up the prime numbers and is shared by Riemann's R function; it launches on an XR/USD book on MIAX, in the same account as the stock perps.",
+    "chapter": "rei",
+    "pods": [
+      "rei",
+      "rei-protocol",
+      "rei-miax",
+      "rei-market",
+      "xr-language",
+      "rei-surfaces"
+    ],
+    "pod_prefixes": [
+      "rei",
+      "xr-"
+    ],
+    "links": [
+      "org-ap",
+      "org-desk",
+      "org-capital",
+      "org-origins",
+      "org-classes"
+    ]
+  },
+  {
+    "id": "org-ap",
+    "name": "American Perpetual",
+    "short": "American Perpetual",
+    "tagline": "The rail: perpetuals on everything, cleared at OCC, 60% of the fees",
+    "status": "active",
+    "era": "Jun 2026 →",
+    "summary": "Perpetual futures on 101 US stocks and ETFs on MIAX Futures, cleared at OCC, under a licence that pays American Perpetual LLC 60% of the fees MIAX collects on every perpetual product. Filings drafted; signing set final 30 Sep 2026.",
+    "chapter": "ap",
+    "pods": [
+      "ap",
+      "ap-reg",
+      "ap-ops",
+      "ap-llc",
+      "ap-mppla",
+      "ap-ten-percent"
+    ],
+    "pod_prefixes": [
+      "ap"
+    ],
+    "links": [
+      "org-rei",
+      "org-classes",
+      "org-street",
+      "org-capital",
+      "org-glx"
+    ]
+  },
+  {
+    "id": "org-classes",
+    "name": "Asset classes",
+    "short": "Every asset",
+    "tagline": "One rail, every asset: crypto, FX, metals, world indices",
+    "status": "idea",
+    "era": "after launch",
+    "summary": "After equities the same build lists crypto (BTC, ETH, SOL, XRP), then FX with gold and silver, then foreign indices, each needing only a new reference feed and a multiplier, all under the same royalty.",
+    "chapter": "classes",
+    "pods": [],
+    "pod_prefixes": [
+      "classes-"
+    ],
+    "links": [
+      "org-ap",
+      "org-rei",
+      "org-desk"
+    ]
+  },
+  {
+    "id": "org-street",
+    "name": "The street",
+    "short": "The street",
+    "tagline": "Market makers, brokers and the app that carry the product",
+    "status": "active",
+    "era": "Sep 2026 →",
+    "summary": "Launch partners, the market-maker program, the Robinhood screens, the FCM build and the integrator kit: four inputs, four booking rules, one screen and one report line at every firm.",
+    "chapter": "street",
+    "pods": [],
+    "pod_prefixes": [
+      "street-"
+    ],
+    "links": [
+      "org-ap",
+      "org-desk"
+    ]
+  },
+  {
+    "id": "org-desk",
+    "name": "The desk",
+    "short": "The desk",
+    "tagline": "Trading: the terminal, the break list, the funded account",
+    "status": "active",
+    "era": "2024 →",
+    "summary": "Where the vision trades: the terminal (setups by timeframe from OI/mcap, funding, breakouts, Korea flow and depth), the Hyperbull break list, and the adjacent arbitrage bets.",
+    "chapter": "desk",
+    "pods": [],
+    "pod_prefixes": [
+      "desk",
+      "hyperbull",
+      "terminal",
+      "astrellis",
+      "cloud-spend",
+      "zktpu",
+      "cambrian",
+      "nimbus",
+      "trader-in-time"
+    ],
+    "links": [
+      "org-rei",
+      "org-classes",
+      "org-street"
+    ]
+  },
+  {
+    "id": "org-glx",
+    "name": "GLX / Greyline",
+    "short": "GLX",
+    "tagline": "The equity-perp exchange build that became American Perpetual",
+    "status": "superseded",
+    "era": "Nov 2025 – Jun 2026",
+    "summary": "Six business models in seven months, from basket perps to a licence on MIAX's fee pool. Its product mechanics, relationships and IP carried into American Perpetual.",
+    "chapter": "glx",
+    "pods": [],
+    "pod_prefixes": [
+      "glx-"
+    ],
+    "links": [
+      "org-ap",
+      "org-capital"
+    ]
+  },
+  {
+    "id": "org-capital",
+    "name": "Capital & IP",
+    "short": "Capital & IP",
+    "tagline": "Who owns which point of the royalty, and what stays outside",
+    "status": "active",
+    "era": "May 2026 →",
+    "summary": "The royalty's buyers and the IP line: Silver Lake's June package, the planned 10% secondary, and the five ventures kept outside the IP assignment in June.",
+    "chapter": "deal",
+    "pods": [
+      "silver-lake-june",
+      "retained-ip",
+      "glx-capital"
+    ],
+    "pod_prefixes": [],
+    "links": [
+      "org-ap",
+      "org-rei",
+      "org-glx"
+    ]
+  },
+  {
+    "id": "org-origins",
+    "name": "Origins",
+    "short": "Origins",
+    "tagline": "The coin, the fund and the first exchange sketches, 2021–2025",
+    "status": "parked",
+    "era": "2021 – 2025",
+    "summary": "Manifest, the main coin over product coins, the Z stablecoin, Andromeda and its fund successors, the market tools and the media bets. The lineage Rei inherits.",
+    "chapter": "origins",
+    "pods": [
+      "manifest",
+      "main-coin",
+      "stable-z",
+      "andromeda",
+      "markets-tools",
+      "media-xr",
+      "real-assets",
+      "side-builds"
+    ],
+    "pod_prefixes": [],
+    "links": [
+      "org-rei",
+      "org-glx"
+    ]
+  }
+]

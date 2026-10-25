@@ -1,5 +1,6 @@
-// Home: the unified vision at the core, pods orbiting it, eras, and the coordination board.
-// Content comes from /data/vision.json and /data/pods.json (generated from the treatise).
+// Home: the unified vision at the core, the orgs orbiting it (each a group of pods), eras, and the
+// coordination board. Content comes from /data/vision.json, /data/orgs.json and /data/pods.json,
+// generated from the treatise by scripts/build_treatise.py.
 
 const $ = (s, r = document) => r.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -68,7 +69,7 @@ function renderOrbit(pods, core) {
     .map((p) => {
       const { x, y } = pos.get(p.id);
       const st = statusOf(p);
-      const r = 24 + Math.min(14, (p.ideas?.length ?? 0) * 1.2);
+      const r = 26 + Math.min(16, (p.pods?.length ?? p.ideas?.length ?? 0) * 2.2);
       const name = p.short ?? p.name;
       return `<g class="pod" tabindex="0" role="button" aria-label="${esc(p.name)}" data-id="${esc(p.id)}" transform="translate(${x},${y})">
         <circle r="${r}" fill="color-mix(in srgb, ${st.color} 16%, #0b111b)" stroke="${st.color}"/>
@@ -84,13 +85,13 @@ function renderOrbit(pods, core) {
     ${nodes}`;
   svg.addEventListener("click", (e) => {
     const g = e.target.closest(".pod");
-    if (g) openPod(g.dataset.id);
+    if (g) openOrg(g.dataset.id);
   });
   svg.addEventListener("keydown", (e) => {
     const g = e.target.closest(".pod");
     if (g && (e.key === "Enter" || e.key === " ")) {
       e.preventDefault();
-      openPod(g.dataset.id);
+      openOrg(g.dataset.id);
     }
   });
   svg.addEventListener("mouseover", (e) => {
@@ -103,18 +104,24 @@ function renderOrbit(pods, core) {
 }
 
 let PODS = [];
+let ORGS = [];
+const podById = () => new Map(PODS.map((p) => [p.id, p]));
 
-function renderPods(pods) {
-  $("#podList").innerHTML = pods
-    .map((p) => {
-      const st = statusOf(p);
-      return `<button class="podcard" type="button" data-id="${esc(p.id)}"><div class="row1"><h3>${esc(p.name)}</h3><span class="tag ${st.cls}">${st.label}</span></div>
-        <p>${esc(p.tagline)}</p><p class="mono small" style="color:var(--dim)">${esc(p.era ?? "")} · ${(p.ideas ?? []).length} ideas</p></button>`;
+function renderPods(orgs) {
+  const byId = podById();
+  $("#podList").innerHTML = orgs
+    .filter((o) => o.pods.length)
+    .map((o) => {
+      const st = statusOf(o);
+      return `<button class="podcard" type="button" data-org="${esc(o.id)}"><div class="row1"><h3>${esc(o.name)}</h3><span class="tag ${st.cls}">${st.label}</span></div>
+        <p>${esc(o.tagline)}</p>
+        <p class="mono small" style="color:var(--dim)">${esc(o.era ?? "")} · ${o.pods.length} pods · ${o.pods.reduce((n, id) => n + (byId.get(id)?.ideas?.length ?? 0), 0)} ideas</p>
+        <p class="small" style="margin-top:8px">${o.pods.map((id) => esc(byId.get(id)?.name ?? id)).join(" · ")}</p></button>`;
     })
     .join("");
   $("#podList").addEventListener("click", (e) => {
     const b = e.target.closest(".podcard");
-    if (b) openPod(b.dataset.id);
+    if (b) openOrg(b.dataset.org);
   });
 }
 
@@ -128,16 +135,21 @@ function renderMoves(pods) {
     });
   }
   const titles = { now: "Now", next: "Next", later: "Later" };
+  const SHOWN = 10;
+  const item = (m, hidden) => `<label class="move${done[m.key] ? " done" : ""}"${hidden ? " hidden" : ""}><input type="checkbox" data-key="${esc(m.key)}" ${done[m.key] ? "checked" : ""}>
+            <span><span class="pod">${esc(m.pod.short ?? m.pod.name)}</span>${esc(m.text)}</span></label>`;
   $("#moveLanes").innerHTML = Object.entries(lanes)
     .map(
-      ([k, items]) => `<div class="lane"><h3>${titles[k]} · ${items.length}</h3>${items
-        .map(
-          (m) => `<label class="move${done[m.key] ? " done" : ""}"><input type="checkbox" data-key="${esc(m.key)}" ${done[m.key] ? "checked" : ""}>
-            <span><span class="pod">${esc(m.pod.short ?? m.pod.name)}</span>${esc(m.text)}</span></label>`,
-        )
-        .join("")}</div>`,
+      ([k, items]) => `<div class="lane"><h3>${titles[k]} · ${items.length}</h3>${items.map((m, i) => item(m, i >= SHOWN)).join("")}
+        ${items.length > SHOWN ? `<button type="button" class="btn ghost more" data-more>Show all ${items.length}</button>` : ""}</div>`,
     )
     .join("");
+  $("#moveLanes").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-more]");
+    if (!b) return;
+    for (const m of b.parentElement.querySelectorAll(".move[hidden]")) m.hidden = false;
+    b.remove();
+  });
   $("#moveLanes").addEventListener("change", (e) => {
     const key = e.target.dataset.key;
     if (!key) return;
@@ -148,26 +160,49 @@ function renderMoves(pods) {
   });
 }
 
-function openPod(id) {
-  const p = PODS.find((x) => x.id === id);
-  if (!p) return;
+function podBlock(p) {
   const st = statusOf(p);
-  const byId = new Map(PODS.map((x) => [x.id, x]));
-  $("#drawerBody").innerHTML = `
-    <span class="tag ${st.cls}" style="font:600 10px var(--mono);padding:4px 6px;border-radius:5px">${st.label}</span>
-    <h2>${esc(p.name)}</h2><p class="tagline">${esc(p.tagline)}</p>
+  return `<details class="podblock" id="pod-${esc(p.id)}"><summary><b>${esc(p.name)}</b> <span class="tag ${st.cls}" style="font:600 9.5px var(--mono);padding:3px 5px;border-radius:4px">${st.label}</span><br><span class="muted small">${esc(p.tagline)}</span></summary>
     <p class="muted mono small">${esc(p.era ?? "")}${p.status ? " · " + esc(p.status) : ""}</p>
     <p>${esc(p.summary)}</p>
-    ${p.numbers?.length ? `<h3>Numbers</h3><div class="nums">${p.numbers.map((n) => `<div><b>${esc(n.value)}</b><span>${esc(n.label)}</span></div>`).join("")}</div>` : ""}
-    ${p.ideas?.length ? `<h3>Ideas · ${p.ideas.length}</h3><ul>${p.ideas.map((i) => `<li class="idea"><b>${esc(i.name)}</b> — ${esc(i.one_liner)} <span class="d">${esc(i.date ?? "")}</span></li>`).join("")}</ul>` : ""}
-    ${p.next_moves?.length ? `<h3>Next moves</h3><ul>${p.next_moves.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}
-    ${p.people?.length ? `<h3>People</h3><ul>${p.people.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}
-    ${p.feeds?.length ? `<h3>Coordinates with</h3><ul>${p.feeds.filter((f) => byId.has(f)).map((f) => `<li><a href="#" data-pod="${esc(f)}">${esc(byId.get(f).name)}</a></li>`).join("")}</ul>` : ""}
-    ${p.chapter ? `<h3>Read</h3><p><a href="/treatise/#${esc(p.chapter)}">Treatise chapter →</a></p>` : ""}`;
+    ${p.numbers?.length ? `<div class="nums">${p.numbers.map((n) => `<div><b>${esc(n.value)}</b><span>${esc(n.label)}</span></div>`).join("")}</div>` : ""}
+    ${p.ideas?.length ? `<h4>Ideas · ${p.ideas.length}</h4><ul>${p.ideas.map((i) => `<li class="idea"><b>${esc(i.name)}</b> — ${esc(i.one_liner)} <span class="d">${esc(i.date ?? "")}</span></li>`).join("")}</ul>` : ""}
+    ${p.next_moves?.length ? `<h4>Next moves</h4><ul>${p.next_moves.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}
+    ${p.people?.length ? `<h4>People</h4><ul>${p.people.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}
+    ${p.chapter ? `<p><a href="/treatise/#${esc(p.chapter)}">Read in the treatise →</a></p>` : ""}
+  </details>`;
+}
+
+function openOrg(id, focusPod) {
+  const o = ORGS.find((x) => x.id === id);
+  if (!o) return;
+  const st = statusOf(o);
+  const byId = podById();
+  const orgName = new Map(ORGS.map((x) => [x.id, x.name]));
+  $("#drawerBody").innerHTML = `
+    <span class="tag ${st.cls}" style="font:600 10px var(--mono);padding:4px 6px;border-radius:5px">${st.label}</span>
+    <h2>${esc(o.name)}</h2><p class="tagline">${esc(o.tagline)}</p>
+    <p class="muted mono small">${esc(o.era ?? "")} · ${o.pods.length} pods</p>
+    <p>${esc(o.summary)}</p>
+    ${o.feeds?.length ? `<h3>Coordinates with</h3><p>${o.feeds.map((f) => `<a href="#" data-org="${esc(f)}">${esc(orgName.get(f) ?? f)}</a>`).join(" · ")}</p>` : ""}
+    <h3>Pods</h3>${o.pods.map((pid) => byId.get(pid)).filter(Boolean).map(podBlock).join("")}
+    ${o.chapter ? `<h3>Read</h3><p><a href="/treatise/#${esc(o.chapter)}">Treatise chapter →</a></p>` : ""}`;
+  if (focusPod) {
+    const d = document.getElementById(`pod-${focusPod}`);
+    if (d) {
+      d.open = true;
+      setTimeout(() => d.scrollIntoView({ block: "start" }), 50);
+    }
+  }
   $("#drawer").classList.add("open");
   $("#drawer").setAttribute("aria-hidden", "false");
   $("#scrim").classList.add("open");
   for (const g of document.querySelectorAll(".orbit .pod")) g.classList.toggle("sel", g.dataset.id === id);
+}
+
+function openPod(id) {
+  const p = podById().get(id);
+  if (p) openOrg(p.org, id);
 }
 
 function closePod() {
@@ -181,16 +216,17 @@ async function init() {
   $("#scrim").addEventListener("click", closePod);
   document.addEventListener("keydown", (e) => e.key === "Escape" && closePod());
   $("#drawerBody").addEventListener("click", (e) => {
-    const a = e.target.closest("[data-pod]");
+    const a = e.target.closest("[data-org]");
     if (a) {
       e.preventDefault();
-      openPod(a.dataset.pod);
+      openOrg(a.dataset.org);
     }
   });
-  const [session, config, vision, pods] = await Promise.all([
+  const [session, config, vision, orgs, pods] = await Promise.all([
     getJson("/api/session").catch(() => ({})),
     getJson("/api/config").catch(() => ({})),
     getJson("/data/vision.json"),
+    getJson("/data/orgs.json"),
     getJson("/data/pods.json"),
   ]);
   for (const el of document.querySelectorAll(".owner-only")) el.hidden = session.role !== "owner";
@@ -204,12 +240,14 @@ async function init() {
     else a.hidden = true;
   }
   PODS = pods;
+  ORGS = orgs.filter((o) => o.pods.length);
   renderHero(vision);
-  renderOrbit(pods, vision.core ?? {});
-  renderPods(pods);
+  renderOrbit(ORGS, vision.core ?? {});
+  renderPods(ORGS);
   renderMoves(pods);
-  const open = new URLSearchParams(location.hash.slice(1)).get("pod");
-  if (open) openPod(open);
+  const hash = new URLSearchParams(location.hash.slice(1));
+  if (hash.get("org")) openOrg(hash.get("org"));
+  else if (hash.get("pod")) openPod(hash.get("pod"));
 }
 
 init().catch((err) => {

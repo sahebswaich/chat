@@ -1,0 +1,597 @@
+[
+  {
+    "id": "street-build",
+    "name": "The Street Build",
+    "tagline": "Four inputs, four booking rules, one screen, one report line",
+    "era": "2026-07 → 2026-09",
+    "status": "active",
+    "summary": "This is the member-side build every carrying firm does once to carry American Perpetual's perps. A firm reads feed message 18 and the funding file, books four rules, shows seventeen display items and ties out to one OCC Funding Adjustment line. Every later asset class reuses the build unchanged; it is prepared in the Launch Partner Brief and UTS Annex C, and no firm has engaged yet.",
+    "ideas": [
+      {
+        "name": "Launch Partner Brief v2.4",
+        "one_liner": "The decision document for FCMs, clearing members and market makers: an NDA, a conformance slot, a switch",
+        "date": "2026-09"
+      },
+      {
+        "name": "Annex C role matrix",
+        "one_liner": "Nine roles from OCC clearing member to retail app, each with exactly what it builds",
+        "date": "2026-07"
+      },
+      {
+        "name": "Tie-out identity",
+        "one_liner": "Customer postings + rounding = the OCC line reversed; a miss means a position is off, never the rate",
+        "date": "2026-07"
+      },
+      {
+        "name": "Seventeen-item display standard",
+        "one_liner": "The design system is the firm's; the semantics are not",
+        "date": "2026-07"
+      },
+      {
+        "name": "Four margin rungs",
+        "one_liner": "15% floor; 20% strategy-based; portfolio margin near 15%; market makers outside the customer regime",
+        "date": "2026-09"
+      },
+      {
+        "name": "Public site rules (Annex D)",
+        "one_liner": "Credit line, two notice rails, free funding history, never annualized in a headline",
+        "date": "2026-07"
+      }
+    ],
+    "numbers": [
+      {
+        "value": "4 · 4 · 1 · 1",
+        "label": "inputs, booking rules, screen, report line"
+      },
+      {
+        "value": "≈0.83–1.24 bps",
+        "label": "all-in customer cost per side on a $250 name (4–7× under offshore base takers)"
+      },
+      {
+        "value": "17",
+        "label": "display items every screen carries"
+      },
+      {
+        "value": "9",
+        "label": "roles in the member build matrix"
+      },
+      {
+        "value": "100+",
+        "label": "OCC clearing members already in place"
+      },
+      {
+        "value": "$2,700",
+        "label": "margin on one NVDAP contract at a $180 Mark (6.7×)"
+      }
+    ],
+    "people": [
+      "Saheb Swaich — founder, American Perpetual LLC (originator and licensor)",
+      "MIAX Futures member services — would run onboarding",
+      "OCC — computes funding and prints the Funding Adjustment line"
+    ],
+    "next_moves": [
+      "Get the Deal signed so MIAX can issue the briefs in its own name",
+      "Open Annex C to launch partners under the one-page mutual NDA",
+      "Bring back-office vendors and ISVs in first so one build reaches every firm",
+      "Get OCC to answer its six open switches",
+      "Press FINRA to conform the 20% securities-account level to the federal 15%",
+      "Have launch firms' tax teams settle the treatment of the hourly Funding Adjustment"
+    ],
+    "feeds": [
+      "ap",
+      "street-connamara",
+      "street-robinhood",
+      "street-mm",
+      "classes-program"
+    ],
+    "chapter": "street"
+  },
+  {
+    "id": "street-mm",
+    "name": "Market Maker Program",
+    "tagline": "The funding print as the published borrow rate of U.S. equities",
+    "era": "2026-08 → 2026-09",
+    "status": "active",
+    "summary": "This pod covers the pitch and recommended terms for market makers: one book per name, $0.40 a side, no rebates, and a quoting standard modeled on MIAX's B500 program. The thesis is that makers set the Mark, and so the hourly funding print, an exchange-published per-name financing rate that competes with bilateral stock loan. MIAX sets the final terms; designation interest is taken name by name.",
+    "ideas": [
+      {
+        "name": "The funding print",
+        "one_liner": "Hard-to-borrow names trade at a discount; shorts pay and longs collect — no locate, no borrow desk, no recall",
+        "date": "2026-09"
+      },
+      {
+        "name": "Quoting standard",
+        "one_liner": "≥90% two-sided, ≥5 lots, width max($0.20, 1.5× stock spread) in regular hours",
+        "date": "2026-09"
+      },
+      {
+        "name": "Security Futures Dealer registration",
+        "one_liner": "Three steps that take maker positions outside the customer-margin regime",
+        "date": "2026-09"
+      },
+      {
+        "name": "Liquidity flywheel",
+        "one_liner": "Every flow in one book; depth compounds; cannot be dislodged by a copy",
+        "date": "2026-09"
+      }
+    ],
+    "numbers": [
+      {
+        "value": "$0.40",
+        "label": "market-maker fee per side (≈27% of the $1.50 regular fee)"
+      },
+      {
+        "value": "≈0.12 bps",
+        "label": "cost to quote at ≈$33,600 realized notional per contract"
+      },
+      {
+        "value": "≥90% / ≥5 lots",
+        "label": "regular-hours quoting obligation"
+      },
+      {
+        "value": "~720",
+        "label": "samples an hour that makers' quotes feed into the Mark"
+      }
+    ],
+    "people": [
+      "MIAX Futures market-maker desk — program owner under Rule 2.1.9"
+    ],
+    "next_moves": [
+      "Get the B500 program terms (Exhibit 2) and the maker papers from MIAX",
+      "Collect designation interest name by name from MIAX's own member market makers",
+      "Invite the offshore perp principal trading firms as the second ring",
+      "Get Rule 3.3.2 approved through the Form 19b-4 so the dealer margin exclusion runs"
+    ],
+    "feeds": [
+      "street-build",
+      "ap"
+    ],
+    "chapter": "street"
+  },
+  {
+    "id": "street-robinhood",
+    "name": "Robinhood — the perp in the app",
+    "tagline": "Trade Perps beside Trade Options, one balance for three products",
+    "era": "2026-01 → 2026-09",
+    "status": "active",
+    "summary": "AP wrote a brief proposing NVDAP-style perps inside Robinhood's existing securities account, beside the stock and its options. Two Form 7-R notice filings open the door, and Robinhood's part is five things on the screen plus four booking rules. It is a proposal only: Robinhood is also running crypto perps through its own FCM and holds a stake in competitor OG.com.",
+    "ideas": [
+      {
+        "name": "Four app screens",
+        "one_liner": "NVDA page, order ticket, NVDAP page, Home — in Robinhood's own design system",
+        "date": "2026-09"
+      },
+      {
+        "name": "Two notices, one door",
+        "one_liner": "Robinhood Securities as FCM and Robinhood Financial as IB, both on Form 7-R, effective on filing",
+        "date": "2026-09"
+      },
+      {
+        "name": "Robinhood's public record",
+        "one_liner": "Nine dated statements, from the 24 Hour Market to HOOD Summit '26",
+        "date": "2026-09"
+      },
+      {
+        "name": "Whitelabel precursor",
+        "one_liner": "Jan 2026 Greyline idea: whitelabel equity perps for Coinbase/Robinhood through Dorman FCM",
+        "date": "2026-01"
+      }
+    ],
+    "numbers": [
+      {
+        "value": "$2,700",
+        "label": "NVDAP portfolio-margin requirement at a $180 Mark (6.7×)"
+      },
+      {
+        "value": "−$0.76",
+        "label": "funding per lock on one long NVDAP contract"
+      },
+      {
+        "value": "$2,701.52",
+        "label": "estimated cost on the illustrative order ticket"
+      },
+      {
+        "value": "10%",
+        "label": "MIH's retained stake in Rothera (ex-LedgerX)"
+      }
+    ],
+    "people": [
+      "Vlad Tenev — Robinhood, quoted on the Q4 2025 and Q2 2026 calls",
+      "JB Mackenzie — Robinhood, quoted at the MIAXdx close",
+      "Johann Kerbrat — Robinhood, to Reuters on Apr 22, 2026"
+    ],
+    "next_moves": [
+      "Send the Robinhood Brief from MIAX Futures as a single file after signing",
+      "Secure a one-page NDA and a named lead on each side",
+      "Have Robinhood Securities and Robinhood Financial file the two Form 7-R notices",
+      "Build and test the screen in the Firm Test Bed and OCC's testing window"
+    ],
+    "feeds": [
+      "street-build",
+      "street-field",
+      "greyline"
+    ],
+    "chapter": "street"
+  },
+  {
+    "id": "street-connamara",
+    "name": "Connamara — one team, every firm",
+    "tagline": "One forward-deployed team fitting one reference kit firm to firm",
+    "era": "2026-04 → 2026-09",
+    "status": "idea",
+    "summary": "This is an optional Street Build. Connamara Systems, which approached AP, would carry one reference implementation of the member build to every carrying firm in six steps and thirteen tasks. MIAX has engaged no one, the launch waits on no outside team, and the 25-page Integration Brief is the backup if MIAX takes the option. In the earlier GLX phase, Saheb proposed acquiring Connamara outright as GLX Tech.",
+    "ideas": [
+      {
+        "name": "Street Build memo",
+        "one_liner": "One team instead of thirty separate projects; MIAX's yes or no",
+        "date": "2026-09"
+      },
+      {
+        "name": "Integration Brief",
+        "one_liner": "Six parties, six engagement steps, thirteen tasks, one kit, twelve switches",
+        "date": "2026-09"
+      },
+      {
+        "name": "GLX Tech acquisition",
+        "one_liner": "Buy Connamara as GLX's engineering arm for ~$40–60M acqui-hire consideration (superseded)",
+        "date": "2026-05"
+      }
+    ],
+    "numbers": [
+      {
+        "value": "13",
+        "label": "tasks in build order"
+      },
+      {
+        "value": "12",
+        "label": "open switches (6 Exchange-side, 6 OCC-side)"
+      },
+      {
+        "value": "25 pp",
+        "label": "length of the Integration Brief"
+      },
+      {
+        "value": "1998",
+        "label": "year Connamara began building capital-markets software"
+      }
+    ],
+    "people": [
+      "Daniel Curry — Chief Revenue Officer, Connamara Systems"
+    ],
+    "next_moves": [
+      "Get MIAX's yes or no on sponsoring one outside team",
+      "If yes, have member services introduce the team with the pack under NDA",
+      "Fit vendors and OMS providers first, then the first clearing member",
+      "Answer the twelve switches once, before the first fitting"
+    ],
+    "feeds": [
+      "street-build",
+      "glx"
+    ],
+    "chapter": "street"
+  },
+  {
+    "id": "street-field",
+    "name": "The competitive field",
+    "tagline": "CME's dated relaunch and four perpetual filers, July–September 2026",
+    "era": "2026-05 → 2026-09",
+    "status": "active",
+    "summary": "These are the venues that moved while the data room was being finished. CME relaunched dated single-stock futures on July 27; Kalshi, Coinbase and Bitnomial filed perpetual security futures on Sept 18; OG.com/Nadex followed on Sept 24; Robinhood announced U.S. crypto perps on Sept 29. AP's answer is architecture: one fungible contract at OCC, hourly funding as a borrow market, dividends by rule and no exemption sought.",
+    "ideas": [
+      {
+        "name": "CME launch memo",
+        "one_liner": "Six reasons the perpetual wins; hours parity once the SIP goes 23×5 on Dec 6, 2026",
+        "date": "2026-07"
+      },
+      {
+        "name": "Financing layer of U.S. equities",
+        "one_liner": "A benchmark in the line of NYSE, CME rates, Cboe volatility and ICE energy",
+        "date": "2026-07"
+      },
+      {
+        "name": "Five-venue comparison",
+        "one_liner": "Funding, dividends, margin, clearing and names across AP, CME, Kalshi, Coinbase, Bitnomial and Nadex",
+        "date": "2026-09"
+      }
+    ],
+    "numbers": [
+      {
+        "value": "55 + 22",
+        "label": "CME standard and Micro dated contracts, July 27, 2026"
+      },
+      {
+        "value": "Sept 18, 2026",
+        "label": "Kalshi, Coinbase and Bitnomial file perpetual security futures"
+      },
+      {
+        "value": "Sept 24, 2026",
+        "label": "OG.com Markets files perps on ten names"
+      },
+      {
+        "value": "Nov 2, 2026",
+        "label": "reported CFTC target date for Kalshi's filing"
+      }
+    ],
+    "people": [
+      "Kris Marszalek — Crypto.com CEO, Sept 17, 2026 statement on U.S. single-stock perps"
+    ],
+    "next_moves": [
+      "Track Kalshi's reported Nov 2, 2026 CFTC date and OG.com's filings",
+      "Plan to out-list CME at one Schedule entry per name after launch",
+      "Follow the pending CME suit cited in the Harmonization Submission",
+      "Correct the CME memo's hard-to-borrow funding direction wherever the memo is reused"
+    ],
+    "feeds": [
+      "street-mm",
+      "street-robinhood",
+      "ap",
+      "classes-crypto"
+    ],
+    "chapter": "street"
+  },
+  {
+    "id": "classes-program",
+    "name": "One rail, every asset",
+    "tagline": "A new class is a new reference feed and a contract multiplier",
+    "era": "2026-08 → 2026-09",
+    "status": "active",
+    "summary": "This is AP's program after equities. Once OCC carries hourly funding inside variation and firms wire the four booking rules, any underlying that passes five tests lists on the same rails. Equities, crypto majors, and FX with gold and silver pass; foreign indices pass behind a license; rates, copper, compute, volatility and pre-IPO are parked or refused, each with its reason. One license at one rate covers every later class.",
+    "ideas": [
+      {
+        "name": "Five tests",
+        "one_liner": "Continuous independent reference, financial carry only, rule-resolvable events, clean seat, licensable reference with demand",
+        "date": "2026-09"
+      },
+      {
+        "name": "No fictional prices",
+        "one_liner": "Funding accrues only while a real reference is live, so no insurance fund and no ADL",
+        "date": "2026-09"
+      },
+      {
+        "name": "Refusal list",
+        "one_liner": "Credibility in what a venue lists is made by what it declines to list",
+        "date": "2026-08"
+      },
+      {
+        "name": "Ceiling ladder",
+        "one_liner": "Pool ≈1–2 bps of addressed volume; each $10T/yr ≈ $1–2B",
+        "date": "2026-09"
+      },
+      {
+        "name": "One rate, every product",
+        "one_liner": "Deal ¶3(d): any later class bears the same royalty from first listing, nothing to countersign",
+        "date": "2026-09"
+      }
+    ],
+    "numbers": [
+      {
+        "value": "≈$625–890T/yr",
+        "label": "addressable flow across all classes"
+      },
+      {
+        "value": "≈$45–130B/yr",
+        "label": "fee pool at the program's far edge"
+      },
+      {
+        "value": "≈$1.3–2.2Q/yr",
+        "label": "cleared-volume ceiling with market-maker circulation of 2.0–2.5×"
+      },
+      {
+        "value": "60%",
+        "label": "royalty on every perpetual product, any underlying (final Deal, Sept 30, 2026)"
+      },
+      {
+        "value": "4",
+        "label": "classes in sequence: equities, crypto, FX & metals, foreign indices"
+      }
+    ],
+    "people": [
+      "Saheb Swaich — founder, American Perpetual LLC",
+      "MIAX Products Leadership — addressee of the Class Expansion memo"
+    ],
+    "next_moves": [
+      "Launch and deepen the equity class first",
+      "Put the crypto-class decision on MIAX's agenda once the Deal signs",
+      "Keep the refusal list current; reopen copper only if a continuous cash reference appears"
+    ],
+    "feeds": [
+      "ap",
+      "street-build",
+      "classes-crypto",
+      "classes-fx-metals",
+      "classes-foreign-indices",
+      "glx",
+      "greyline"
+    ],
+    "chapter": "classes"
+  },
+  {
+    "id": "classes-crypto",
+    "name": "Crypto majors on the rail",
+    "tagline": "BTC, ETH, SOL and XRP perps, cleared at OCC",
+    "era": "2026-01 → 2026-09",
+    "status": "active",
+    "summary": "The second class is hourly-funded perps on the four coins that carry 91% of listable spot flow. They reference CF Benchmarks' per-second indices (the BRTI for bitcoin), and any FCM carries them in a futures account. Bitcoin files for §40.3 approval on the record of the May 2026 order, and the other three self-certify behind it. The stated preference is 24/7 from day one, with the equity session as fallback; this is where Saheb's 2025–26 crypto and 24/7 ideas land.",
+    "ideas": [
+      {
+        "name": "CF Benchmarks reference",
+        "one_liner": "A curated panel, one value a second; the largest offshore venue has never been in it",
+        "date": "2026-09"
+      },
+      {
+        "name": "Fee rule",
+        "one_liner": "Highest quarter-dollar under 2.0 bps a side: $1.75 on a 0.1 BTC contract",
+        "date": "2026-09"
+      },
+      {
+        "name": "Eleven steps to first listing",
+        "one_liner": "Decision, license, values, Onyx, OCC addendum, §40.3 bitcoin, §40.2 others, limits, street, pages, day one",
+        "date": "2026-09"
+      },
+      {
+        "name": "24/7 through crypto",
+        "one_liner": "A per-second reference never goes dark, so 24/7 needs no discovery bound (synthesis)",
+        "date": "2026-01"
+      },
+      {
+        "name": "Regulated crypto perps (GLX V2)",
+        "one_liner": "Crypto perps/spot on the GLX V2 roadmap at Medium priority — the precursor",
+        "date": "2026-03"
+      }
+    ],
+    "numbers": [
+      {
+        "value": "91%",
+        "label": "share of listable spot flow in BTC·ETH·SOL·XRP (BTC+ETH 85%)"
+      },
+      {
+        "value": "$100–500k/yr",
+        "label": "estimated CF Benchmarks license, plus a sub-cent per contract"
+      },
+      {
+        "value": "$9.3M / $28M / $75M",
+        "label": "fee pool a year at 25k / 75k / 200k contracts a day"
+      },
+      {
+        "value": "$20–40T → $2–8B",
+        "label": "addressable flow and pool a year"
+      },
+      {
+        "value": "0.1 BTC",
+        "label": "contract unit (≈$10,000 notional)"
+      }
+    ],
+    "people": [
+      "CF Benchmarks — reference administrator (BRTI and family)"
+    ],
+    "next_moves": [
+      "Open license talks with CF Benchmarks for BRTI, ETH, SOL and XRP republication",
+      "Prepare OCC's seven-item digital-asset addendum, starting with the session question",
+      "Draft the bitcoin §40.3 submission and Chapter 44 on the May 2026 order's record",
+      "Decide between 24/7 and the 23×5 equity session for day one",
+      "Time the filing against the commodity-perpetual litigation"
+    ],
+    "feeds": [
+      "classes-program",
+      "street-build",
+      "street-field",
+      "glx",
+      "greyline"
+    ],
+    "chapter": "classes"
+  },
+  {
+    "id": "classes-fx-metals",
+    "name": "FX majors with gold and silver",
+    "tagline": "The interest-rate differential, priced hourly on an exchange",
+    "era": "2026-09",
+    "status": "active",
+    "summary": "The third class is seven FX pairs plus gold and silver as currency pairs, on a licensed 24/5 composite of executable spot. Here funding is the interest-rate differential. There are no corporate actions and no §871(m), and tax is §1256 60/40. Gold and silver may lead the class; Kalshi's self-cleared gold and silver perps went live Sept 10, 2026.",
+    "ideas": [
+      {
+        "name": "Metals as currencies",
+        "one_liner": "Gold trades as a currency; copper does not",
+        "date": "2026-09"
+      },
+      {
+        "name": "Composite license",
+        "one_liner": "One data license is the only thing that takes time",
+        "date": "2026-09"
+      },
+      {
+        "name": "CFDs as FX perps in disguise",
+        "one_liner": "An exchange-listed, centrally cleared alternative to bilateral retail FX",
+        "date": "2026-09"
+      }
+    ],
+    "numbers": [
+      {
+        "value": "9",
+        "label": "instruments (7 pairs + XAU + XAG)"
+      },
+      {
+        "value": "$100–500k/yr",
+        "label": "estimated composite license for the class"
+      },
+      {
+        "value": "$11M / $34M / $91M",
+        "label": "fee pool a year at 25k / 75k / 200k contracts a day"
+      },
+      {
+        "value": "$120–240T → $12–48B",
+        "label": "FX addressable flow and pool a year"
+      },
+      {
+        "value": "$55–100T → $5.5–20B",
+        "label": "metals addressable flow and pool a year"
+      }
+    ],
+    "people": [
+      "LBMA — precious-metals benchmarks consolidated under one administrator, July 2026"
+    ],
+    "next_moves": [
+      "Line up a regulated benchmark administrator for the composite license",
+      "Get counsel's view on the Part 150 status of gold and silver cash-index perps",
+      "Draft Chapter 45 on the crypto chapter's pattern"
+    ],
+    "feeds": [
+      "classes-program",
+      "classes-crypto"
+    ],
+    "chapter": "classes"
+  },
+  {
+    "id": "classes-foreign-indices",
+    "name": "World indices by the ratio method",
+    "tagline": "Nikkei, then KOSPI 200 and Hang Seng TECH, once licensed",
+    "era": "2026-01 → 2026-09",
+    "status": "parked",
+    "summary": "These are dollar-per-point perps on foreign indices. They reference the official index in home hours and the last close times a home-futures ratio overnight, and they pause when nothing real trades. The class passes the tests but waits for a license and is never the first to launch; its switch is the only new engine piece in the whole program.",
+    "ideas": [
+      {
+        "name": "The switch",
+        "one_liner": "Two feeds, a rule, one division, a state flag",
+        "date": "2026-09"
+      },
+      {
+        "name": "Named walls",
+        "one_liner": "China by policy; Europe venue-owned; FTSE at CME through 2037; MSCI at ICE",
+        "date": "2026-08"
+      },
+      {
+        "name": "Global markets",
+        "one_liner": "Jan 2026 Greyline one-liner that this class and FX make concrete",
+        "date": "2026-01"
+      }
+    ],
+    "numbers": [
+      {
+        "value": "$250k–1M+/yr",
+        "label": "license per index, plus a home-futures data license"
+      },
+      {
+        "value": "$0.25/pt",
+        "label": "proposed Nikkei 225 unit"
+      },
+      {
+        "value": "$7–11T → $0.7–2.2B",
+        "label": "addressable flow and pool a year"
+      },
+      {
+        "value": "≈½ bp",
+        "label": "maximum drift before re-anchoring at the home open"
+      }
+    ],
+    "people": [
+      "Nikkei, KRX (KOSPI 200), Hang Seng — license targets"
+    ],
+    "next_moves": [
+      "Open Nikkei license talks; if the terms are heavy, do not build",
+      "Write the Nikkei settings sheet so later indices become settings"
+    ],
+    "feeds": [
+      "classes-program"
+    ],
+    "chapter": "classes"
+  }
+]

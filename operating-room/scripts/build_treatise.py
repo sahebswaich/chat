@@ -3,11 +3,12 @@
 
     python3 scripts/build_treatise.py [--artifact OUT.html]
 
-Reads treatise/ch*.md (one chapter per file, in filename order), treatise/vision.json and
-treatise/pods/*.json. Writes:
+Reads treatise/ch*.md (one chapter per file, in filename order), treatise/vision.json,
+treatise/orgs.json and treatise/pods/*.json. Writes:
   public/treatise/index.html   the Operating Room edition (print → PDF, discussion threads)
   public/data/vision.json      home-page hero, stats and eras
-  public/data/pods.json        home-page pods (merged, ordered)
+  public/data/orgs.json        home-page orgs (top-level groups) with their pod ids and links
+  public/data/pods.json        home-page pods (merged; feeds checked against real ids)
   --artifact OUT.html          a self-contained edition (inline CSS/JS, no print button) for sharing
 
 Markdown dialect: GitHub tables, "## Title {#id}" anchors, and callouts written as blockquotes
@@ -287,16 +288,45 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 """
 
 
-def merge_pods() -> list[dict]:
-    order = json.loads((SRC / "pods" / "_order.json").read_text()) if (SRC / "pods" / "_order.json").exists() else []
+# Pod ids writers guessed for pods in other chapters → the ids those chapters use.
+POD_ALIASES = {"glx": "glx-exchange", "greyline": "glx-exchange", "american-perpetual": "ap"}
+
+
+def merge_pods() -> tuple[list[dict], list[dict]]:
+    """Merges treatise/pods/*.json and groups them under treatise/orgs.json.
+
+    Each org lists pods explicitly and/or by id prefix; a pod belongs to the first org that
+    claims it. An org's links (feeds) are its declared "links" plus the orgs its pods' feeds
+    point to."""
     pods: dict[str, dict] = {}
     for f in sorted((SRC / "pods").glob("*.json")):
-        if f.name.startswith("_"):
-            continue
         for p in json.loads(f.read_text(encoding="utf-8")):
             pods.setdefault(p["id"], p)
-    ranked = [pods.pop(i) for i in order if i in pods]
-    return ranked + list(pods.values())
+    for p in pods.values():
+        p["feeds"] = sorted({POD_ALIASES.get(x, x) for x in p.get("feeds", [])} & set(pods) - {p["id"]})
+    orgs = json.loads((SRC / "orgs.json").read_text(encoding="utf-8"))
+    owner: dict[str, str] = {}
+    for org in orgs:
+        for pid in org.get("pods", []):
+            if pid in pods and pid not in owner:
+                owner[pid] = org["id"]
+    for org in orgs:
+        for pid in pods:
+            if pid not in owner and any(pid == pre.rstrip("-") or pid.startswith(pre) for pre in org.get("pod_prefixes", [])):
+                owner[pid] = org["id"]
+    leftovers = [pid for pid in pods if pid not in owner]
+    for pid in leftovers:
+        owner[pid] = "org-origins"
+    for org in orgs:
+        org["pods"] = [pid for pid in pods if owner[pid] == org["id"]]
+        org.pop("pod_prefixes", None)
+        links = {owner[f] for pid in org["pods"] for f in pods[pid]["feeds"]} | set(org.pop("links", []))
+        org["feeds"] = sorted(links - {org["id"]})
+        for pid in org["pods"]:
+            pods[pid]["org"] = org["id"]
+    if leftovers:
+        print("pods with no org (filed under Origins):", leftovers)
+    return orgs, list(pods.values())
 
 
 def main() -> None:
@@ -312,11 +342,12 @@ def main() -> None:
     data = ROOT / "public" / "data"
     data.mkdir(parents=True, exist_ok=True)
     (data / "vision.json").write_text(json.dumps(vision, indent=1, ensure_ascii=False), encoding="utf-8")
-    pods = merge_pods()
+    orgs, pods = merge_pods()
     (data / "pods.json").write_text(json.dumps(pods, indent=1, ensure_ascii=False), encoding="utf-8")
+    (data / "orgs.json").write_text(json.dumps(orgs, indent=1, ensure_ascii=False), encoding="utf-8")
     if args.artifact:
         Path(args.artifact).write_text(artifact_edition(pages), encoding="utf-8")
-    print(f"{len(chapters)} chapters, {sum(c['words'] for c in chapters):,} words, {len(pods)} pods → {out}")
+    print(f"{len(chapters)} chapters, {sum(c['words'] for c in chapters):,} words, {len(orgs)} orgs, {len(pods)} pods → {out}")
 
 
 if __name__ == "__main__":

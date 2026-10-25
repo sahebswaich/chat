@@ -1,0 +1,314 @@
+[
+  {
+    "id": "manifest",
+    "name": "Manifest",
+    "tagline": "Redeemable goods, an OHM-fork treasury and the World of Ohm",
+    "era": "2021-10 → 2023-05",
+    "status": "parked",
+    "summary": "Saheb's first company: a crypto-native streetwear collective with a rebasing MNFST token, redeemable NFTs and protocol-owned liquidity, which raised $1.3M in 8 hours and later sunsetted. In 2022 it pivoted to provenance tooling (Bridge, MaaS), drafted a $33m sale to Olympus DAO built around an OHM-denominated super-app, and lent its name to ManifestOS, a streamable OS and chain with C-Prime contracts.",
+    "ideas": [
+      {"name": "MNFST rebasing token", "one_liner": "OHM-fork token; genesis hoodie NFT auto-staked 33 MNFST; treasury in OHM and KLIMA", "date": "2021-12"},
+      {"name": "Manifest Pipeline / Streetwear / Mafia", "one_liner": "Physical good plus on-chain proof; in-house brand; DeFi treasury expansion", "date": "2021-12"},
+      {"name": "Manifest Bridge", "one_liner": "Open tooling linking Shopify inventory to redeemable NFT mints", "date": "2022-04"},
+      {"name": "MaaS (Manifest-as-a-Service)", "one_liner": "Design-to-doorstep merch for crypto communities via LA factories", "date": "2022-04"},
+      {"name": "Perps on real-world goods (wish)", "one_liner": "\"options on miami condos, perpetuals on sneakers, japanese whiskey futures\"", "date": "2022-04"},
+      {"name": "Olympus acquisition plan", "one_liner": "$33m ask, accept above $25m; Saheb as operator", "date": "2022-08"},
+      {"name": "World of Ohm super-app", "one_liner": "OHM forex up to 500x, OHM options, Flow drops, debit card, credit score, KLIMA buyout", "date": "2022-08"},
+      {"name": "PhantomDAO / Mecasso circle", "one_liner": "OHM-fork accelerator DAO and modular NFT streetwear shared with Saheb (role unconfirmed)", "date": "2021-12"},
+      {"name": "ManifestOS + C-Prime", "one_liner": "Streamable OS and Azure chain; C#-based contract language; devices sold as claimable NFTs", "date": "2022-10"},
+      {"name": "Manifest liquidity pools on Bitcoin", "one_liner": "Title-only doc: AMM pools on Bitcoin", "date": "2023-05"}
+    ],
+    "numbers": [
+      {"value": "$1.3M in 8 hours", "label": "Manifest raise"},
+      {"value": "33 MNFST", "label": "auto-staked per genesis hoodie NFT"},
+      {"value": "$33m (accept > $25m)", "label": "Olympus acquisition ask"},
+      {"value": "up to 500x", "label": "OHM forex leverage"},
+      {"value": "16–17%", "label": "Olympus stake in Flow"}
+    ],
+    "people": [
+      "Saheb Swaich — founder",
+      "Co-founder (owner of the Manifest FAQ; name not in the documents) — co-founder",
+      "Milark — stake holder to be bought out",
+      "Dala — owed a payout before the Olympus deal",
+      "CMill — to build out Flow",
+      "Lazer Devshop — proposed builder of the OHM forex exchange",
+      "Olympus DAO — target acquirer",
+      "Psychedelic — proposed funder of Wholesome OnlyFans"
+    ],
+    "next_moves": [
+      "Confirm with Saheb whether the 'algostable at seventeen' is Manifest and reconcile the age with the April 2021 '18 year old' note",
+      "Record the outcome of the Olympus approach",
+      "Decide whether the Manifest name or ManifestOS carries into the unified brand"
+    ],
+    "feeds": ["main-coin", "markets-tools", "media-xr"],
+    "chapter": "origins"
+  },
+  {
+    "id": "main-coin",
+    "name": "Main coin + product coins",
+    "tagline": "One scarce main coin owning many revenue-sharing product coins",
+    "era": "2022-08 → 2025-06",
+    "status": "idea",
+    "summary": "The most consistent design in Saheb's early work and the seed of the unified Prime coin: a fixed-supply main coin priced like a stock, with cheaper product coins below it and USDC dividends flowing up. It evolves from OHM as the single denomination (2022) through the Year-1 token stack and LIFE handles (2022), the $SUP dividend airdrop (2023) and Saheb's rule of tokenomics (2023) to Coin Denominated Reality's public company holding 100+ product coins (2023).",
+    "ideas": [
+      {"name": "OHM as single denomination", "one_liner": "Forex, options, clothing, NFTs, credit and carbon all priced in OHM", "date": "2022-08"},
+      {"name": "Year-1 token stack", "one_liner": "Main token = adtech blockspace; USDC split 1/3 foundation, 1/3 apps, 1/3 user dividends", "date": "2022-10"},
+      {"name": "Fixed supply, stakers earn dividends", "one_liner": "Devices are nodes; 'Fixed Supply / Stakers are eligible to dividends'", "date": "2022-10"},
+      {"name": "LIFE handles", "one_liner": "Usernames bought at OS start, $3 to $32,805 by length, resold in the main token or USDC", "date": "2022-10"},
+      {"name": "Currency → security", "one_liner": "'All Tokens Pay Dividend eventually starts as currency -> security'", "date": "2022-10"},
+      {"name": "$SUP dividend airdrop", "one_liner": "Buy the token on market and airdrop it to paying customers", "date": "2023-02"},
+      {"name": "Saheb's rule of tokenomics", "one_liner": "Ecosystem coins below the main coin; ~100m supply; price in the tens of dollars", "date": "2023-08"},
+      {"name": "Coin Denominated Reality", "one_liner": "Public company whose chain-main coin holds 100+ product coins paying USDC dividends", "date": "2023-11"},
+      {"name": "Social tokens", "one_liner": "Influencer seeds a $50,000 USDC pool; fans bet on their success", "date": "2022-10"},
+      {"name": "Trade-vault token", "one_liner": "Deposit USDC into a strategy vault, receive a redeemable trade token", "date": "2024-10"}
+    ],
+    "numbers": [
+      {"value": "100m × $400 = $40b", "label": "main-coin rule of thumb"},
+      {"value": "1/3 / 1/3 / 1/3", "label": "USDC split: foundation / apps / user dividends"},
+      {"value": "3%", "label": "default protocol fee, set by holder vote"},
+      {"value": "$3 → $32,805", "label": "LIFE handle price ladder"},
+      {"value": "100+", "label": "revenue-sharing product coins under the main coin (CDR)"},
+      {"value": "$100", "label": "one-time OS/device fee funding account and first username"}
+    ],
+    "people": [
+      "Saheb Swaich — author of every rule",
+      "sisyphus — trader cited in the rule of tokenomics"
+    ],
+    "next_moves": [
+      "Fix one supply number for Prime and retire the conflicting figures",
+      "Decide whether Prime holders share product revenue (early lineage) or new supply (2026 Rei/XR design)",
+      "Strip the treasury-drain and unilateral-dividend language before any partner sees the rules",
+      "Write the Prime parameter sheet from the lineage table: supply, price band, product-coin ratio, dividend source, identity"
+    ],
+    "feeds": ["stable-z", "media-xr", "andromeda", "markets-tools"],
+    "chapter": "origins"
+  },
+  {
+    "id": "stable-z",
+    "name": "Stable (Z and StableStation)",
+    "tagline": "Real-estate-backed stablecoin in prime stairsteps, plus a USDC fiat rail",
+    "era": "2023-04 → 2025-08",
+    "status": "idea",
+    "summary": "Z is an overcollateralized, soft-pegged (±10%) stablecoin minted against loans on owned real estate and released in undefined 'prime stairsteps', defended by rental income and an in-house market-making desk; its stack lists the first perp pair in Saheb's notes, BTCZPERP. StableStation (2025) specs a Zero Hash, Plaid and RTP ramp to fund Hyperliquid accounts in under two minutes.",
+    "ideas": [
+      {"name": "Stablecoin Z", "one_liner": "10m Z per $10m loan on a $60m building; proceeds in treasuries at 8%", "date": "2023-04"},
+      {"name": "Prime stairsteps", "one_liner": "Supply released in prime steps as demand rises; runway measured in steps", "date": "2023-04"},
+      {"name": "BTCZPERP", "one_liner": "Bitcoin perpetual quoted in Z, alongside Z/BTC and Z forex", "date": "2023-04"},
+      {"name": "Internet paid in crypto, yield in Z", "one_liner": "Companies install dishes as gateways; users earn yield in Z", "date": "2023-04"},
+      {"name": "StableStation", "one_liner": "USD ⇄ USDC swap via Zero Hash KYC, Plaid and RTP; 'No Float Required'", "date": "2025-08"},
+      {"name": "USDC App lead", "one_liner": "Related 'USDC App' docs shared Jul 2025; not yet read", "date": "2025-07"}
+    ],
+    "numbers": [
+      {"value": "10m Z", "label": "printed against a $10m loan on a $60m building"},
+      {"value": "8%", "label": "treasury yield on loan proceeds"},
+      {"value": "±10%", "label": "Z soft-peg band"},
+      {"value": "~6 months", "label": "runway from 3m Z held in prime steps"},
+      {"value": "1.4%", "label": "StableStation all-in spread in the sample quote"}
+    ],
+    "people": [
+      "Zero Hash — KYC, custody and float partner (StableStation)",
+      "Plaid — bank-link partner (StableStation)",
+      "James Piazza III — owner of the 'USDC App' docs (Jul 2025), possible origin of StableStation"
+    ],
+    "next_moves": [
+      "Ask Saheb to define 'prime stairsteps' and whether it matches the 2026 prime-gap schedule",
+      "Read the 'USDC App' and 'USDC App Spec' documents",
+      "Fix the StableStation fee math (rate vs $1.00 fee) and the '>2 minutes' typo",
+      "Get a money-transmission and securities view before any redeemable-stablecoin work resumes"
+    ],
+    "feeds": ["main-coin", "markets-tools", "real-assets"],
+    "chapter": "origins"
+  },
+  {
+    "id": "andromeda",
+    "name": "Funds (Andromeda → 3S Capital)",
+    "tagline": "Options-led fund meant to become the first legal crypto Prime bank",
+    "era": "2023-10 → 2024-10",
+    "status": "parked",
+    "summary": "Andromeda is Saheb's plan to fund the larger vision with option trades: a $20m tokenized partnership (10m AND tokens), pooled $200k–$400k ETH and SOL option trades, the ACM operating memo and the $25m 3S Capital offshore fund. The stated path runs from a signature call-spread strategy to a regulated options market maker and 'the first legal crypto Prime bank in the world'; the documents confirm no outside capital, and the 2024 books show a small personal book plus airdrop farming.",
+    "ideas": [
+      {"name": "5 year plan allocation", "one_liner": "50% ETH call spreads, 20% alt options, 10% snowball, 10% VC, 5% NFTs, 5% low caps", "date": "2023-10"},
+      {"name": "Donnie call fund", "one_liner": "$20m, 2-year fund; Kraken ECP/ISDA; four strategies incl. ETH 1600→7200 ladder", "date": "2023-12"},
+      {"name": "AND token partnership", "one_liner": "Delaware LLC on a multisig; 10m non-transferable AND; manager 30% → 50% after 3x", "date": "2024-02"},
+      {"name": "Prime bank path", "one_liner": "Big Bet LLC → Andromeda MM firm → 'first legal crypto Prime bank' → Paradise on Earth tech co", "date": "2024-02"},
+      {"name": "Andromeda Capital Partners ETH trade", "one_liner": "$200k max; two rolled ETH call spreads to 3,300–3,500", "date": "2024-02"},
+      {"name": "Sol Trade", "one_liner": "$200k max; three rolled SOL call spreads targeting 100x", "date": "2024-03"},
+      {"name": "Andromeda Terminal", "one_liner": "'9 figure perpetual positions using multiple exchanges from one access point'", "date": "2024-03"},
+      {"name": "ETH DOWNTURN", "one_liner": "$400k rolling ETH put debit spreads", "date": "2024-04"},
+      {"name": "Operations for ACM", "one_liner": "Telegram-first, content-led fund whose purpose is a consumer-tech company", "date": "2024-06"},
+      {"name": "Letter from the Founder", "one_liner": "Options on altcoins for ~10x–100x; generic liquid-fund term template", "date": "2024-10"},
+      {"name": "3S Capital", "one_liner": "$25m offshore master-feeder; options plus on-chain sleeves; trade vaults", "date": "2024-10"}
+    ],
+    "numbers": [
+      {"value": "$20m / 10m AND", "label": "Andromeda partnership target"},
+      {"value": "30% → 50%", "label": "manager share before / after a 3x return"},
+      {"value": "100x", "label": "expected return of the Sol Trade spreads"},
+      {"value": "$25m; $2m min", "label": "3S Capital raise and ticket"},
+      {"value": "2% / 25%", "label": "3S management / performance fees"},
+      {"value": "7.4x est.", "label": "June 2024 airdrop book ($21,919 → $162,500)"}
+    ],
+    "people": [
+      "Saheb Swaich — manager",
+      "Donnie — prospective LP or partner (Dec 2023 call)",
+      "Kraken / Kraken Pro — institutional options venue (ECP/ISDA)",
+      "Galaxy Digital — named options counterparty (3S)",
+      "Horizons Law — 3S US counsel",
+      "Harneys — 3S offshore counsel",
+      "MG Stover — 3S administrator",
+      "Copper Custody — 3S custodian",
+      "Split Capital founder — cited on FTX-estate SOL sales",
+      "Unnamed Telegram quant friend — offered Saheb a PM seat ('2/20 is brutal')"
+    ],
+    "next_moves": [
+      "Record whether any Andromeda trade was placed and whether any LP capital arrived",
+      "Write a one-page spec of the Andromeda Terminal, since its logic reappears in GLX",
+      "Keep 'Prime bank' as the long-range end state and map it to prime brokerage in the exchange chapters"
+    ],
+    "feeds": ["markets-tools", "main-coin", "glx"],
+    "chapter": "origins"
+  },
+  {
+    "id": "markets-tools",
+    "name": "Markets & tools",
+    "tagline": "Derivatives conviction, small bots, and the first venue sketches",
+    "era": "2021-08 → 2026-03",
+    "status": "superseded by American Perpetual",
+    "summary": "From the 2021 decentralized-derivatives tracker to the 2023 rules 'if it has perps, use perps' and 'Options are cheap leverage', Saheb's market view points to derivatives. His tools (Hook IV-bidding bot, Thales mispriced-options bot, airdrop farming, launch sniping) and research (Sujiko NFT perps, Justin Drake's preconfirmation work) lead to a 2026 screener that ranks US stocks for security-futures listing, the bridge into GLX.",
+    "ideas": [
+      {"name": "Decentralized derivatives thesis", "one_liner": "Tracked perps, options and synthetics venues by capital efficiency", "date": "2021-08"},
+      {"name": "Instrument rules", "one_liner": "'if it has perps, use perps'; options as cheap leverage; SOL spot as baseline", "date": "2023-10"},
+      {"name": "Crypto Options Protocol 0→1", "one_liner": "Taste-led options protocol in three months (no design written)", "date": "2024-01"},
+      {"name": "Hook NFT options bot", "one_liner": "Bids IV−10 on OTM strikes within 20% to farm Hook chests", "date": "2023-10"},
+      {"name": "Thales mispriced-options bot", "one_liner": "Hosted finder of mispriced options, est. $3–10k a month", "date": "2024-06"},
+      {"name": "Sujiko NFT perps", "one_liner": "NFT perpetuals DEX with $1 collateral; Saheb held 7 NFTs and ran an arbitrage", "date": "2023-10"},
+      {"name": "Sequencing & preconfirmations", "one_liner": "Justin Drake's based-preconf working group and 'fixing fragmentation' notes", "date": "2024-02"},
+      {"name": "Airdrop farming and sybil ops", "one_liner": "10 Solana wallets; $400 per 100 wallets; Blast, Rainbow, Lyra points", "date": "2024-01"},
+      {"name": "Launch sniping", "one_liner": "Banana Gun snipe log", "date": "2024-02"},
+      {"name": "Bitcoin Ordinals playbook", "one_liner": "Hold grails, flip 3k+ PFPs from 0.11–0.3 BTC to 1–2 BTC", "date": "2023-02"},
+      {"name": "Solana option trade / altcoin shorts", "one_liner": "One-line SOL fractal trade stub; 'May 2024 Altcoin Shorts' sheet unread", "date": "2024-06"},
+      {"name": "GLX notional-rank screener", "one_liner": "Ranks US stocks by notional with sfp_eligible ≥ $5 average close", "date": "2026-03"}
+    ],
+    "numbers": [
+      {"value": "658.96%", "label": "Perp.fi capital efficiency, Aug 2021"},
+      {"value": "IV − 10", "label": "Hook bot default bid"},
+      {"value": "$400 / 100 wallets", "label": "sybil farming cost per run"},
+      {"value": "~10%", "label": "L1 proposers needed for based preconfirmations"},
+      {"value": "$5", "label": "minimum average close for sfp_eligible"}
+    ],
+    "people": [
+      "Victor Bonhomme — owner of the decentralized-derivatives tracker",
+      "Justin Drake (Ethereum Foundation) — shared preconf directory and 'fixing fragmentation'",
+      "Zhe — Sujiko CTO per the Hyperdrive sheet",
+      "Hook.xyz — target of the bidding bot",
+      "Lyra team — farming relationship ('Very close with the team')"
+    ],
+    "next_moves": [
+      "Rotate the plaintext Polygon/Massive API key in Untitled0.ipynb",
+      "Read the 'Copy of May 2024 Altcoin Shorts' sheet",
+      "Clarify Saheb's role in Sujiko (investor, adviser or partner)",
+      "Fix and rerun the notional-rank screener as the AP listing-universe input"
+    ],
+    "feeds": ["glx", "andromeda", "stable-z"],
+    "chapter": "origins"
+  },
+  {
+    "id": "media-xr",
+    "name": "Media & XR",
+    "tagline": "Pay-per-decision films, one identity across the web, smart glasses",
+    "era": "2022-08 → 2025-10",
+    "status": "idea",
+    "summary": "The consumer surface of the early vision: one OS-level crypto account that pays per use across films, games, social and markets. Rifts (VR films with interactive pauses) pays RIFT holders on every decision and asks $2b at a $25b FDV; the Multiplayer web and the 2025 XR smart-glasses note extend the same identity into games and hardware.",
+    "ideas": [
+      {"name": "Rifts", "one_liner": "VR films with UE5 interactive pauses; ~$25 per 90-minute Rift in micro-payments", "date": "2024-02"},
+      {"name": "RIFT token", "one_liner": "Holders receive dividends on every decision inside a Rift", "date": "2024-02"},
+      {"name": "Multiplayer web", "one_liner": "One OS identity across Rifts, content, games and markets", "date": "2024-04"},
+      {"name": "XR bundle", "one_liner": "Smart glasses + controllers on Android XR; Zombies, Pokemon, MMO", "date": "2025-10"},
+      {"name": "Mixed-reality games", "one_liner": "Real-world zombie game with 3D-printed weapons; MR devices in Phases II–III", "date": "2023-11"},
+      {"name": "Wholesome OnlyFans", "one_liner": "20–30 minute video sessions for $20–30 in SOL on an ICP back end", "date": "2022-08"},
+      {"name": "Decentralized social media", "one_liner": "Influencer marketplace with tradable social tokens", "date": "2022-10"}
+    ],
+    "numbers": [
+      {"value": "$2b at $25b FDV", "label": "Rifts raise"},
+      {"value": "250", "label": "Rifts to be funded"},
+      {"value": "~$25", "label": "spend per 90-minute Rift"},
+      {"value": "$2 per $25", "label": "payout to an 8% RIFT owner per viewing"}
+    ],
+    "people": [
+      "Psychedelic — proposed funder of Wholesome OnlyFans",
+      "Harrison — separate conversation on Wholesome OnlyFans"
+    ],
+    "next_moves": [
+      "Decide whether RIFT is a product coin under the Prime main coin",
+      "Settle which 'existing blockchain' Rifts would run on",
+      "Clarify whether the 2025 XR glasses note and the 2026 XR ticker are meant to connect"
+    ],
+    "feeds": ["main-coin"],
+    "chapter": "origins"
+  },
+  {
+    "id": "real-assets",
+    "name": "Real assets & the energy standard",
+    "tagline": "Land, buildings and vehicles in crypto; the empire measured in Joules",
+    "era": "2021-03 → 2023-10",
+    "status": "idea",
+    "summary": "A physical ambition beside the coins: own property and vehicles, rent them in crypto, and pay holders in stablecoins. The 2022 fibonacci prime note measures the empire in Joules with a Fibonacci-prime target and an energy peg line ('1 UNIT OF ENERGY = $1'); the 2023 real-estate and '80 companies' documents supply the collateral and verticals that Z and CDR later use.",
+    "ideas": [
+      {"name": "fibonacci prime / energy unit E", "one_liner": "Empire scored in Joules; target F(83) = 99,194,853,094,755,497 E", "date": "2022-08"},
+      {"name": "Real-estate crypto empire", "one_liner": "Homebase-style SPV NFTs under Reg D 506(b); 'Single company, single NFTs'", "date": "2023-03"},
+      {"name": "80 companies", "one_liner": "Airbnb, Turo and jet charter 'but crypto', funded by option-trading earnings", "date": "2023-09"},
+      {"name": "Automated multi-asset order routing", "one_liner": "Swap any asset into stablecoins, bank accounts and dividends ('!! recurring theme')", "date": "2023-09"},
+      {"name": "Prosperity Game", "one_liner": "Doubling-spend exercise pairing DeFi blue chips with Miami and Austin property", "date": "2021-03"}
+    ],
+    "numbers": [
+      {"value": "99,194,853,094,755,497 E", "label": "empire target (Fibonacci prime F(83))"},
+      {"value": "8,271 J = $1", "label": "energy conversion at 12.09¢/kWh"},
+      {"value": "~20 quadrillion E", "label": "Gates land + Tesla benchmark"},
+      {"value": "80", "label": "companies to fund from option earnings"},
+      {"value": "$524,287,000", "label": "Prosperity Game total spend"}
+    ],
+    "people": [
+      "Homebase DAO — model for tokenized single-home SPVs",
+      "Tim Draper — cited PROPY backer"
+    ],
+    "next_moves": [
+      "Decide whether energy (E) is a unit of account for Prime or a personal metric only",
+      "Get securities advice before any tokenized-property design resumes"
+    ],
+    "feeds": ["stable-z", "main-coin"],
+    "chapter": "origins"
+  },
+  {
+    "id": "side-builds",
+    "name": "Side builds",
+    "tagline": "sonic.ooo, ICP NFTs, yami, MATL and the self-reported track record",
+    "era": "2021-04 → 2024",
+    "status": "parked",
+    "summary": "Smaller projects that fill in Saheb's record: a 2021 $4M/yr business budget, technical marketing at Fleek and sonic.ooo, Internet Computer NFT ideas, the yami privacy-protocol grant ask on Taiko, and MATL, an AI swarm token on X that the résumé says reached a $40M market cap. The 'algostable at seventeen' and AI-swarm claims in the 2026 investor document draw on this pod.",
+    "ideas": [
+      {"name": "First business budget", "one_liner": "$4M/yr blockchain/AI business with a Brickell office", "date": "2021-04"},
+      {"name": "sonic.ooo at Fleek/Psychedelic", "one_liner": "PM/creator; later sold", "date": "2021-05"},
+      {"name": "Internet Computer NFTs", "one_liner": "Trolls, Bunnies, Superheroes/Villains, Wizards collections", "date": "2021-07"},
+      {"name": "yami", "one_liner": "Railgun-style shielded transfers on Taiko with a fee-share token; $2m grant ask", "date": "2024-01"},
+      {"name": "MATL", "one_liner": "First AI swarm on X built on ElizaOS; $50K raised; $40M market cap claimed", "date": "2024-12"}
+    ],
+    "numbers": [
+      {"value": "$4M/yr", "label": "2021 business budget"},
+      {"value": "$2m", "label": "yami Taiko grant ask"},
+      {"value": "$50K", "label": "MATL raise (AI16z, Ryze Labs)"},
+      {"value": "$40M", "label": "MATL market cap (self-reported)"}
+    ],
+    "people": [
+      "Fleek / Psychedelic — employer (sonic.ooo)",
+      "Taiko Labs — grant program (yami)",
+      "mteam88 — MEV developer who pointed Saheb to Taiko grants",
+      "AI16z, Ryze Labs — MATL investors",
+      "Jai — recipient of a 2021 outreach draft"
+    ],
+    "next_moves": [
+      "Find or write a MATL record (dates, token, chain) to back the $40M claim",
+      "Record the yami grant outcome"
+    ],
+    "feeds": ["main-coin", "manifest"],
+    "chapter": "origins"
+  }
+]
