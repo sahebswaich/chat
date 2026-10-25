@@ -144,7 +144,7 @@ EXTRA_CSS = """
 .paper-toolbar .count { font: 12.5px var(--mono); color: var(--ink); background: var(--paper); border-radius: 6px; padding: 4px 8px; }
 mark.hit { background: #ffe58a; color: inherit; padding: 0 1px; border-radius: 2px; }
 mark.hit.now { background: #ffb02e; outline: 2px solid #ffb02e; }
-@media (max-width: 700px) { .cover-stats { grid-template-columns: 1fr; } .paper-toolbar .tb-title { display: none; } }
+@media screen and (max-width: 700px) { .cover-stats { grid-template-columns: 1fr; } .paper-toolbar .tb-title { display: none; } }
 @media print { .progress { display: none; } }
 """
 
@@ -259,7 +259,7 @@ body { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: m
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--desk); }
 .paper-toolbar { top: env(safe-area-inset-top, 0px); margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px))); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 .paper { width: min(860px, 100%); }
-@media (max-width: 700px) { body { padding-left: 0; padding-right: 0; } .paper-toolbar { margin: 0; } .paper { padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); } }
+@media screen and (max-width: 700px) { body { padding-left: 0; padding-right: 0; } .paper-toolbar { margin: 0; } .paper { padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); } }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
 """
     fonts = f'<link rel="stylesheet" href="{font_import.group(1)}">' if font_import else ""
