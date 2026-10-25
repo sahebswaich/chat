@@ -169,5 +169,8 @@ body.gate {
   .home { padding: 0 16px 60px; }
   .top { padding: 10px 16px; gap: 10px; }
   .tiles { grid-template-columns: 1fr; }
-  .stats { grid-template-columns: 1fr 1fr; }
+  .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .stat { padding: 10px; }
+  .stat b { font-size: 16px; }
+  .stat span { font-size: 11px; }
 }

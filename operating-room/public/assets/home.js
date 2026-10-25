@@ -105,6 +105,7 @@ function renderOrbit(pods, core) {
 
 let PODS = [];
 let ORGS = [];
+let TREATISE = "/treatise/";
 const podById = () => new Map(PODS.map((p) => [p.id, p]));
 
 function renderPods(orgs) {
@@ -169,7 +170,7 @@ function podBlock(p) {
     ${p.ideas?.length ? `<h4>Ideas · ${p.ideas.length}</h4><ul>${p.ideas.map((i) => `<li class="idea"><b>${esc(i.name)}</b> — ${esc(i.one_liner)} <span class="d">${esc(i.date ?? "")}</span></li>`).join("")}</ul>` : ""}
     ${p.next_moves?.length ? `<h4>Next moves</h4><ul>${p.next_moves.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}
     ${p.people?.length ? `<h4>People</h4><ul>${p.people.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}
-    ${p.chapter ? `<p><a href="/treatise/#${esc(p.chapter)}">Read in the treatise →</a></p>` : ""}
+    ${p.chapter ? `<p><a href="${TREATISE}#${esc(p.chapter)}">Read in the treatise →</a></p>` : ""}
   </details>`;
 }
 
@@ -186,7 +187,7 @@ function openOrg(id, focusPod) {
     <p>${esc(o.summary)}</p>
     ${o.feeds?.length ? `<h3>Coordinates with</h3><p>${o.feeds.map((f) => `<a href="#" data-org="${esc(f)}">${esc(orgName.get(f) ?? f)}</a>`).join(" · ")}</p>` : ""}
     <h3>Pods</h3>${o.pods.map((pid) => byId.get(pid)).filter(Boolean).map(podBlock).join("")}
-    ${o.chapter ? `<h3>Read</h3><p><a href="/treatise/#${esc(o.chapter)}">Treatise chapter →</a></p>` : ""}`;
+    ${o.chapter ? `<h3>Read</h3><p><a href="${TREATISE}#${esc(o.chapter)}">Treatise chapter →</a></p>` : ""}`;
   if (focusPod) {
     const d = document.getElementById(`pod-${focusPod}`);
     if (d) {
@@ -222,13 +223,17 @@ async function init() {
       openOrg(a.dataset.org);
     }
   });
-  const [session, config, vision, orgs, pods] = await Promise.all([
-    getJson("/api/session").catch(() => ({})),
-    getJson("/api/config").catch(() => ({})),
-    getJson("/data/vision.json"),
-    getJson("/data/orgs.json"),
-    getJson("/data/pods.json"),
-  ]);
+  // A single-file edition embeds its data as window.ROOM_DATA instead of serving /data and /api.
+  const embedded = window.ROOM_DATA;
+  const [session, config, vision, orgs, pods] = embedded
+    ? [embedded.session ?? {}, embedded.config ?? {}, embedded.vision, embedded.orgs, embedded.pods]
+    : await Promise.all([
+        getJson("/api/session").catch(() => ({})),
+        getJson("/api/config").catch(() => ({})),
+        getJson("/data/vision.json"),
+        getJson("/data/orgs.json"),
+        getJson("/data/pods.json"),
+      ]);
   for (const el of document.querySelectorAll(".owner-only")) el.hidden = session.role !== "owner";
   if (config.roomName) {
     $("#roomName").textContent = config.roomName;
@@ -238,6 +243,10 @@ async function init() {
   for (const a of [$("#navTerminal"), $("#tileTerminal")]) {
     if (term) a.href = term;
     else a.hidden = true;
+  }
+  if (config.treatiseUrl) {
+    TREATISE = config.treatiseUrl;
+    for (const a of document.querySelectorAll('a[href^="/treatise/"]')) a.href = TREATISE + a.getAttribute("href").replace(/^\/treatise\/?/, "");
   }
   PODS = pods;
   ORGS = orgs.filter((o) => o.pods.length);
