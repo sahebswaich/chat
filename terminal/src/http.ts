@@ -1,0 +1,145 @@
+// JSON responses, the error shape, and request-body parsing (shared with the Nimbus server).
+
+/** Thrown by handlers; turned into `{"error": {"code", "message"}}` by the router. */
+export class HttpError extends Error {
+  constructor(
+    readonly status: number,
+    readonly code: string,
+    message: string,
+    readonly extra?: Record<string, unknown>,
+    readonly headers?: Record<string, string>,
+  ) {
+    super(message);
+  }
+}
+
+const JSON_HEADERS = {
+  "content-type": "application/json; charset=utf-8",
+  "cache-control": "no-store",
+} as const;
+
+export function json(data: unknown, status = 200, headers: Record<string, string> = {}): Response {
+  return new Response(JSON.stringify(data), { status, headers: { ...JSON_HEADERS, ...headers } });
+}
+
+export function errorResponse(err: HttpError): Response {
+  return json(
+    { error: { code: err.code, message: err.message, ...(err.extra ?? {}) } },
+    err.status,
+    err.headers,
+  );
+}
+
+export function noContent(): Response {
+  return new Response(null, { status: 204 });
+}
+
+export const invalidRequest = (message: string) => new HttpError(400, "invalid_request", message);
+
+/**
+ * Upper bound for any request body, in bytes. Publications are the largest bodies
+ * (a long treatise page is a few hundred KB), so 6 MB bounds memory with room to spare.
+ */
+export const MAX_BODY_BYTES = 6_000_000;
+
+const tooLarge = () => invalidRequest("Request body is too large.");
+
+/**
+ * Reads the body as UTF-8 text, giving up as soon as it exceeds `max` bytes (the
+ * Content-Length header is optional and can't be trusted, so the bytes are counted).
+ */
+async function readBodyText(request: Request, max: number): Promise<string> {
+  const declared = Number(request.headers.get("content-length") ?? "0");
+  if (declared > max) throw tooLarge();
+  if (!request.body) return "";
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > max) {
+        reader.cancel().catch(() => {});
+        throw tooLarge();
+      }
+      chunks.push(value);
+    }
+  } catch (err) {
+    if (err instanceof HttpError) throw err;
+    throw invalidRequest("Could not read the request body.");
+  }
+  const bytes = new Uint8Array(size);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return new TextDecoder().decode(bytes);
+}
+
+/** Reads and parses a JSON object body, or throws 400 invalid_request. */
+export async function readJsonObject(request: Request): Promise<Record<string, unknown>> {
+  const text = await readBodyText(request, MAX_BODY_BYTES);
+  let value: unknown;
+  try {
+    value = JSON.parse(text);
+  } catch {
+    throw invalidRequest("Request body must be valid JSON.");
+  }
+  if (typeof value !== "object" || value === null || Array.isArray(value)) {
+    throw invalidRequest("Request body must be a JSON object.");
+  }
+  return value as Record<string, unknown>;
+}
+
+/** Optional string field: undefined/null → undefined; otherwise must be a string ≤ max chars. */
+export function optionalString(
+  body: Record<string, unknown>,
+  key: string,
+  max: number,
+): string | undefined {
+  const value = body[key];
+  if (value === undefined || value === null) return undefined;
+  if (typeof value !== "string") throw invalidRequest(`"${key}" must be a string.`);
+  if (value.length > max) throw invalidRequest(`"${key}" must be at most ${max} characters.`);
+  return value;
+}
+
+/** Required non-blank string field ≤ max chars (returned untrimmed unless `trim`). */
+export function requiredString(
+  body: Record<string, unknown>,
+  key: string,
+  max: number,
+  trim = false,
+): string {
+  const value = optionalString(body, key, max);
+  if (value === undefined || value.trim() === "") throw invalidRequest(`"${key}" is required.`);
+  return trim ? value.trim() : value;
+}
+
+/** Optional integer field within [min, max]; undefined/null → undefined. */
+export function optionalInt(
+  body: Record<string, unknown>,
+  key: string,
+  min: number,
+  max: number,
+): number | undefined {
+  const value = body[key];
+  if (value === undefined || value === null) return undefined;
+  if (typeof value !== "number" || !Number.isInteger(value) || value < min || value > max) {
+    throw invalidRequest(`"${key}" must be a whole number from ${min} to ${max}.`);
+  }
+  return value;
+}
+
+/**
+ * "https://<host>" for links handed out (share links). Plain http is
+ * kept only for local development hosts (wrangler dev).
+ */
+export function publicOrigin(request: Request): string {
+  const url = new URL(request.url);
+  const local = ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname) || url.hostname.endsWith(".localhost");
+  return `${local ? url.protocol : "https:"}//${url.host}`;
+}

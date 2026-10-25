@@ -1,0 +1,49 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Operating Room: one Cloudflare Worker + one D1 database + the static pages in public/.
+  // Every request goes through the Worker first (run_worker_first), so the password gate
+  // covers the static pages too. The trading terminal is a separate Worker (../terminal).
+  "name": "operating-room",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "observability": { "enabled": true },
+
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+
+  // Plain settings. Change them here and redeploy.
+  "vars": {
+    // Shown in the header and on the sign-in page.
+    "ROOM_NAME": "Operating Room",
+    // Optional: serve each publication on its own subdomain, e.g. "pub.example.com" makes
+    // https://<slug>.pub.example.com show /p/<slug>. Needs a wildcard DNS record and route
+    // (README → "Your own domain"). Leave "" to use /p/<slug> paths only.
+    "PUBLISH_HOST_SUFFIX": "",
+    // Where the home page's Terminal tile points (the terminal is its own Worker).
+    "TERMINAL_URL": ""
+  },
+
+  // ROOM_PASSWORD: the owner password. SESSION_SECRET: random string that signs cookies.
+  "secrets": {
+    "required": ["ROOM_PASSWORD", "SESSION_SECRET"]
+  },
+
+  // `wrangler deploy` creates the "operating-room" database on the first deploy.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "operating-room",
+      "migrations_dir": "migrations"
+    }
+  ],
+
+  // Your own domain (README → "Your own domain"). Uncomment and edit, then redeploy:
+  // "routes": [
+  //   { "pattern": "room.example.com", "custom_domain": true },
+  //   { "pattern": "*.pub.example.com/*", "zone_name": "example.com" }
+  // ]
+}

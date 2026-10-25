@@ -1,0 +1,4 @@
+# Copy to .dev.vars for `npm run dev` (local only; never committed).
+ROOM_PASSWORD=change-me
+SESSION_SECRET=replace-with-output-of-openssl-rand-hex-32
+# COINGECKO_API_KEY=CG-...

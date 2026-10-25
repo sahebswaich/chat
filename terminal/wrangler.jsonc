@@ -1,0 +1,44 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Trading terminal: one Cloudflare Worker + one D1 database + the static terminal in public/.
+  // Every request goes through the Worker first (run_worker_first), so the password gate covers
+  // the page too. Market data is fetched server-side from public APIs and cached at the edge.
+  "name": "trading-terminal",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "observability": { "enabled": true },
+
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+
+  "vars": {
+    // Shown in the header and on the sign-in page.
+    "ROOM_NAME": "Terminal"
+  },
+
+  // ROOM_PASSWORD: the terminal password. SESSION_SECRET: random string that signs cookies.
+  // Optional: COINGECKO_API_KEY (a free CoinGecko "Demo" key raises rate limits).
+  "secrets": {
+    "required": ["ROOM_PASSWORD", "SESSION_SECRET"]
+  },
+
+  // `wrangler deploy` creates the "trading-terminal" database on the first deploy.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "trading-terminal",
+      "migrations_dir": "migrations"
+    }
+  ],
+
+  // Hourly market snapshots (OI, funding, Korea flow) so the board can show OI changes over
+  // 1D / 3D / 1W even though the free APIs only give current values.
+  "triggers": { "crons": ["7 * * * *"] }
+
+  // Your own domain (README → "Your own domain"). Uncomment and edit, then redeploy:
+  // ,"routes": [{ "pattern": "terminal.example.com", "custom_domain": true }]
+}

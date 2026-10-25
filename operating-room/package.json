@@ -1,0 +1,27 @@
+{
+  "name": "operating-room",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Operating Room: password-gated Cloudflare Worker that hosts the trading terminal, the Prime treatise, publishing and discussion.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "wrangler d1 migrations apply operating-room --local && wrangler dev",
+    "deploy": "wrangler d1 migrations apply operating-room --remote && wrangler deploy",
+    "db:migrate": "wrangler d1 migrations apply operating-room --remote",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "check": "tsc --noEmit && vitest run && wrangler deploy --dry-run --outdir .wrangler/dry-run",
+    "publish-page": "node scripts/publish.mjs",
+    "types": "wrangler types --include-runtime=false --strict-vars=false"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "1.4.3",
+    "@cloudflare/workers-types": "5.20261015.1",
+    "typescript": "7.0.2",
+    "vitest": "5.0.5",
+    "wrangler": "4.151.0"
+  }
+}

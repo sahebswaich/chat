@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Runs importers/icloud_mail.py every hour on the Mac and writes into Google Drive.
+     Edit ICLOUD_EMAIL and the two paths, copy to ~/Library/LaunchAgents/, then:
+     launchctl load ~/Library/LaunchAgents/com.saheb.icloud-mail.plist -->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.saheb.icloud-mail</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string>
+    <string>/Users/YOU/chat/importers/icloud_mail.py</string>
+    <string>--match</string><string>smollen</string>
+    <string>--out</string>
+    <string>/Users/YOU/Library/CloudStorage/GoogleDrive-swaichsaheb@gmail.com/My Drive/AI Inbox/iCloud Mail</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>ICLOUD_EMAIL</key><string>you@icloud.com</string>
+  </dict>
+  <key>StartInterval</key><integer>3600</integer>
+  <key>RunAtLoad</key><true/>
+  <key>StandardOutPath</key><string>/tmp/icloud-mail.log</string>
+  <key>StandardErrorPath</key><string>/tmp/icloud-mail.log</string>
+</dict>
+</plist>
