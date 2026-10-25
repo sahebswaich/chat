@@ -39,6 +39,8 @@ def render_markdown(text: str) -> str:
     out = re.sub(r"<table>", '<div class="tbl-wrap"><table>', out)
     out = re.sub(r"</table>", "</table></div>", out)
     out = re.sub(r"<p><em>(Sources?:.*?)</em></p>", r'<p class="source"><em>\1</em></p>', out, flags=re.S)
+    out = re.sub(r"<li>\s*\[ \]\s*", '<li class="task"><span class="box" aria-hidden="true">☐</span> ', out)
+    out = re.sub(r"<li>\s*\[[xX]\]\s*", '<li class="task done"><span class="box" aria-hidden="true">☑</span> ', out)
     return re.sub(r"<blockquote>(.*?)</blockquote>", callouts, out, flags=re.S)
 
 
@@ -136,6 +138,8 @@ EXTRA_CSS = """
 .cover-stats .callout { margin: 0; }
 .cover .toc li .n { width: 52px; flex: none; }
 .cover .toc h2 { font: 600 13px/1 var(--sans); letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-2); margin-top: 40px; }
+.paper li.task { list-style: none; margin-left: -22px; }
+.paper li.task .box { font-family: var(--sans); color: var(--accent); }
 .progress { position: fixed; left: 0; right: 0; top: 0; height: 3px; z-index: 20; pointer-events: none; }
 .progress span { display: block; height: 100%; width: 0; background: var(--accent); }
 .paper-toolbar .tb-title { font: 400 18px/1 var(--display); color: var(--ink); white-space: nowrap; }
