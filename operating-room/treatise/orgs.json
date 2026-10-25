@@ -178,7 +178,9 @@
       "real-assets",
       "side-builds"
     ],
-    "pod_prefixes": [],
+    "pod_prefixes": [
+      "archive-"
+    ],
     "links": [
       "org-rei",
       "org-glx"

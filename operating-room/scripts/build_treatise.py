@@ -30,7 +30,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "treatise"
 PAPER_CSS = ROOT / "public" / "assets" / "paper.css"
 
-ROMAN = re.compile(r"^(?P<num>[IVXLC]+)\.\s+(?P<title>.+)$")
+ROMAN = re.compile(r"^(?P<num>[IVXLC]+(?:-[A-Z])?)\.\s+(?P<title>.+)$")
 APPX = re.compile(r"^Appendix (?P<num>[A-Z])\.\s+(?P<title>.+)$")
 
 
