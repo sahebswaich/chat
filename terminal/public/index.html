@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Terminal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/terminal.css">
+</head>
+<body>
+<header class="bar">
+  <div class="brand"><span class="mark">X<sup>∞</sup></span><span>Terminal</span></div>
+  <div class="tf" role="tablist" aria-label="Timeframe">
+    <button role="tab" data-tf="1d">1D</button>
+    <button role="tab" data-tf="3d">3D</button>
+    <button role="tab" data-tf="1w">1W</button>
+  </div>
+  <label class="field grow"><span>Exclude</span><input id="exclude" placeholder="KAITO, PENGU" spellcheck="false"></label>
+  <label class="field"><span>Universe</span><input id="universe" type="number" min="5" max="36" step="1"></label>
+  <button id="refresh" class="btn" title="Refresh (R)">↻ Refresh</button>
+  <span id="updated" class="muted mono"></span>
+  <span id="sources" class="sources" title="Data sources"></span>
+  <button id="settingsBtn" class="btn ghost" aria-expanded="false" aria-controls="settings">⚙ Rules</button>
+  <button id="shareBtn" class="btn ghost owner-only" hidden>Share</button>
+</header>
+
+<aside id="settings" class="drawer" hidden>
+  <h3>Account rules</h3>
+  <p class="muted small">Set these to your funded-account (Breakout) limits. Sizing takes the tightest of risk, leverage cap and share of open interest.</p>
+  <div class="grid2">
+    <label class="field"><span>Equity $</span><input data-acct="equity" type="number" min="0" step="1000"></label>
+    <label class="field"><span>Risk per trade $</span><input data-acct="risk" type="number" min="0" step="50"></label>
+    <label class="field"><span>Max lev BTC/ETH</span><input data-acct="levMajors" type="number" min="0" step="0.5"></label>
+    <label class="field"><span>Max lev alts</span><input data-acct="levAlts" type="number" min="0" step="0.5"></label>
+    <label class="field"><span>Max % of OI</span><input data-acct="oiFrac" type="number" min="0" step="0.05"></label>
+    <label class="field"><span>Stop (ATRs)</span><input data-acct="stopAtr" type="number" min="0.1" step="0.1"></label>
+  </div>
+  <h3>Signal weights</h3>
+  <div class="grid2" id="weights"></div>
+  <div class="row"><button id="resetRules" class="btn ghost">Reset</button><button id="applyRules" class="btn">Apply</button></div>
+</aside>
+
+<main class="layout">
+  <section class="panel board" aria-labelledby="boardTitle">
+    <div class="panel-head">
+      <h2 id="boardTitle">Setups <span id="tfLabel" class="tag"></span></h2>
+      <div class="muted small" id="boardNote">Ranked by breakout, momentum, volume, funding, leverage, OI flow and Korea flow.</div>
+    </div>
+    <div class="table-wrap">
+      <table id="boardTable" class="tbl">
+        <thead><tr>
+          <th>#</th><th>Coin</th><th>Side</th><th class="num">Score</th><th class="num">Price</th><th>Breakout · since</th>
+          <th class="num">Funding APR</th><th class="num">OI / mcap</th><th class="num">Korea ×</th><th class="num">Size</th><th>30 bars</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div id="detail" class="detail" hidden></div>
+  </section>
+
+  <section class="panel" aria-labelledby="koreaTitle">
+    <div class="panel-head">
+      <h2 id="koreaTitle">Korea flow</h2>
+      <div class="muted small" id="koreaNote">Upbit + Bithumb turnover vs global volume.</div>
+    </div>
+    <div class="table-wrap">
+      <table id="koreaTable" class="tbl">
+        <thead><tr><th>#</th><th>Coin</th><th class="num">Interest</th><th class="num">Korea share</th><th class="num">Global share</th><th class="num">Korea vs global</th><th class="num">24h turnover</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="levTitle">
+    <div class="panel-head">
+      <h2 id="levTitle">Leverage map</h2>
+      <div class="muted small" id="levNote">Perp open interest across venues (CoinGecko derivatives) vs market cap.</div>
+    </div>
+    <div class="table-wrap">
+      <table id="levTable" class="tbl">
+        <thead><tr><th>Coin</th><th class="num">Perp OI</th><th class="num">OI / mcap</th><th class="num">Avg funding</th><th class="num">HL funding APR</th><th class="num">Vol / OI</th><th class="num">Venues</th><th class="num">HL max lev</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="impTitle">
+    <div class="panel-head">
+      <h2 id="impTitle">Zero-fee trenches · pair impact</h2>
+      <div class="controls">
+        <label class="field"><span>Pair size $</span><input id="pairSize" type="number" min="100" step="1000"></label>
+        <label class="field"><span>Max impact bps</span><input id="pairImpactBps" type="number" min="0.1" step="1"></label>
+        <label class="check"><input id="kraken" type="checkbox"> Kraken</label>
+        <button id="impactGo" class="btn ghost">Run</button>
+      </div>
+    </div>
+    <div class="split">
+      <div class="table-wrap">
+        <table id="impTable" class="tbl">
+          <thead><tr><th>Coin</th><th class="num">Buy bps</th><th class="num">Sell bps</th><th class="num">Round trip</th><th class="num">+ fees</th><th class="num">Kraken spread</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table id="pairTable" class="tbl">
+          <thead><tr><th>Long</th><th>Short</th><th class="num">Entry impact</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel owner-only" aria-labelledby="jTitle" hidden>
+    <div class="panel-head">
+      <h2 id="jTitle">Journal · moves since fill</h2>
+      <div class="controls"><button id="csvBtn" class="btn ghost">Paste fills (CSV)</button></div>
+    </div>
+    <form id="csvForm" class="csv" hidden>
+      <textarea id="csvText" rows="5" placeholder="time,coin,side,price,size,leverage&#10;2026-10-20 14:05,BTC,long,61000,0.5,5"></textarea>
+      <div class="row"><button type="submit" class="btn">Import</button><span id="csvMsg" class="muted small"></span></div>
+    </form>
+    <div class="table-wrap">
+      <table id="fillTable" class="tbl">
+        <thead><tr><th>Filled</th><th>Coin</th><th>Side</th><th class="num">Price</th><th class="num">Size</th><th class="num">Lev</th><th class="num">Mark</th><th class="num">Move since</th><th class="num">P&amp;L</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<dialog id="shareDialog">
+  <form method="dialog" class="share">
+    <h3>Share the terminal</h3>
+    <p class="muted small">Anyone with the link sees the market panels read-only (never your journal). Turn links off any time.</p>
+    <label class="field"><span>Label</span><input id="shareLabel" value="Desk"></label>
+    <label class="field"><span>Expires in days (blank = never)</span><input id="shareDays" type="number" min="1"></label>
+    <div class="row"><button value="cancel" class="btn ghost">Close</button><button id="shareMake" value="default" class="btn">Create link</button></div>
+    <input id="shareOut" readonly hidden>
+    <ul id="shareList" class="share-list"></ul>
+  </form>
+</dialog>
+
+<script type="module" src="/assets/terminal.js"></script>
+</body>
+</html>

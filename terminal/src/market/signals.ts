@@ -379,7 +379,8 @@ export function scoreSide(f: CoinFeatures, side: "long" | "short", w: Weights = 
     const freshness = Math.max(0, 1 - b.barsSince / 8);
     const ext = fin(b.extensionAtr) ? clamp(b.extensionAtr / 2, -1, 1) : 0;
     bo = dir * s * (b.holding ? 0.5 + 0.5 * freshness : -0.5) * (ext > 1.5 ? 0.7 : 1);
-    boNote = `${b.direction === "up" ? "broke above" : "broke below"} ${b.barsSince} bar${b.barsSince === 1 ? "" : "s"} ago, ${
+    const when = b.barsSince === 0 ? "on this bar" : `${b.barsSince} bar${b.barsSince === 1 ? "" : "s"} ago`;
+    boNote = `${b.direction === "up" ? "broke above" : "broke below"} ${when}, ${
       b.holding ? "holding" : "failed"
     }, ${fin(b.moveSince) ? (b.moveSince * 100).toFixed(1) : "?"}% since`;
   }

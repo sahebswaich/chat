@@ -1,0 +1,65 @@
+/* Sign-in and notice pages (served before the visitor is signed in). */
+:root {
+  --bg: #07090d;
+  --panel: #0e131b;
+  --line: #1c2533;
+  --text: #e6edf6;
+  --muted: #7d8aa0;
+  --accent: #5eead4;
+  --danger: #ff6b6b;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body.gate {
+  background: radial-gradient(1200px 600px at 50% -10%, #132235 0%, var(--bg) 60%);
+  color: var(--text);
+  font: 15px/1.5 "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 16px;
+}
+.gate-card {
+  width: min(380px, 100%);
+  background: color-mix(in srgb, var(--panel) 92%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 32px 28px 24px;
+  text-align: center;
+  box-shadow: 0 30px 80px -30px #000;
+}
+.gate-mark {
+  font: 600 44px/1 "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: -0.04em;
+  background: linear-gradient(120deg, #5eead4, #818cf8 60%, #f0abfc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 8px;
+}
+.gate-mark sup { font-size: 0.5em; }
+.gate-card h1 { font-size: 20px; margin: 4px 0 2px; letter-spacing: 0.02em; }
+.muted { color: var(--muted); }
+.small { font-size: 12px; }
+#login { display: grid; gap: 10px; margin: 18px 0 10px; }
+#login input {
+  background: #0a0f16;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--text);
+  font: inherit;
+  padding: 12px 14px;
+}
+#login input:focus { outline: 2px solid color-mix(in srgb, var(--accent) 60%, transparent); outline-offset: 1px; }
+#login button {
+  background: var(--accent);
+  border: 0;
+  border-radius: 10px;
+  color: #04201c;
+  cursor: pointer;
+  font: 600 15px/1 inherit;
+  padding: 12px;
+}
+.error { color: var(--danger); margin: 0; font-size: 13px; }
+a { color: var(--accent); }

@@ -20,3 +20,7 @@ server/node_modules/
 server/.wrangler/
 server/.dev.vars
 server/.nimbus-admin.json
+
+# Python
+__pycache__/
+*.pyc

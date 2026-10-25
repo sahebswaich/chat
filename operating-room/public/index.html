@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Operating Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/room.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/"><span class="x">X<sup>∞</sup></span><span id="roomName">Operating Room</span></a>
+  <nav aria-label="Room">
+    <a href="#vision" aria-current="page">Vision</a>
+    <a href="#pods">Pods</a>
+    <a href="#moves">Moves</a>
+    <a href="/treatise/">Treatise</a>
+    <a id="navTerminal" href="#" target="_blank" rel="noopener">Terminal ↗</a>
+    <a class="owner-only" href="/publish/" hidden>Publish</a>
+  </nav>
+</header>
+
+<main class="home">
+  <section class="hero" id="vision" aria-labelledby="visionTitle">
+    <div>
+      <h1 id="visionTitle"><small id="kicker">The unified vision</small>X → ∞</h1>
+      <p class="thesis" id="thesis"></p>
+      <div class="stats" id="stats"></div>
+    </div>
+    <div class="orbit-wrap">
+      <svg class="orbit" id="orbit" viewBox="-320 -320 640 640" role="img" aria-label="The pods around the unified vision"></svg>
+      <div class="legend" id="legend"></div>
+    </div>
+  </section>
+
+  <div class="section-title"><h2>Rooms</h2></div>
+  <div class="tiles">
+    <a class="tile primary" href="/treatise/"><span class="k">Read</span><h3>The Prime Treatise</h3><p>Every idea, 2021 → now, unified. Paper pages, PDF export, discussion on every section.</p></a>
+    <a class="tile" id="tileTerminal" href="#" target="_blank" rel="noopener"><span class="k">Trade</span><h3>Terminal ↗</h3><p>Setups by timeframe from OI/mcap, funding, breakouts, Korea flow and depth.</p></a>
+    <a class="tile owner-only" href="/publish/" hidden><span class="k">Publish</span><h3>Pages &amp; links</h3><p>Publish any page to a path or its own domain; hand out Excalidraw-style links.</p></a>
+    <a class="tile" href="#eras"><span class="k">Trace</span><h3>Eras</h3><p>How the vision moved: Manifest → the coin → the fund → Greyline → GLX → American Perpetual.</p></a>
+  </div>
+
+  <div class="section-title" id="eras"><h2>Eras</h2><span class="muted small">Left to right, oldest first</span></div>
+  <div class="eras" id="erasList"></div>
+
+  <div class="section-title" id="pods"><h2>Pods</h2><span class="muted small">Idea groups that each own a piece of the vision — click one</span></div>
+  <div class="pods" id="podList"></div>
+
+  <div class="section-title" id="moves"><h2>Coordination · next moves</h2><span class="muted small">Ticks are saved in this browser</span></div>
+  <div class="moves" id="moveLanes"></div>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Pod" aria-hidden="true">
+  <button class="close" type="button" id="drawerClose">Close</button>
+  <div id="drawerBody"></div>
+</aside>
+
+<script type="module" src="/assets/home.js"></script>
+</body>
+</html>

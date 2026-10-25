@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Publish · Operating Room</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/room.css">
+<style>
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 16px; }
+  .wrap h2 { margin: 0 0 12px; font: 600 12.5px/1 var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: #c7d2e2; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .stack { display: grid; gap: 10px; }
+  .row { display: flex; gap: 8px; align-items: center; justify-content: flex-end; flex-wrap: wrap; }
+  .msg { font-size: 13px; color: var(--muted); }
+  .url { font: 12px var(--mono); background: var(--bg-2); border: 1px solid var(--teal); border-radius: 8px; padding: 8px; width: 100%; color: var(--text); }
+  .full { grid-column: 1 / -1; }
+  @media (max-width: 900px) { .wrap { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/"><span class="x">X<sup>∞</sup></span><span>Operating Room</span></a>
+  <nav><a href="/">Home</a><a href="/treatise/">Treatise</a><a href="/publish/" aria-current="page">Publish</a></nav>
+</header>
+<main class="wrap">
+  <section class="panel">
+    <h2>Publications</h2>
+    <table class="list" id="pubs"><thead><tr><th>Page</th><th>Visibility</th><th></th></tr></thead><tbody></tbody></table>
+    <div class="row" style="margin-top:12px"><button class="btn ghost" id="newPub">New page</button></div>
+  </section>
+
+  <section class="panel stack">
+    <h2 id="editTitle">New page</h2>
+    <div class="grid2">
+      <label class="field">Slug (address: /p/slug)<input id="slug" placeholder="glx-memo" pattern="[a-z0-9-]+"></label>
+      <label class="field">Title<input id="title" placeholder="The GLX memo"></label>
+      <label class="field">Kind<select id="kind"><option value="markdown">Markdown (paper pages)</option><option value="html">HTML (served as-is, sandboxed)</option></select></label>
+      <label class="field">Visibility<select id="visibility"><option value="private">Private — owner and share links</option><option value="public">Public — anyone with the address</option></select></label>
+      <label class="field full">Own hostname (optional — e.g. memo.yourdomain.com; add it in Cloudflare first, see README)<input id="customHost" placeholder="memo.example.com"></label>
+    </div>
+    <label class="field">Body<textarea id="body" placeholder="# Title&#10;&#10;Write markdown. Callouts: > [!number] $40M — signing payment"></textarea></label>
+    <div class="row"><span class="msg" id="saveMsg"></span><a class="btn ghost" id="viewLink" href="#" target="_blank" hidden>Open ↗</a><button class="btn" id="save">Publish</button></div>
+  </section>
+
+  <section class="panel stack full">
+    <h2>Share links</h2>
+    <p class="msg">Like an Excalidraw room link: whoever opens it gets into that part of the room — no password. "Comment" links can join the discussion. Turn any link off at any time.</p>
+    <div class="grid2" style="grid-template-columns: 1.2fr 1fr 0.8fr 0.8fr auto; align-items:end">
+      <label class="field">Opens<input id="shScope" value="/treatise" placeholder="/treatise or /p/slug"></label>
+      <label class="field">Label (who it's for)<input id="shLabel" placeholder="Joe — MIAX"></label>
+      <label class="field">Access<select id="shRole"><option value="comment">Read + comment</option><option value="view">Read only</option></select></label>
+      <label class="field">Expires (days)<input id="shDays" type="number" min="1" placeholder="never"></label>
+      <button class="btn" id="shMake">Create link</button>
+    </div>
+    <input class="url" id="shOut" readonly hidden>
+    <table class="list" id="shares"><thead><tr><th>Who</th><th>Opens</th><th>Access</th><th>Last used</th><th></th></tr></thead><tbody></tbody></table>
+  </section>
+</main>
+<script type="module">
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+async function api(path, init) {
+  const res = await fetch(path, init);
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data?.error?.message ?? `HTTP ${res.status}`);
+  return data;
+}
+const send = (method, path, body) => api(path, { method, headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+
+async function loadPubs() {
+  const { publications } = await api("/api/publications");
+  $("#pubs tbody").innerHTML = publications.map((p) => `<tr><td><a href="${esc(p.path)}" target="_blank">${esc(p.title)}</a><div class="msg mono">${esc(p.path)}${p.customHost ? " · " + esc(p.customHost) : ""}</div></td>
+    <td>${esc(p.visibility)}</td><td class="row"><button class="linkbtn" data-edit="${esc(p.slug)}">Edit</button><button class="linkbtn" data-share="${esc(p.path)}">Share</button><button class="linkbtn" data-del="${esc(p.slug)}">Delete</button></td></tr>`).join("")
+    || `<tr><td colspan="3" class="msg">Nothing published yet.</td></tr>`;
+}
+async function loadShares() {
+  const { shares } = await api("/api/shares");
+  $("#shares tbody").innerHTML = shares.map((s) => `<tr><td>${esc(s.label)}</td><td class="mono">${esc(s.scope)}</td><td>${esc(s.role)}${s.revokedAt ? " · off" : ""}${s.expiresAt ? " · until " + esc(s.expiresAt.slice(0, 10)) : ""}</td>
+    <td class="msg">${s.lastUsedAt ? esc(new Date(s.lastUsedAt).toLocaleString()) : "never"}</td><td>${s.revokedAt ? "" : `<button class="linkbtn" data-revoke="${esc(s.id)}">Turn off</button>`}</td></tr>`).join("")
+    || `<tr><td colspan="5" class="msg">No links yet.</td></tr>`;
+}
+async function edit(slug) {
+  const res = await fetch(`/p/${slug}`);
+  const html = await res.text();
+  const pubs = (await api("/api/publications")).publications;
+  const p = pubs.find((x) => x.slug === slug);
+  $("#editTitle").textContent = `Edit · ${p.title}`;
+  $("#slug").value = p.slug; $("#title").value = p.title; $("#kind").value = p.kind; $("#visibility").value = p.visibility; $("#customHost").value = p.customHost ?? "";
+  if (p.kind === "html") $("#body").value = html;
+  else {
+    const m = /<script type="application\/json" id="pub">([\s\S]*?)<\/script>/.exec(html);
+    $("#body").value = m ? JSON.parse(m[1]).markdown : "";
+  }
+}
+$("#save").addEventListener("click", async () => {
+  $("#saveMsg").textContent = "Publishing…";
+  try {
+    const slug = $("#slug").value.trim();
+    const p = await send("PUT", `/api/publications/${encodeURIComponent(slug)}`, {
+      title: $("#title").value, kind: $("#kind").value, visibility: $("#visibility").value, body: $("#body").value, customHost: $("#customHost").value.trim() || null,
+    });
+    $("#saveMsg").textContent = `Published at ${p.path}`;
+    $("#viewLink").href = p.path; $("#viewLink").hidden = false;
+    loadPubs();
+  } catch (e) { $("#saveMsg").textContent = e.message; }
+});
+$("#newPub").addEventListener("click", () => {
+  for (const id of ["slug", "title", "customHost", "body"]) $("#" + id).value = "";
+  $("#editTitle").textContent = "New page";
+});
+$("#pubs").addEventListener("click", async (e) => {
+  const t = e.target;
+  if (t.dataset.edit) edit(t.dataset.edit);
+  if (t.dataset.share) { $("#shScope").value = t.dataset.share; $("#shLabel").focus(); }
+  if (t.dataset.del && confirm("Delete this page?")) { await api(`/api/publications/${encodeURIComponent(t.dataset.del)}`, { method: "DELETE" }); loadPubs(); }
+});
+$("#shMake").addEventListener("click", async () => {
+  try {
+    const days = Number($("#shDays").value);
+    const r = await send("POST", "/api/shares", { scope: $("#shScope").value.trim(), label: $("#shLabel").value.trim() || "Guest", role: $("#shRole").value, ...(days > 0 ? { expiresInDays: days } : {}) });
+    $("#shOut").value = r.url; $("#shOut").hidden = false; $("#shOut").select();
+    navigator.clipboard?.writeText(r.url).catch(() => {});
+    loadShares();
+  } catch (e) { alert(e.message); }
+});
+$("#shares").addEventListener("click", async (e) => {
+  const id = e.target.dataset.revoke;
+  if (!id) return;
+  await api(`/api/shares/${encodeURIComponent(id)}`, { method: "DELETE" });
+  loadShares();
+});
+loadPubs(); loadShares();
+</script>
+</body>
+</html>

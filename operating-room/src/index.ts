@@ -34,6 +34,12 @@ const routes: Route[] = [
   { method: "POST", pattern: /^\/logout$/, access: "public", handler: () => handleLogout() },
   { method: "GET", pattern: /^\/s\/([A-Za-z0-9_-]{20,64})$/, access: "public", handler: (c) => openShare(c.request, c.env, c.params[0]!) },
   { method: "GET", pattern: /^\/api\/session$/, access: "public", handler: (c) => describeSession(c.session) },
+  {
+    method: "GET",
+    pattern: /^\/api\/config$/,
+    access: "session",
+    handler: (c) => json({ roomName: roomName(c.env), terminalUrl: c.env.TERMINAL_URL?.trim() || null }),
+  },
 
   { method: "GET", pattern: /^\/api\/shares$/, access: "owner", handler: (c) => listShares(c.env) },
   { method: "POST", pattern: /^\/api\/shares$/, access: "owner", handler: (c) => createShare(c.request, c.env) },
