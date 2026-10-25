@@ -241,6 +241,200 @@ Every document the research read, by thread. Drive files keep their titles; the 
 | LISTED, NOT OPENED (data-room copies, other readers): MIAX/ folder (all 39 docs + _AI_READABLE + 7_MIAX_SIMPLE), COUNSEL/02_The_Deal.pdf (1h3uMe…) | — | Data-room documents |
 | LISTED, NOT OPENED (PII / low value): W-9_Saheb_Swaich.pdf (1CN690…), EIN.pdf (1jcdAF…), 03_EIN_Letter_CP575G.pdf, Certificate of Formation PDFs (1z3AnH…, 1sh3Pj…), 02_Delaware_Good_Standing (1XqLJL…), Operating Agreement.pdf / 0C formation OA (unsigned template, 954 KB), Sept 03_Joinder / 04_Assignment / 06_Closing_Certificate / 09_Non_Foreign_Certificate, AP_Shares_Index_2026-09-30.csv, 14 other PRIOR manifests, Word twins of PDFs read | — | Formation records / duplicates |
 
+## Drive {#sources-drive}
+
+| Source | Date | Gist |
+|---|---|---|
+| Andromeda Gnosis.pdf | 2023-04-20 | Andromeda Capital binary-fund prospectus: Kraken ETH put spreads, 3%/30%, Gnosis Safe |
+| "ETH DOWNTURN" Andromeda - Capital Partners Comminuque | 2024-04-29 | $400k raise, 3 rolling ETH put debit spreads, 20x+ target |
+| Offering Memorandum (Andromeda Digital Asset LLC) | 2024-02-12 | $20M raise: $10M options + $10M pods; USDC→Gnosis; K-1 |
+| Andromeda Pod Ideas | 2023-12-19 | 5 pods: spot-fundamental, option MM, MEV, venture, airdrop farming |
+| Andromeda Fund Structure | 2023-10-29 | US LLC owns BVI Andromeda Trading; KYC on ~20 CEXs; referral bucket |
+| Andromeda Dashboard | 2024-03-14 | Investor dashboard, mobile PnL app, Andromeda Terminal (9-figure perps), Cloudy airdrop suite |
+| Andromeda Peremenant 5 Year Thesis | 2024-02-27 | "SPX 640 2027 / ETH 8400" |
+| Andromeda (world government doc) | 2023-04-01 | World "Andromeda government", sector data centers, defense tech [unsure-fit] |
+| Funding Arb fund | 2025-11-10 | Hub-and-spoke funding-rate arb fund, hub on Arbitrum |
+| Untitled document (Perps folder, 229 KB) | 2025-11-25 | 2-sentence opener: regulated US-equity perp exchange, 20x cross margin |
+| Grayline | 2025-09-26 | JEMSE 50% dividend strip (Cauchari-Olaroz); Guyana Stabroek royalty strip |
+| Outreach for Andromeda (sheet) | 2024-04-12 | 42 crypto-whale/fund LP targets (CZ, Saylor, Winklevoss, Novogratz, Buterin…) |
+| Outreach for Later On (sheet) | 2024-04-12 | 41 billionaire/founder targets (Collisons, Tenev, Durov, Zuckerberg…) |
+| Andromeda>MispricedFinder>ThalesMarket (doc) | 2024-05-31 | RV/IV scanner spec for Thales Market options |
+| Andromeda>MispricedFinder>ThalesMarket (sheet) | 2024-05-19 | eth_call targets per chain/asset |
+| chartpaint -> andromeda terminal | 2023-11-13 | Multi-CEX/DEX execution terminal spec; andromeda.xyz $150k; upnl rolling perps |
+| Business Plan ACM | 2024-06-27 | Strategy-vault tokens → one taxable event |
+| Fund Summary June (sheet) | 2024-07-13 | Personal fund book: holdings, airdrop sunk $21,919 → est $162,500 (7.4x) |
+| Fund Summary Sep (sheet) | 2024-09-27 | Same, Sep: Hyperliquid $12,257; $24,275 → $149,000 (6.14x); Minneapolis trip |
+| OX ARB | 2024-04-19 | OXv1→OXv2 arb math; won't work (60-day lock) |
+| Upnl roll (sheet) | 2023-12-02 | Category sizing grid for upnl-rolling |
+| Working on (sheet) | 2023-12-06 | Life/career dashboard; raising for fund; "Monk" |
+| Thoughts Mar 23 | 2024-03-23 | Empty |
+| ETH Trade (doc) | 2022-10-29 | "Master Capital" 3-phase ETH put-spread/perp parlay, $500k→$62.5m |
+| ETH Trade (sheet) | 2022-10-31 | Position log: $500k start, phase-1 spreads/dates |
+| Saheb's eth trade | 2023-03-09 | Andromeda website/one-pager spec; Andromeda.vc, Ethshort.com; Nick & Monk |
+| ETH Trade 7200 | 2024-03-20 | 3-leg ETH call spreads to 7200, "a mission" |
+| Trade Idea 2.27 | 2024-02-27 | DePIN GPU coin snipe, 50/50 split |
+| April 1st Trade Ideas | 2024-04-01 | MOG perps on OX.Fun, Photon sniping, Blast Gold EV math |
+| Cypher Trade Deal | 2023-02-23 | Cypher (Sol perps) $75m round, $10m in, merge w/ Marginfi; Harrison co-founder ask |
+| Stock Option EV (sheet) | 2023-04-07 | Option EV table (stocks + crypto touch bets) |
+| Options>Vertical Spread>IVDifference | 2023-07-24 | IV-jump vertical-spread selector spec |
+| STOCKS TO SHORT | 2023-05-27 | SaaS/cloud short list |
+| Layered Bids (sheet) | 2021-06-25 | Geometric bid ladders ICP/LINK/BNB/ETH/MKR/SOL/FTT |
+| ids & bids (sheet) | 2023-10-25 | Blur vs OpenSea trait-bid arb; Flooring Protocol |
+| Blur for Memecoins | 2024-05-17 | Solana memecoin vault platform; 2.5% fee, 2 SOL open; token buyback |
+| Copy of Copy of May 2024 Altcoin Shorts (root) | 2026-10-19 | Altcoin short tiers (copy reopened Oct 2026) |
+| Copy of May 2024 Altcoin Shorts | 2024-06-24 | + memecoin perps (LBANK) + failed borrow/lend short |
+| May 2024 Altcoin Shorts | 2024-06-08 | Original of the above |
+| Summer List of Coins to Short | 2024-07-01 | Short tiers by drop % and holder concentration |
+| Blast Valuation Model | 2024-04-20 | Gold ≈ $15.58; 101,172 pts/Gold |
+| Blast Gold Meta Strategies | 2024-04-15 | Blast dapp gold table + bot ideas |
+| Bladeswap Automation | 2024-08-10 | Crate-claim automation; $35-90k est; 40x |
+| Airdrop Farming (sheet) | 2024-06-04 | 15-wallet farm, mixers, venue notes |
+| Airdrop Farming for Rainbow Wallet (doc) | 2023-12-14 | Rainbow farm plan; $75m airdrop est |
+| Airdrop Farming for Rainbow Wallet (sheet) | 2023-12-16 | Seed phrases/private keys — not reproduced |
+| Market | 2023-03-29 | Token rules: low float, short vesting, $40 price, split at $500; real-estate purchase = token sale; raise ×3 valuation |
+| Operation 100b | 2023-03-23 | 100b-notional ETH put / BTC call spread book; XToInfinity.com; "Perpetuals on Stocks" |
+| Mining | 2023-05-10 | BTC-miner earnings options plan |
+| Operation Kalista | 2023-06-09 | Nation-state concept (Punjab) [unsure-fit] |
+| Airdrop Farming Strategy - Mobile App Sign Ups (doc) | 2024-04-20 | Blackbird multi-account SOP (VPN + VOIP numbers) |
+| Airdrop Farming Strategy - Mobile App Sign Ups (sheet) | 2024-04-20 | Empty tracking template |
+| Decenteralized Social Media | 2022-10-04 | Influencer social tokens with $50k USDC LP |
+| Mission Statement | 2023-08-30 | "Become the richest individual to live"; options 400x → tech → PE → miltech |
+| SAHEB | 2023-07-14 | Influence strategy; crypto-favored unified OS; military company |
+| Organization | 2022-10-04 | Seattle/Korea global tech co; chain & OS in Seattle |
+| Corporate Structure | 2022-12-14 | "Will we ever go public…? We will." |
+| Operation No Scope | 2023-03-23 | FaZe alcoholic gaming beverage [non-crypto] |
+| Olympus plan | 2022-08-19 | $25M Olympus buyout → Flow; Odyssey; Super App; Real; Fibonacci-prime targets |
+| Ideas | 2023-09-08 | "Crypto will serve as the primary equity source" |
+| Investment thesis | 2023-08-27 | Empty |
+| Features for tech empire | 2024-05-07 | Floating call widget idea |
+| Your big idea (slides) | 2023-07-17 | Boilerplate Google template |
+| Manifest The Human Company | 2023-06-04 | Personal-care/SARMs product list [non-crypto] |
+| Manifest Genesis | 2021-12-16 | KLIMA drop: 2 MNFST mint, 1332 NFTs (3×444) |
+| Klima offsets for Olympus x Manifest drop | 2022-06-16 | 564.67 t CO2 = 564.67 BCT ≈ $1,150 |
+| Homepage Spec | 2022-06-12 | WebGL Manifest site; $50M Series A; Shopify-backed claimable NFT storefronts |
+| Untitled document (Manifest logo note) | 2022-02-17 | $M & $gM; 333 angel number |
+| Untitled document (aesthetic) | 2023-04-26 | Optimistic tech aesthetic note |
+| Untitled document (meal plan) | 2024-01-10 | Diet plan [non-crypto] |
+| Real Deck (slides, James Piazza) | 2025-06-23 | Real zk L1 without consensus; one $REAL token unifying all apps; Q1 2026 |
+| Real Spec (James Piazza) | 2025-06-24 | Orchestrator/zkVM/Smart Chain Contract spec |
+| practice real spec | 2025-06-17 | Raise/build timeline → token + handle marketplace Jan-Feb |
+| Real frontapp page | 2025-06-14 | realsolana.app, Squads-style |
+| 1Real Frontend App | 2025-06-24 | 1Real USDC spending passport on Real zkL1 |
+| Real Frontend Document (Saheb iCloud acct) | 2025-06-06 | Real Yield Plan: SPL REAL staking 5-15%, RWA buybacks, 30/50/20 |
+| Real Raise Plan | 2025-06-16 | Empty |
+| Space Spec (James Piazza) | 2025-06-26 | USDC spend: Column Bank float + RTP payouts |
+| USDC App (James Piazza) | 2025-07-28 | Bridge/Fireblocks/Morpho/Aave/Odos/Taxbit app spec; 0.15% fees |
+| USDC App Spec (James Piazza) | 2025-10-29 | Near-duplicate of USDC App |
+| USDC App Roadmap | 2025-07-23 | Stage marketing; virtual Visa; build V1-V1.2 |
+| VC Emails (James Piazza) | 2025-07-07 | USDC Pay seed outreach drafts |
+| Copy of Partners (sheet) | 2025-08-06 | VC target list (SF/TG/crypto/NYC) |
+| Partners & VCs (Real) (sheet, Piazza) | 2025-08-05 | Source of Copy of Partners |
+| SPV Reach (sheet) | 2025-10-13 | $25M SPV LP targets (Dominari, Affinity, 1789, PIF…) |
+| Progress Document | 2025-12-02 | MIAX GC talks; idea started Nov 2025; pivot from index perps; Polymarket/ICE |
+| Map of Apps (sheet, Piazza) | 2025-02-12 | Homer/Jetter/Cartel token-revenue apps; Andromeda US derivatives exchange |
+| Swaich Executive Summary | 2025-08-19 | eVTOL Brownsville↔Starbase; $6.5M/yr SpaceX; $5M seed [unsure-fit] |
+| eVTOL Network | 2025-08-13 | Pilot plan [unsure-fit] |
+| SpaceX VCs (sheet) | 2025-08-14 | 44 space investors [unsure-fit] |
+| Untitled presentation (Swaich EVTOL) | 2025-08-14 | Title slide only |
+| Memtastic | 2025-09-20 | CXL AI memory card [unsure-fit] |
+| Slay the Dragon | 2025-10-09 | Streaming phone with SpaceX [unsure-fit] |
+| How to get to what I really want | 2025-08-05 | Empty |
+| Learning to Code | 2025-10-09 | ENG 111 essay [excluded] |
+| ReviewbySS | 2025-10-09 | Guitar growth-mindset essay [excluded] |
+| 01_MIPA.docx (June signing pkg) | 2026-06-08 | AP→Silver Lake 3.5 pts $210M @ $60M/pt, 36% Gross Fee Pool |
+| 08_Funds_Flow_Memo.docx | 2026-06-08 | $210M wire to Seller, $0 to Company |
+| 07_Disclosure_Schedule.docx | 2026-06-07 | No exceptions; products unlaunched |
+| American_Perpetual_Member_Ledger.xlsx (known; re-read) | 2026-06-06 | 32.5/3.5 of 36 pts |
+| 01_MIPA_Form.docx (Sept 30 CLOSING_DOCUMENTS) | 2026-09-30 | MPPLA royalty; 100M units; approvals = closing condition |
+| 0B_Corporate_Binder_Checklist.docx | 2026-09-30 | Good standing 6/5/26, CP575 6/1/26, MIAX agmt not yet signed |
+| AP_Delivery_Acknowledgment_FORM_2026-09-30.docx | 2026-09-30 | 99-file Originator Work delivery list, 101 names, Robinhood, Connamara |
+| Offer Exchanges by Listing.Help | 2023-12-18 | CEX listing price sheet (Gate/MEXC/BitMart…) |
+| AP data-room READMEs (4; local zip extract) | 2026-06-07 | Phase-one closing package map |
+| 02_AR_Operating_Agreement.docx (Sept 30) | 2026-09-30 | 100M units, 10% founder sale cap, quarterly distributions, no royalty-keyed fees |
+| 07_Listing_Desk_Workbook | 2026-09-03 | AP×MIAX listing desk; SPYP; 483-name screener |
+| Tentative Investor Agreement | 2023-12-05 | Andromeda Digital Asset $20M fund; AND mirror token 20M supply |
+| Copy of Weekly Trading Plan (11/8-11/14) | 2021-04-08 (Nov 2020 prices) | 2020 altcoin snowball/margin plan |
+| Example_41.23_SEC19B-7_Filing_Onechicago.docx | 2026-06-14 | OneChicago precedent: §41.23 + 19b-7 matched pair |
+| Technical Analysis (slides) | 2025-02-26 | Chart pattern success rates |
+| 5.19.22 Stock Purchase Agreement-Milan Schouten | 2022-05-26 | Manifest Tech co-founder equity 4M shares [sensitive PII] |
+| MNFST_X_ODYSSEY_DECK_R2.pdf | 2022-05-19 | MNFST sneaker design concepts (Odyssey/Golden Ratio) |
+| Concerns regarding Rollbit | 2020-04-30 | 3rd-party exposé of Rollbit crypto casino |
+| Fei Genesis Outcomes | 2021-04-03 | FEI/TRIBE genesis calculator |
+| OHM Forks v2 | 2021-11-14 | OHM fork roster |
+| ETH projections (23 Apr 2022) | 2022-04-26 | ultrasound merge model |
+| Missing Airdrop Form Rejections | 2022-06-03 | airdrop rejection list |
+| BONK Claims | 2023-05-19 | Solana wallet list |
+| Zed Run Expected Value | 2023-07-17 | EV calc; @ExecutiveRhino |
+| IALottery Expected Value (EV) | 2021-08-02 | lottery EV |
+| Points Parlor Simulator v1.12 | 2023-08-31 | DeGods pack EV |
+| [PUBLIC ACCESS] Gold Distribution 1 | 2024-03-25 | Blast Gold per dapp |
+| Moonriver Network Eli5 For Romies | 2021-10-28 | MOVR guide |
+| Guide to Mint/Deal INCOOOM Cards | 2021-09-14 | NFT mint guide |
+| What can be done now? | 2023-06-15 | Thiel Fellowship; 'Stable coin is algorithmic REAL' |
+| AI Investment Strategy | 2023-05-26 | AI = next crypto; tiers |
+| US AI Stocks | 2023-10-27 | target mcaps |
+| AI 2023 | 2023-09-17 | stub |
+| AI *Untapped as of Feb17th* | 2024-02-18 | AI crypto low caps |
+| The "Impossible" Task | 2023-08-18 | Crypto options parlay to $100M |
+| Login system | 2023-08-25 | zk name/identity soulbound |
+| Device Company | 2022-10-04 | repairable phone; NFT parts/insurance |
+| How to build a new consumer Electronic Device | 2023-06-24 | MR glasses note |
+| Being Prosperous | 2023-02-20 | Empty |
+| 23 | 2023-03-22 | 2023 crypto narratives |
+| 2028 | 2023-06-13 | sell houses to company; short own stock |
+| 2023 (sheet) | 2023-03-31 | $100mm operator goal |
+| stocks | 2023-10-29 | equity/option buckets |
+| Marketing | 2022-12-14 | marketing principles |
+| Manufactering | 2021-12-08 | NFT claim→QR flow |
+| Progress (poem) | 2022-08-06 | personal poem [excluded] |
+| list | 2025-04-08 | Empty |
+| Copy of CMC Form Public | 2021-12-07 | CMC listing application |
+| Copy of art gobblers numbers | 2023-05-22 | VRGDA issuance model |
+| LUCKBRC | 2023-05-11 | Empty |
+| Black Friday | 2023-11-24 | gym shopping list [excluded] |
+| Schedule | 2023-05-12 | daily routine [excluded] |
+| (4,4) | 2021-12-21 | OHM (4,4) bonding calculator |
+| Expense report (2021) | 2021-10-14 | $200 lawyer consult |
+| Buy/Sell | 2022-06-29 | MNFST NFT/token buy-sell curve |
+| Frontend Fields for Storefront/Homepage Spec | 2022-06-16 | Empty |
+| 05_final_ranking_and_pitch.md | 2026-08-04 | China AI IPO-calendar thesis [unsure-fit] |
+| 06_access_map_energy_financiers_indexes.md | 2026-08-04 | index mechanics/US-person restrictions [unsure-fit] |
+| 12_final_bucket_board_20mo.md | 2026-08-04 | 10x/5x/2x buckets [unsure-fit] |
+| China AI dossier 01-04,07-11 (9 files) | 2026-08-04 | same dossier |
+| 00 Start Here.md (Project Walkman) | 2026-08-02 | summonable-screen hardware [excluded] |
+| 01 Thesis.md / 02 Physics Survey.md (Walkman) | 2026-08-02 | hardware [excluded] |
+| Swaich Full Spec Doc | 2025-08-19 | Empty |
+| Andromeda Foundation sketch | 2023-04-01 | network-state nodes |
+| Andromeda & Andromeda Research Group | 2024-02-01 | stub |
+| Sector watchlist (Untitled spreadsheet) | 2023-09-11 | exchange/option tokens + stocks |
+| Japan equity list (Untitled spreadsheet) | 2023-08-04 | TOPIX tickers |
+| Make life faster (Untitled) | 2023-08-27 | crypto = faster money |
+| Ways out (Untitled) | 2023-07-05 | Dubai/Harrison/James |
+| Plan note (Untitled) | 2024-04-29 | Trade. Fund. Tech. Miltech. |
+| 20.33-20.55 | 2023-04-26 | to-do: Manifest, Deri.io trade |
+| Untitled stubs x9 | 2023 | empty/one-line |
+| My Life | 2025-02-27 | personal autobiography [excluded] |
+| Atlantic Options - 0.1 - Public.pdf | 2022-01-25 | Dopex atlantic options (no-liquidation perps) |
+| Flypaper_May2023.pdf | 2023-10-19 | Blackbird $FLY tokenomics |
+| MetaLayer Labs - Terms of Use.pdf | 2023-11-20 | Blast ToU; shared by arcaderesearch.io |
+| MNFST Contract Info | 2021-11-10 | Manifest = OHM fork contracts + Genesis ERC1155 + bonds |
+| Zk Sync application | 2022-01-31 | Manifest vision; Rhino@manifest.gg |
+| KLIMA x MNFST Collaboration | 2021-11-20 | 333 tee NFTs → buy KLIMA |
+| Swaich: From Starbase to the World | 2025-08-14 | eVTOL deck; '7-figure exit from previous crypto venture' |
+| Manifest community docs (Krill's Policy Thesis, Grants, Genesis, Medium/Discord, Calendar, Token Thesis drafts, Policy) | 2021-11→2022-05 | Manifest DAO context |
+| Olympus_January_2022_Treasury_Report.pdf | 2022-02-07 | 3rd-party OHM report |
+| Blueprint: Make $250k With Cold Email | 2024-05-16 | shared by James Piazza |
+| Karate Combat_Kanpai Pandas_Airdrop Guide.docx | 2023-12-13 | 3rd-party airdrop guide |
+| Swaich — The Starbase Shuttle / Brownsville Vertiport Requirements | 2025-08 | eVTOL siblings [unsure-fit] |
+| Tentative Investor Agreement.pdf | 2023-04-20 | Andromeda Capital binary 20:1 put-spread fund; AND 10M |
+| 00_Binder_Contents.md | 2026-09-30 | binder: royalty agmt/Commission order pending |
+| SimpleInstrumentRecord.pdf | 2026-05-30 | image PDF |
+| Personal (master plan) | 2022-10-04 | Level 1 blockchain+OS → semis → miltech; 1B/10B/100B |
+| TAX | 2023-02-28 | venue consolidation; Manifest AngelList Stack dissolve |
+| What do I want? / WHAT DO I REALLY WANT? | 2023-08-19 / 2021-04-07 | personal affirmations [excluded] |
+| Home / Nothingness | 2022 | home gym list / empty [excluded] |
+| Manifest Inc. - Draft Docs.zip (11 files) | 2022-04-26 | Manifest Inc. 60/40 founders; SAFE up to $500k |
+
 ## Claude {#sources-claude}
 
 | Source | Date | Gist |

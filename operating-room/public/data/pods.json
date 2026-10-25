@@ -308,6 +308,782 @@
   "org": "org-ap"
  },
  {
+  "id": "archive-real",
+  "name": "REAL / $REAL",
+  "tagline": "One zk token for every app, three years before Rei",
+  "era": "2022-08 → 2025-10",
+  "status": "superseded by Rei",
+  "summary": "REAL is the unifying coin of the archive: the endgame vehicle of the 2022 Olympus plan, an \"algorithmic REAL\" stablecoin in 2023, and in June 2025, with James Piazza, a zk Layer 1 without consensus whose single $REAL token earns a share of app revenue, plus a separate Solana token paying 5–15% from real-world assets. Rei keeps its one-token, one-login, handle-centred design and reverses its economics: no yield, revenue share or buybacks.",
+  "ideas": [
+   {
+    "name": "Real as endgame",
+    "one_liner": "\"Le Real launch … turning to a real app\"; companies \"to acquire for Real\"",
+    "date": "2022-08"
+   },
+   {
+    "name": "Algorithmic REAL",
+    "one_liner": "\"Stable coin is algorithmic REAL\" inside a crypto/AI/MR device stack",
+    "date": "2023-06"
+   },
+   {
+    "name": "zk name login",
+    "one_liner": "One name, one soulbound wallet, one identity \"across the entire ecosystem\"",
+    "date": "2023-08"
+   },
+   {
+    "name": "Real zk L1 without consensus",
+    "one_liner": "Central coordinator, RISC Zero zkVM, clients sync a 50KB proof",
+    "date": "2025-06"
+   },
+   {
+    "name": "$REAL single token",
+    "one_liner": "Used across all apps, earns a share of revenue, treasury-backed",
+    "date": "2025-06"
+   },
+   {
+    "name": "Handle marketplace",
+    "one_liner": "Username/handle sales as revenue; token + handle market in Jan–Feb",
+    "date": "2025-06"
+   },
+   {
+    "name": "Real Yield Plan (SPL REAL)",
+    "one_liner": "Stake SPL REAL for 5–15%; RWA income buys back REAL",
+    "date": "2025-06"
+   },
+   {
+    "name": "Crypto WeChat in America",
+    "one_liner": "Prop-tech apps and a super-app on the Real L1 (November milestone)",
+    "date": "2025-06"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "$45M–$200M at $120M–$600M",
+    "label": "REAL Yield Plan raise target"
+   },
+   {
+    "value": "30 / 50 / 20",
+    "label": "investors / company / DLMM float (provisional)"
+   },
+   {
+    "value": "5–15% (7.9% fixed)",
+    "label": "SPL REAL staking yield"
+   },
+   {
+    "value": "50KB",
+    "label": "zk proof a client downloads to sync the chain"
+   },
+   {
+    "value": "Q1 2026",
+    "label": "Real L1 launch target"
+   }
+  ],
+  "people": [
+   "James Piazza — co-builder; owner of Real Deck, Real Spec, Space Spec, USDC App",
+   "\"Competence\" — named raise agent for the Yield Plan",
+   "Two tokenomics advisers (named by social handle)"
+  ],
+  "next_moves": [
+   "Decide whether REAL is retired or folded into Rei, and record it in the Rei brief",
+   "Do not reuse REAL revenue-share or yield language in Rei materials",
+   "Confirm with James Piazza the status and ownership of the Real spec, deck and any code",
+   "Review the 50KB-proof sync and zk-handle design against the Rei stack"
+  ],
+  "feeds": [
+   "archive-master-plans",
+   "archive-usdc-pay",
+   "main-coin",
+   "media-xr",
+   "rei",
+   "stable-z"
+  ],
+  "chapter": "archive",
+  "org": "org-origins"
+ },
+ {
+  "id": "archive-usdc-pay",
+  "name": "1Real / Space / USDC Pay",
+  "tagline": "Spend USDC inside apps; settle merchants over RTP",
+  "era": "2025-06 → 2025-10",
+  "status": "parked",
+  "summary": "The payments front end for REAL: a USDC \"spending passport\" that apps pull payments from, a Column Bank float with RTP payouts, and a consumer USDC app with Bridge cards, Morpho savings, Aave BTC-backed loans and a 0.15% fee. Seed emails to seven VCs were drafted but never sent. It precedes StableStation by one to two months.",
+  "ideas": [
+   {
+    "name": "1Real passport",
+    "one_liner": "Mobile USDC balance that plugs into Uber-style apps; backend Real zkL1",
+    "date": "2025-06"
+   },
+   {
+    "name": "Space",
+    "one_liner": "\"Spend USDC Globally\": internal ledger, Column Bank float, RTP merchant payouts",
+    "date": "2025-06"
+   },
+   {
+    "name": "USDC App",
+    "one_liner": "Bridge KYC/Visa, Morpho Blue savings, cbBTC on Aave, Odos swaps, Taxbit forms",
+    "date": "2025-07"
+   },
+   {
+    "name": "Marketing to be acquired",
+    "one_liner": "Roadmap ends at Series B with acquisition-focused marketing",
+    "date": "2025-07"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "0.15%",
+    "label": "fee on savings→checking and on borrowing"
+   },
+   {
+    "value": "under two minutes",
+    "label": "RTP settlement to merchants"
+   },
+   {
+    "value": "7 of 7",
+    "label": "drafted VC emails marked not sent"
+   }
+  ],
+  "people": [
+   "James Piazza — spec owner (Space, USDC App, VC Emails)"
+  ],
+  "next_moves": [
+   "Compare with Rei Pay and StableStation before reviving any piece",
+   "Check money-transmission licensing for any USDC-spend product before building"
+  ],
+  "feeds": [
+   "archive-real",
+   "rei-surfaces",
+   "stable-z"
+  ],
+  "chapter": "archive",
+  "org": "org-origins"
+ },
+ {
+  "id": "archive-token-rules",
+  "name": "\"Market\" token rules",
+  "tagline": "Tokens priced like shares; the property sale is the token sale",
+  "era": "2023-03 → 2025-02",
+  "status": "idea",
+  "summary": "Saheb's written rules for how a token should trade: low float, short vesting, a $40 target price, a split above $500, bonds and reverse splits. Real estate is sold with tokens attached, so the property sale is the token sale, and every raise lifts valuation by three times its size. Ideas (Sep 2023) generalizes it: crypto becomes the main equity of internet companies.",
+  "ideas": [
+   {
+    "name": "$40 price point",
+    "one_liner": "\"low circulation, short vesting … so they seem like respectable investments\"",
+    "date": "2023-03"
+   },
+   {
+    "name": "Split above $500",
+    "one_liner": "Tokens split, reverse split and issue bonds like shares",
+    "date": "2023-03"
+   },
+   {
+    "name": "Property sale = token sale",
+    "one_liner": "Buy real estate, get tokens airdropped with it",
+    "date": "2023-03"
+   },
+   {
+    "name": "Raise ×3 rule",
+    "one_liner": "\"Raising money increases the valuation x3 the amount that you raise\"",
+    "date": "2023-03"
+   },
+   {
+    "name": "Tokenized VC firm",
+    "one_liner": "A fund token for seed allocations that \"appreciates only\"",
+    "date": "2023-03"
+   },
+   {
+    "name": "Crypto as primary equity",
+    "one_liner": "\"the new internet companies will go public on the internet\"",
+    "date": "2023-09"
+   },
+   {
+    "name": "Whale apps",
+    "one_liner": "Homer (Airbnb owning homes), Cartel (Turo paying \"airdrop\" dividends)",
+    "date": "2025-02"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "$220b",
+    "label": "\"#1 spot on the leaderboard\""
+   },
+   {
+    "value": "$60m → $300m",
+    "label": "real-estate spend to minimum token valuation"
+   },
+   {
+    "value": "$350m raise → almost $2b",
+    "label": "worked example of the ×3 rule"
+   }
+  ],
+  "people": [],
+  "next_moves": [
+   "Mark which rules Rei drops (stock-like pricing, dividends) and which it keeps",
+   "Take securities advice before any property-with-token sale design is reused"
+  ],
+  "feeds": [
+   "main-coin",
+   "real-assets",
+   "rei"
+  ],
+  "chapter": "archive",
+  "org": "org-origins"
+ },
+ {
+  "id": "archive-operation-100b",
+  "name": "Operation 100b & the trading books",
+  "tagline": "Option parlays — and the first \"Perpetuals on Stocks\" line",
+  "era": "2022-10 → 2024-07",
+  "status": "superseded by American Perpetual",
+  "summary": "Saheb's trade plans written as parlays: a $500k ETH put-spread chain to $62.5m (2022), a $10M book claiming over $100B notional (2023), an options path to a $100M net worth, and a 3-leg ETH call-spread \"mission\" to 7200 (2024). Operation 100b ends with \"Perpetuals on Stocks, Cheaper than Options on Stocks\", 32 months before Greyline, and lists the counterparty terms that central clearing later solves.",
+  "ideas": [
+   {
+    "name": "Master Capital parlay",
+    "one_liner": "$500k → $2.5m → $12.5m → $62.5m via Deribit put spreads then a 13× perp short",
+    "date": "2022-10"
+   },
+   {
+    "name": "Operation 100b",
+    "one_liner": "25,000 ETH 1200/600 put spreads plus BTC call-spread ladder; \"well over 100b\" notional",
+    "date": "2023-03"
+   },
+   {
+    "name": "Perpetuals on Stocks",
+    "one_liner": "\"Cheaper than Options on Stocks for the same amount of leverage\"",
+    "date": "2023-03"
+   },
+   {
+    "name": "Counterparty terms",
+    "one_liner": "Transferability, a solvency plan (Kraken shares), instant settlement",
+    "date": "2023-03"
+   },
+   {
+    "name": "The \"Impossible\" Task",
+    "one_liner": "Crypto options parlay to a $100M net worth; Kraken as broker past $10m",
+    "date": "2023-08"
+   },
+   {
+    "name": "ETH Trade 7200",
+    "one_liner": "Three rolled ETH call spreads to 5600/6000, \"200-300m worth\"",
+    "date": "2024-03"
+   },
+   {
+    "name": "Short books",
+    "one_liner": "\"CLOUD IS DEAD\"; altcoin shorts by drawdown and holder concentration",
+    "date": "2024-06"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "125×",
+    "label": "Master Capital target ($500k → $62.5m)"
+   },
+   {
+    "value": "$375,000,000 for $5,000,000",
+    "label": "Operation 100b ETH put-spread notional at $20 a contract"
+   },
+   {
+    "value": "3750×",
+    "label": "Operation 100b BTC call-spread multiple"
+   },
+   {
+    "value": "32 months",
+    "label": "from \"Perpetuals on Stocks\" to the first Greyline plan"
+   }
+  ],
+  "people": [
+   "Kraken, Gemini, Coinbase, QCP — named option counterparties"
+  ],
+  "next_moves": [
+   "Cite Operation 100b (2023-03-23) as the dated origin of the stock-perp idea in AP history",
+   "Use its three counterparty terms as a plain explainer of why OCC clearing matters"
+  ],
+  "feeds": [
+   "andromeda",
+   "ap",
+   "glx-exchange",
+   "markets-tools"
+  ],
+  "chapter": "archive",
+  "org": "org-origins"
+ },
+ {
+  "id": "archive-master-plans",
+  "name": "Master plans",
+  "tagline": "An Olympus takeover, a Level 1–3 ladder and a mission",
+  "era": "2022-08 → 2024-04",
+  "status": "idea",
+  "summary": "The Olympus plan (Aug 2022) is a 16-week operating plan to buy out Olympus DAO for $25m, rename Manifest \"Flow\", launch Odyssey and an options product, and end in \"Real\", with Fibonacci-prime wealth targets F(43), F(47) and F(83). Personal (Oct 2022) sets the ladder: a blockchain-and-OS company, then hardware, then semiconductors, with a capital-management firm alongside; the 2024 note reduces it to \"Trade. Fund. Tech. Miltech.\"",
+  "ideas": [
+   {
+    "name": "$25m Olympus buyout",
+    "one_liner": "\"for Me & Manifest\", held in two Gnosis Safes",
+    "date": "2022-08"
+   },
+   {
+    "name": "Flow",
+    "one_liner": "Manifest renamed, run by CMill, paying quarterly dividends to Olympus",
+    "date": "2022-08"
+   },
+   {
+    "name": "Odyssey",
+    "one_liner": "Sudoswap-style pools: StockX markets for clothing priced in OHM",
+    "date": "2022-08"
+   },
+   {
+    "name": "Olympus Super App",
+    "one_liner": "Debit card, credit score, borrowing, forex, options, clothing, creator app",
+    "date": "2022-08"
+   },
+   {
+    "name": "Fibonacci-prime targets",
+    "one_liner": "433,494,437; 2,971,215,073 \"BEFORE 22\"; 99,194,853,094,755,497 \"Life Time Earnings\"",
+    "date": "2022-08"
+   },
+   {
+    "name": "Level 1–3 ladder",
+    "one_liner": "Blockchain+OS → hardware → semiconductors; capital firm concurrent; miltech final",
+    "date": "2022-10"
+   },
+   {
+    "name": "Trade. Fund. Tech. Miltech.",
+    "one_liner": "The 2024 one-line version of the plan",
+    "date": "2024-04"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "$25m",
+    "label": "Olympus buyout"
+   },
+   {
+    "value": "10B (13–25B peak)",
+    "label": "Olympus Super App valuation in the plan"
+   },
+   {
+    "value": "~$500k per quarter",
+    "label": "Flow dividend goal to Olympus"
+   },
+   {
+    "value": "1B / 10B / 100B",
+    "label": "Level 1–3 targets \"by 23 / 26 / 29\" (2025 / 2028 / 2031)"
+   }
+  ],
+  "people": [
+   "CMill — proposed Flow commander",
+   "Harrison — proposed co-funder of Wholesome OnlyFans"
+  ],
+  "next_moves": [
+   "Restate the ladder for 2026: AP and Andromeda on the firm side, Rei as Level 1",
+   "Keep the Olympus plan as history; no record shows it was proposed to Olympus DAO"
+  ],
+  "feeds": [
+   "andromeda",
+   "archive-real",
+   "manifest",
+   "real-assets",
+   "rei"
+  ],
+  "chapter": "archive",
+  "org": "org-origins"
+ },
+ {
+  "id": "archive-manifest-onchain",
+  "name": "Manifest on-chain",
+  "tagline": "An OHM fork with bonds, rebases and a clothing treasury",
+  "era": "2021-10 → 2023-02",
+  "status": "parked",
+  "summary": "Manifest ran the Olympus contract set (token, staked token, staking, treasury, bonds) with an ERC-1155 genesis mint, priced bonds in OHM and WETH, and argued premium-responsive bonding in community theses. The launch cost $95,887. Three entities followed (Manifest Collective LLC, Manifest Inc., Manifest Tech Inc. with Milan Schouten at 40%); the banking entity was paid out and dissolved in February 2023.",
+  "ideas": [
+   {
+    "name": "OHM-fork contracts",
+    "one_liner": "MNFST, sMNFST, staking, treasury, distributor, sOHM/WETH/LP bonds",
+    "date": "2021-11"
+   },
+   {
+    "name": "Premium-responsive bonding",
+    "one_liner": "+1% supply per 10% premium, −1% per 10% discount (Dunnsy); RFV in OHM (Krill)",
+    "date": "2022-01"
+   },
+   {
+    "name": "333 APY tiers",
+    "one_liner": "Rewards fall by supply tier, from 66,666% APY under 333,333 tokens",
+    "date": "2022-02"
+   },
+   {
+    "name": "Genesis split",
+    "one_liner": "Vortex 9% / Treasury 24% / Community 67% of 999 NFTs, 33 MNFST each",
+    "date": "2022-02"
+   },
+   {
+    "name": "NFT buy/sell curve",
+    "one_liner": "Guaranteed market: 10 MNFST = 1 NFT, 1% spread, treasury-filled",
+    "date": "2022-06"
+   },
+   {
+    "name": "NFT → QR redemption",
+    "one_liner": "Swap for a \"claimed Version\"; tx hash becomes the garment QR code",
+    "date": "2021-12"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "$95,887",
+    "label": "ManifestDAO launch expenses (Oct–Nov 2021)"
+   },
+   {
+    "value": "$23.07 / $40.94",
+    "label": "MNFST price via sOHM / WETH bonds (Feb 2022)"
+   },
+   {
+    "value": "177,733",
+    "label": "MNFST supply (Feb 2022)"
+   },
+   {
+    "value": "60 / 40",
+    "label": "Saheb / Milan Schouten founder split; SAFEs up to $500,000"
+   }
+  ],
+  "people": [
+   "Milan Schouten (\"milark\") — co-founder, President & Treasurer, 40%",
+   "Lando — smart-contract developer",
+   "Dunnsy, Krill — community policy authors",
+   "Mycelium, Saso — design and 3D"
+  ],
+  "next_moves": [
+   "Resolve or drop the \"7-figure exit\" line before any deck reuses it",
+   "Keep the Milan Schouten SPA PDF out of shared folders (it holds personal data)"
+  ],
+  "feeds": [
+   "archive-master-plans",
+   "main-coin",
+   "manifest"
+  ],
+  "chapter": "archive",
+  "org": "org-origins"
+ },
+ {
+  "id": "archive-andromeda-fund",
+  "name": "Andromeda fund papers",
+  "tagline": "A $20M options-and-pods fund with a mirror token",
+  "era": "2023-02 → 2024-06",
+  "status": "parked",
+  "summary": "Eight Andromeda documents in sixteen months: a binary 20:1 put-spread fund, a US parent over a BVI trading company, an AND mirror token whose supply goes 10M → 20M → 10M, a $20M offering memorandum ($10M options + $10M pods), and tokens for single strategies that redeem as \"one taxable event\". No signed agreement, wire or LP appears.",
+  "ideas": [
+   {
+    "name": "Binary fund",
+    "one_liner": "\"a return of 20:1 or lose all\": ETH put spreads on Kraken; Kraken shares as fallback",
+    "date": "2023-04"
+   },
+   {
+    "name": "US → BVI structure",
+    "one_liner": "Andromeda Trading (BVI) with institutional KYC on ~20 exchanges",
+    "date": "2023-10"
+   },
+   {
+    "name": "AND mirror token",
+    "one_liner": "Fund-share token; 30% to the manager, half the investor's tokens after 3×",
+    "date": "2023-12"
+   },
+   {
+    "name": "ETH options ladder",
+    "one_liner": "Half the fund in one ETH bet from 1600 to 2200, 3800, 7200",
+    "date": "2023-12"
+   },
+   {
+    "name": "Pods",
+    "one_liner": "Spot-fundamental, option MM, MEV, venture, airdrop farming",
+    "date": "2023-12"
+   },
+   {
+    "name": "Strategy-vault tokens",
+    "one_liner": "25 tokens at $10,000 rise to $200,000 when a vault returns $5m",
+    "date": "2024-06"
+   },
+   {
+    "name": "Cypher deal",
+    "one_liner": "Back Cypher (Solana perps) and merge it with Marginfi; ask Harrison to co-found",
+    "date": "2023-02"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "$20M",
+    "label": "fund size in every draft"
+   },
+   {
+    "value": "3% / 30% (50% above 3×)",
+    "label": "management / performance fee"
+   },
+   {
+    "value": "10M → 20M → 10M",
+    "label": "AND supply, Apr 2023 / Dec 2023 / Feb 2024"
+   },
+   {
+    "value": "$10M + $10M",
+    "label": "options sleeve + investment pods (Feb 2024 OM)"
+   }
+  ],
+  "people": [
+   "Harrison — asked to co-found Andromeda (Feb 2023)",
+   "Nick — Andromeda partner on the 2023 site spec",
+   "Monk — partner approached to start fundraising (Dec 2023)",
+   "Kraken, Cumberland — named counterparties"
+  ],
+  "next_moves": [
+   "Do not circulate fund papers without counsel: no LP evidence and three conflicting token terms",
+   "If a fund is revived, start from the Feb 2024 memorandum and drop the farming pod"
+  ],
+  "feeds": [
+   "andromeda",
+   "archive-farming",
+   "archive-operation-100b",
+   "archive-terminal"
+  ],
+  "chapter": "archive",
+  "org": "org-origins"
+ },
+ {
+  "id": "archive-terminal",
+  "name": "Andromeda Terminal & tools",
+  "tagline": "Multi-exchange perps, vol scanners and vault platforms",
+  "era": "2023-10 → 2025-11",
+  "status": "parked",
+  "summary": "Chartpaint, an in-house tool to accumulate low caps across small exchanges, was to become the Andromeda Terminal: one front end for options, perps, spot and lending across 21 exchanges and DEXs, with uPNL rolling on cross-margined perps and \"9 figure perp positions\". Around it sit a Thales options mispricing scanner, a Solana memecoin vault platform and a hub-and-spoke funding-rate arbitrage fund (Nov 2025).",
+  "ideas": [
+   {
+    "name": "Chartpaint",
+    "one_liner": "CLI to price and sweep liquidity across eight small exchanges with IOC orders",
+    "date": "2023-11"
+   },
+   {
+    "name": "Andromeda Terminal",
+    "one_liner": "All-in-one aggregator; uPNL rolling on Bybit/Hyperliquid",
+    "date": "2023-11"
+   },
+   {
+    "name": "MispricedFinder",
+    "one_liner": "Realized vs Thales implied vol; ratio < 1 = cheap option",
+    "date": "2024-05"
+   },
+   {
+    "name": "Blur for Memecoins",
+    "one_liner": "Trader vaults for Solana memecoins; revenue buys back the token",
+    "date": "2024-05"
+   },
+   {
+    "name": "Funding Arb fund",
+    "one_liner": "Hub on Arbitrum, exchanges as spokes; TP/SL with ADL monitoring",
+    "date": "2025-11"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "21",
+    "label": "exchanges named for Chartpaint/Terminal integration"
+   },
+   {
+    "value": "2.5% + 2 SOL",
+    "label": "Blur for Memecoins fees (profits/deposits + vault opening)"
+   },
+   {
+    "value": "$3–10k a month",
+    "label": "estimated income of the Thales mispricing bot"
+   },
+   {
+    "value": "$150,000",
+    "label": "andromeda.xyz domain ask"
+   }
+  ],
+  "people": [
+   "\"mteam\" — named builders of the Cloudy airdrop suite"
+  ],
+  "next_moves": [
+   "Offer the funding-arb and multi-venue designs to AP market makers as reference material",
+   "Archive the Terminal spec as the origin of the cross-margin requirement"
+  ],
+  "feeds": [
+   "archive-andromeda-fund",
+   "glx-exchange",
+   "markets-tools",
+   "street-mm"
+  ],
+  "chapter": "archive",
+  "org": "org-origins"
+ },
+ {
+  "id": "archive-farming",
+  "name": "Airdrop farming operations",
+  "tagline": "Points farms across Rainbow, Blast and fifteen wallets",
+  "era": "2023-12 → 2024-09",
+  "status": "parked",
+  "summary": "The most active Andromeda pod: valuation models for Rainbow ($75m airdrop estimate) and Blast (Gold ≈ $15.58), a Bladeswap automation plan ($35–90k), a 15-wallet farm and a mobile sign-up SOP. The files describe sybil practices (mixer funding, VPN accounts) that breach protocol terms and raise AML and disclosure risk, and one sheet exposes 11 seed phrases.",
+  "ideas": [
+   {
+    "name": "Rainbow farm",
+    "one_liner": "Swap-volume farming against a 15% airdrop estimate",
+    "date": "2023-12"
+   },
+   {
+    "name": "Blast Gold model",
+    "one_liner": "101,172 points per Gold; implied airdrop $934,827,020",
+    "date": "2024-04"
+   },
+   {
+    "name": "Bladeswap automation",
+    "one_liner": "Automated swaps and crate claims, ~$485 per wallet",
+    "date": "2024-08"
+   },
+   {
+    "name": "15-wallet farm",
+    "one_liner": "Hook, Dopex, Hyperliquid, Rysk, Synquote, Jumper, Rabby",
+    "date": "2024-06"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "$75m",
+    "label": "Rainbow airdrop estimate (15% of ~$500m)"
+   },
+   {
+    "value": "$15.58",
+    "label": "estimated value of one Blast Gold"
+   },
+   {
+    "value": "$35,000–$90,000",
+    "label": "Bladeswap estimate for 100–200 wallets"
+   },
+   {
+    "value": "11",
+    "label": "seed phrases/private keys exposed in one sheet"
+   }
+  ],
+  "people": [],
+  "next_moves": [
+   "Move funds from the 11 exposed wallets, revoke approvals and delete the sheet",
+   "Keep farming out of all AP and Rei materials"
+  ],
+  "feeds": [
+   "andromeda",
+   "archive-andromeda-fund",
+   "markets-tools"
+  ],
+  "chapter": "archive",
+  "org": "org-origins"
+ },
+ {
+  "id": "archive-grayline",
+  "name": "Grayline → MIAX",
+  "tagline": "Royalty strips, a $25M SPV and the first MIAX call",
+  "era": "2025-09 → 2026-01",
+  "status": "superseded by American Perpetual",
+  "summary": "\"Grayline\" first named a plan to buy a 50% dividend strip on JEMSE's Cauchari-Olaroz lithium stake and a royalty strip on Guyana's Stabroek oil block (Sep 2025), followed by a $25M SPV target list. By late November the idea was a regulated US equity-perp exchange with crypto-style 20x cross margin; the first MIAX approach pitched index perps, and by December Saheb was talking to MIAX's general counsel.",
+  "ideas": [
+   {
+    "name": "JEMSE dividend strip",
+    "one_liner": "50% dividend strip on the Cauchari-Olaroz lithium stake",
+    "date": "2025-09"
+   },
+   {
+    "name": "Stabroek royalty strip",
+    "one_liner": "Royalty strip on Guyana's offshore oil block",
+    "date": "2025-09"
+   },
+   {
+    "name": "$25M SPV",
+    "one_liner": "LP targets incl. Dominari, Affinity, 1789 Capital, PIF; purpose unstated",
+    "date": "2025-10"
+   },
+   {
+    "name": "20x cross margin for US equities",
+    "one_liner": "\"how to build a regulated perpetual exchange for US equities\"",
+    "date": "2025-11"
+   },
+   {
+    "name": "Index-perps wedge",
+    "one_liner": "First reason for reaching out to MIAX",
+    "date": "2025-11"
+   },
+   {
+    "name": "Contract checklist",
+    "one_liner": "Funding, liquidation, ADL, mark/index, IM/MM, margin modes, corporate actions",
+    "date": "2026-01"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "$25M",
+    "label": "SPV target"
+   },
+   {
+    "value": "Nov 2025",
+    "label": "\"I started this idea\""
+   }
+  ],
+  "people": [
+   "MIAX general counsel — first MIAX contact (Dec 2025)",
+   "Dominari Holdings, Affinity Partners, 1789 Capital, Cantor Fitzgerald — SPV targets"
+  ],
+  "next_moves": [
+   "Record in AP history that the first MIAX pitch was index perps",
+   "Decide whether the royalty-strip idea is closed or a separate pod"
+  ],
+  "feeds": [
+   "ap-mppla",
+   "glx-exchange",
+   "glx-miax"
+  ],
+  "chapter": "archive",
+  "org": "org-origins"
+ },
+ {
+  "id": "archive-ventures",
+  "name": "Other ventures",
+  "tagline": "eVTOL shuttles, memory cards and phones outside the market line",
+  "era": "2022-10 → 2026-08",
+  "status": "parked",
+  "summary": "Non-market business ideas found in the sweep, kept for completeness [unsure-fit]: an eVTOL shuttle between Brownsville and SpaceX Starbase with a $5M seed, a CXL AI memory card, a streaming phone with SpaceX, a summonable-screen phone, a repairable NFT-parts phone, a gaming drink and a China-AI equity dossier.",
+  "ideas": [
+   {
+    "name": "Swaich eVTOL",
+    "one_liner": "BRO ↔ Starbase in 8–9 minutes; SpaceX as anchor customer",
+    "date": "2025-08"
+   },
+   {
+    "name": "Memtastic",
+    "one_liner": "Plug-in CXL memory expansion for AI racks",
+    "date": "2025-09"
+   },
+   {
+    "name": "Slay the Dragon",
+    "one_liner": "\"Defeat Apple by launching a streaming phone with SpaceX\"",
+    "date": "2025-10"
+   },
+   {
+    "name": "China-AI dossier",
+    "one_liner": "\"The IPO calendar is the whole game\"",
+    "date": "2026-08"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "$5M",
+    "label": "eVTOL seed"
+   },
+   {
+    "value": "$3.5–4M / $6.5M / $7M",
+    "label": "SpaceX contract value in three documents"
+   }
+  ],
+  "people": [],
+  "next_moves": [
+   "Keep out of partner-facing treatise sections unless a link to the market line appears"
+  ],
+  "feeds": [],
+  "chapter": "archive",
+  "org": "org-origins"
+ },
+ {
   "id": "ap-llc",
   "name": "American Perpetual LLC",
   "tagline": "A Delaware LLC that holds the royalty and does nothing else",

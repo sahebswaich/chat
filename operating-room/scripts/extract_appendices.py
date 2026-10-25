@@ -19,6 +19,7 @@ THREAD = {
     "05_AP_build": "AP", "06_AP_street": "AP", "10_AP_corporate": "AP", "07_GLX_A": "GLX",
     "08_GLX_B": "GLX", "09_Greyline": "Greyline", "11_early_ideas_A": "Origins",
     "12_early_ideas_B": "Origins", "13_gap_sweep": "Drive", "14_claude_sessions": "Claude",
+    "15_artifacts_rest": "Claude", "16_gap_followup": "Drive",
 }
 
 

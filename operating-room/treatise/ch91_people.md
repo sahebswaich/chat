@@ -6,6 +6,8 @@ Everyone the documents name, with every role they were given and the threads the
 
 | Name | Roles (as described) | Threads |
 |---|---|---|
+| "Competence" | Raise agent for REAL Yield | Drive |
+| "Gaj" | Admired peer ("nice to everyone… share their learnings") | Drive |
 | "Gemini" | Name for the in-house market-making team | Origins |
 | "Lifestyle" | Jake Paul (antifund), Lucy Guo (backend capital), Christina Angermeyer (apeiron) | Greyline |
 | "Power Play" VC targets | David Sacks (Craft), Donald Trump Jr. (1789), JD Vance (Narya), Joshua Kushner (Thrive), Luke Nosek (Gigafund), Antonio Gracias (Valor), Joe Lonsdale (8VC), Robert Kraft, Joe Tsai | Greyline |
@@ -13,8 +15,10 @@ Everyone the documents name, with every role they were given and the threads the
 | "The founder" (unnamed) | AP's founder. Sept 18 ed.: $1M availability over 12 months; final: unpaid launch cooperation. Wrote a "founder's note" to MIAX with the Robinhood Brief attached. Presumably Saheb Swaich, though no name appears anywhere in the batch | AP |
 | "Tonk Analyser" | Telegram bot in demo group | Origins |
 | "Zach" (MIAX) | Owner of Onyx/VeriClear extensions in the stack table (likely Zach Dexter) | GLX |
+| 0x.hank.krill ("Krill") | Manifest/Olympus community author (policy thesis, grants, zkSync app) | Drive |
 | 1kx (r@1kx.capital) | Shared DePIN taxonomy | Origins |
 | 42 Andromeda outreach targets (BitBull, Pythagoras, Off The Chain, Morgan Creek Digital, Wave Digital Assets, Multicoin, BH Digital; CZ, Winklevoss twins, Tim Draper, Joseph Lubin, Brian Armstrong, Michael Saylor, Novogratz, Barry Silbert, Vitalik Buterin, Paolo Ardoino, etc.) | LP target list (not contacts confirmed) | Origins |
+| @alexziton; @stableshaman | REAL tokenomics advisors | Drive |
 | [unnamed] Chief Regulatory Officer / General Counsel | MIAX signatory (blank) | AP |
 | Adam Neumann / Flow | Cited for "Buy Properties with Crypto" | Origins |
 | Adaptive | engineering build option ("engineering via Adaptive or direct hires") [unsure: firm] | Greyline |
@@ -38,6 +42,7 @@ Everyone the documents name, with every role they were given and the threads the
 | Bitnomial Exchange | rulebook consulted | AP |
 | Bitstamp | Robinhood's crypto perp venue (HOOD Summit '26) | AP |
 | Bitstamp (by Robinhood) | EU crypto perps (MiFID II); U.S. crypto perps venue | AP |
+| Blackbird Labs, Inc. | $FLY restaurant token (farming target) | Drive |
 | Bloomberg | MIAX lists Bloomberg index futures (23 h at OCC); Bloomberg's master licence is the model for the sale terms and cap; license form the Master Agreement follows; Index futures franchise listed on MIAX Futures May–June 2026 | AP |
 | Bloomberg (B500 Index Futures, MIAX Ch 40) | house-style skeleton | AP |
 | Bloomberg / Bloomberg Beta | MIAX's index-product partner; Saheb proposed Bloomberg come in as equity via Bloomberg Beta | GLX |
@@ -65,7 +70,7 @@ Everyone the documents name, with every role they were given and the threads the
 | CME Group | Incumbent; dated SSF relaunch; suit to declare perps swaps | AP |
 | CME Group / CME Clearing | Incumbent; dated SSF relaunch; suit vs funding-rate perpetuals | AP |
 | CME Group / CME Clearing / Globex | Competitor; dated SSF relaunch on 7/27/26; holds S&P/Nasdaq and FTSE Russell (to 2037) exclusives; Competitor — dated SSF relaunch July 27, 2026 | AP |
-| CMill | Builds out Flow; co-holder of "25m gnosis" | Origins |
+| CMill | Builds out Flow; co-holder of "25m gnosis"; Proposed "Flow" commander in Olympus plan | Drive, Origins |
 | Coinbase / Coinbase Derivatives | Perpetual SSF filing 9/18 (AAPL model); margin rule SR-COIN-2026-001; hourly funding | AP |
 | Coinbase Derivatives | Form 19b-4 precedent Sept 2026 [crypto-adjacent] | AP |
 | Coinbase Derivatives (Nodal) | Competitor perp SFP filer | AP |
@@ -77,7 +82,7 @@ Everyone the documents name, with every role they were given and the threads the
 | Connamara Systems | Backup one-team street-build integrator (Integration Brief); Outside engineering team ("co-authors and official maintainers of QuickFIX", since 1998). Approached AP; Integration Brief prepared for it; not engaged; Greyline technology build partner (matching/trading infra) | AP, Greyline |
 | Connamara Systems / Connamara Technologies | Chicago engineering vendor; EP3; QuickFIX/Go; acquisition target | GLX |
 | Connamara Systems — Dan, Jim, Maureen (+12 Chicago engineers) | Build team → GLX Tech, Inc.; "Maureen chaired NFA Board 2020–2024" | GLX |
-| Connamara Systems, LLC | Proposed integration team; QuickFIX co-authors/maintainers; since 1998 | AP |
+| Connamara Systems, LLC | Proposed integration team; QuickFIX co-authors/maintainers; since 1998; Street-build integration brief recipient | AP, Drive |
 | Connamara Systems, LLC — Daniel Curry (CRO) | Addressee of Integration Brief; QuickFIX maintainers | AP |
 | Copper, Fireblocks, Sygnum Bank; CME, Kraken, Deribit, Bybit | Custody/venues in pasted reference fund | Origins |
 | Crypto.com | Its "statements" are cited in the competitor/field record (no detail); Robinhood minority stake; parent of OG.com spin-off | AP |
@@ -88,13 +93,16 @@ Everyone the documents name, with every role they were given and the threads the
 | defislug007@gmail.com | Owner of Manifest FAQs; likely Manifest co-founder ("me and my co founder") | Origins |
 | Dingaling | Cited NFT-farming exemplar | Origins |
 | DocuSign | E-signature (AutoPlace tags) | AP |
+| Dominari Holdings; Affinity Partners; 1789 Capital; Cantor Fitzgerald; PIF; Sanabil; Kingdom Holding; Dar Global | $25M SPV targets | Drive |
 | Don Wilson | DRW principal | GLX |
 | Don Wilson (DRW), Evgeny Gaevoy (Wintermute) | quoted on ADL / risk engines; DRW, Wintermute also VC/MM targets | Greyline |
 | Donnie | Call counterparty for the $20m Andromeda fund (prospective LP/partner) | Origins |
 | Dooley | SIG contact who would introduce Saheb to Egon Durban | GLX |
+| Dopex | Atlantic Options whitepaper (no-liquidation perps) | Drive |
 | Dorman Trading | Carrying FCM (BMO Harris seg account 2427201); opens NFA conversation; "GLX-Dorman"; FCM bought by MIAX's parent (Oct 2022); carries Rei/AP accounts; "May 2026 note to Dorman" | Claude, GLX |
 | Dorman Trading, LLC | FCM (Chicago); BMO Harris seg; potential acquisition; FCM (MIAX affiliate); Chicago; bank BMO Harris Bank NA; holds insurance fund | GLX, Greyline |
 | DrJay, KB (Clive's Ordinals list maintainers); captainy888 | Ordinals community | Origins |
+| Edward, Dala, Hermes, Apollo, Relic, altamira | Manifest team (design, Shopify backend, etc.) | Drive |
 | Egon Durban | Silver Lake; target partner; memo addressee ("Egon —"); Silver Lake Co-CEO; Long Term Capital anchor (Mubadala-backed) | GLX |
 | Eris (on CME) | Closest attribution precedent ("patented Eris Methodology") | AP |
 | Eurex | dated-contract contrast | AP |
@@ -115,18 +123,20 @@ Everyone the documents name, with every role they were given and the threads the
 | Goldman Sachs, HSBC, Korea Securities Depository, Tuttle Capital (T-Rex), Tradr, Seoul Economic Daily | Sources of the Korea demand data | AP |
 | Goldman, MS, JPM, BofA/BAML, UBS, Wells Fargo, Citi | Track 2 primes / Tier 1 integrators | GLX |
 | Gunderson Dettmer | Series Seed term sheet form | Greyline |
-| Harrison | Separate conversation: fund Wholesome OnlyFans (ICP/Solana) | Origins |
+| Harrison | Separate conversation: fund Wholesome OnlyFans (ICP/Solana); Prospective Andromeda co-founder/backer ("size me 10m"); Wholesome OnlyFans partner | Drive, Origins |
 | Hester Peirce | SEC Commissioner; 2020 SFP concurrence; SEC Commissioner; 2020 concurrence on SFP margin | GLX, Greyline |
 | Homebase DAO | Model for Solana real-estate STO (Reg D 506(b)) | Origins |
 | Hook.xyz | NFT options protocol (bot target) | Origins |
 | Horizons Law (US counsel), Harneys (offshore counsel), MG Stover (admin), Copper Custody | 3S service providers | Origins |
 | Hyperliquid, Trade.XYZ, Felix Protocol, Ventuals, Bitnomial, Coinbase Derivatives, Kalshi, Polymarket, FTX, Binance, Bybit, OKX | Competitors / precedents | GLX |
 | Hyperliquid, Trade.xyz/Trade[XYZ], Lighter, Bybit, Binance, dYdX, OKX, QFEX, Ostium, Bitnomial, Coinbase Derivatives, Nodal Clear, Kraken, FTX, BitMEX, LMAX, Architect | Benchmarks / precedents | GLX |
+| Hyperliquid; Bitget; OKX; MEXC; Gate; etc. | Venues for upnl-rolling / terminal integration | Drive |
 | ICE, CME, Cboe, OCC, NSCC, DTCC, NFA, FINRA, ISG | Infrastructure / regulators | GLX |
 | Intermarket Surveillance Group (ISG) | Gets the one-page notice at listing; surveillance credential | AP |
 | ISG | Surveillance (ISG Surveillance Brief p.7); Intermarket Surveillance Group — MIAX participation in place | AP |
 | ISG (Intermarket Surveillance Group) | surveillance data per name | AP |
 | Jai (worked for Sean Parker; MyCrypto) / Ambo team | Recipients of a 2021 outreach draft | Origins |
+| James Piazza (jamespiazzaiii@gmail.com) | REAL / Space / USDC-app co-builder; shared cold-email blueprint May 2024; probable "James" in "Ways out" | Drive |
 | James Piazza III (jamespiazzaiii@gmail.com) | Owner of "USDC App"/"USDC App Spec" (Jul 2025), likely related to StableStation | Origins |
 | JB Mackenzie | Robinhood (quoted at MIAXdx close and Sept 8 release) | AP |
 | Jim | Connamara senior team | GLX |
@@ -142,11 +152,14 @@ Everyone the documents name, with every role they were given and the threads the
 | KalshiEX | Holder of CFTC's first order permitting a U.S. exchange to list a perpetual (May 29, 2026) | AP |
 | KalshiEX / Kalshi Klear LLC / Kalshi Prime LLC | Competitor perpetual SFPs; BTC, gold and silver perps | AP |
 | KalshiEX LLC | BTCPERP precedent; Sep 18 2026 58-contract §41.23(b) schedule (competitor/model) | AP |
+| Kanpai Labs (liam@kanpailabs.io) | Shared Karate Combat airdrop guide | Drive |
 | Katten | Law firm (opinion on CFTC 1.57) | GLX |
 | Katten (Katten Muchin Rosenman) | law firm; Atkins spoke at Katten event; "Need Katten opinion on CFTC 1.57" (likely Greyline counsel) | Greyline |
 | KLIMA | Bailout/buyout target; Manifest treasury asset | Origins |
 | Kraken / Kraken Pro | ECP/ISDA institutional account; $10m options allocation | Origins |
+| Kraken; Cumberland; Deribit; Paradigm; Delta Exchange; Bybit; QCP; Gemini; Coinbase | Option/perp counterparties named in fund plans | Drive |
 | Kris Marszalek | Crypto.com CEO (Sept 17, 2026 via The Block) | AP |
+| Lando (lando.33.crypto) | Manifest smart-contract developer (ERC1155, contracts doc) | Drive |
 | Latham (or equivalent); CSC; Computershare; Wilmington Trust; Carta / Waystone; EisnerAmper / Withum / RSM | Named provider classes for counsel, administrator, custody, CPA | AP |
 | Lazer Devshop | Proposed builder of the OHM forex product | Origins |
 | LBMA | Precious-metals benchmark, consolidated July 2026 | AP |
@@ -154,10 +167,12 @@ Everyone the documents name, with every role they were given and the threads the
 | LedgerX / FTX estate | Origin of Rothera | AP |
 | LedgerX / MIAXdx | Engineering-hire pool | GLX |
 | Light Protocol | Saheb a venture backer; used for anonymous wallet funding | Origins |
+| Listing.Help | CEX listing agency price sheet | Drive |
 | Manifest competitors: Manifold.xyz, RTFKT (Nike), Metafactory, Uniqly, loldefi, Maddie Company, 4k | Competitive landscape | Origins |
 | Marex, StoneX (RJ O'Brien), Wedbush, ADMIS/ADM, Phillip Capital | Specialty FCMs (give-ups) | GLX |
 | Market makers named | Jump (Trading/Crypto), Citadel Securities (primary MMA target), Jane Street, Wintermute, Cumberland, SIG/Susquehanna, HRT, Two Sigma, IMC, Optiver, DRW, Flow Traders, Akuna, Virtu, XTX, Five Rings | Greyline |
 | Maureen | Connamara senior team; NFA Board Chair 2020–2024 | GLX |
+| MetaLayer Labs / Blast; Arcade Research (ops@arcaderesearch.io) | Blast terms shared with Saheb Apr 2024 | Drive |
 | Miami International Holdings (MIH) | MIAX's parent; guarantor; its stock is name No. 101 | AP |
 | Miami International Holdings, Inc. (MIAX) | Exchange's parent; No. 101 Reference Security (Affiliate Security); parent's guaranty | AP |
 | Miami International Holdings, Inc. (MIH) | MIAX parent; guarantor of the payments (¶5(i)); MIAX parent; four U.S. securities exchanges; Q2 2026 net revenue $141M; 10% of Rothera; © on LPB, MM brief, handouts; Guarantor (Delaware corp.); parent; ≈$3.9B mkt cap | AP |
@@ -170,7 +185,7 @@ Everyone the documents name, with every role they were given and the threads the
 | MIAX Futures Exchange, LLC (ex-Minneapolis Grain Exchange; Minneapolis address) | The listing exchange ("the Exchange"). Memos go to MIAX Products Leadership | AP |
 | MIAX Futures Exchange, LLC (formerly Minneapolis Grain Exchange, LLC) | DCM listing & operating the product on Onyx; MIC XMFE; files everything | AP |
 | MIAX Futures Exchange, LLC (Onyx), VeriClear, MIAX Products LLC, MIAX Technologies LLC | subsidiaries | GLX |
-| MIAX Futures Exchange, LLC / Miami International Holdings, Inc. | Listing DCM; licensee; © holder of the Brief; builds Onyx mark/funding engines | AP |
+| MIAX Futures Exchange, LLC / Miami International Holdings, Inc. | Listing DCM; licensee; © holder of the Brief; builds Onyx mark/funding engines; Royalty counterparty (MPPLA) / payment guarantor | AP, Drive |
 | MIAX Options | Source of the Corporate Action Alert type | AP |
 | MIAX Regulatory Oversight Committee (Public Directors), Market Regulation Department, Market Data, ISG representative | internal functions with duties | AP |
 | MIAX teams | Regulatory; Market Regulation Department; Operations (corporate-actions desk); Onyx Trading Ops & release engineering; Market Data & web; member services; OCC liaison; corporate development/finance/counsel; Regulatory Oversight Committee; Board | AP |
@@ -178,15 +193,18 @@ Everyone the documents name, with every role they were given and the threads the
 | Michael S. Selig | CFTC Chairman (addressee; defendant in CME v. Selig) | AP |
 | Michael Selig | CFTC Chairman | GLX |
 | Michael Selig (CFTC Chairman), Paul Atkins (SEC Chairman), Caroline Pham (ex-Acting CFTC Chair), Hester Peirce, Dawn Stump, Brian Quintenz, Dan Berkovitz | Regulators quoted | GLX |
+| Milan Schouten ("milark", milark@manifest.gg) | Manifest co-founder; President & Treasurer; 40% of Manifest Inc. | Drive |
 | Milark | Holds a Manifest stake to be bought out | Origins |
 | Mover, ArcX | Teams/products to buy (debit card, credit score) | Origins |
 | mteam88 | MEV dev; referred him to Taiko grants | Origins |
+| Mycelium; Saso | Designer; 3D modeler for MNFST × KLIMA tee | Drive |
 | Nadex (North American Derivatives Exchange) / OG.com / Crypto.com | Competitor; 10 names | AP |
 | Nadex / OG.com / Crypto.com / OG Markets US | Competitor (10-name filing) | AP |
 | Nadex / OG.com Markets | Notice-registered 9/14; ten-name perpetual SSF filing 9/24 | AP |
 | Nasdaq Nordic; Eurex | foreign analogues (gross-return futures; R-factor) | AP |
 | Nat Smith / Northwest Registered Agent Service, Inc. | Organizer at formation | AP |
 | Nelk Boys, Andrew Tate, Ansem, Elon Musk | Media/influencer role models | Origins |
+| Nick; Monk | Andromeda partners (contact cards, fundraising) 2023 | Drive |
 | Nikkei, KOSPI 200 (KRX), Hang Seng, TAIEX, Osaka | Foreign-index licence targets | AP |
 | Nostr wallet developer; Udimeyer | Ordinals ecosystem contacts | Origins |
 | NYSE, Nasdaq, NYSE Arca, NYSE Texas | listing markets / affiliate-listing precedents | AP |
@@ -196,9 +214,10 @@ Everyone the documents name, with every role they were given and the threads the
 | OCC (Ovation; MyOCC) | Clearinghouse; three new build pieces | AP |
 | OG.com / OG.com Markets / North American Derivatives Exchange, Inc. (Nadex) | Competing SFP exchange; filed dated then perpetual SFs on 10 stocks (Sept 2026) | AP |
 | Olympus DAO (OHM) | Target acquirer/partner; "World of Ohm" | Origins |
+| OlympusDAO; KlimaDAO; Utopia Labs; Lazer Dev Shop; Mover; ARCX | Olympus-plan counterparties | Drive |
 | OneChicago | Precedent SFP exchange (OCX.NoDivRisk; Rule 515(n); Amendment No. 1 SR-OCC-2010-13); Failed dated SSF exchange (2002–2020); source of precedents; primary precedent (NoDivRisk, Rule 414, Rule 515(n), Position Limit File, margins pattern, maturity acceleration); Predecessor SSF exchange 2002–2020; NoDivRisk (OCX.NoDivRisk) lineage; CE14-62 notice | AP |
 | OneChicago (OCX) | Predecessor SSF exchange whose seat MIAX takes; NoDivRisk; closed 2020 | AP |
-| OneChicago, LLC | SSF predecessor (OCX.NoDivRisk lineage; Rules 414, 515(n)) | AP |
+| OneChicago, LLC | SSF predecessor (OCX.NoDivRisk lineage; Rules 414, 515(n)); Security-futures listing precedent (2002 19b-7; 2015 §41.23) | AP, Drive |
 | Onyx | MIAX's trading platform; the perpetual gets its own instance | AP |
 | Optiver, IMC, Virtu, Wolverine, HRT, Two Sigma, Tower | Broader MM cohort | GLX |
 | Other MMs: Optiver, IMC, Virtu, Wolverine, Hudson River Trading | MIAX MM cohort (Track 3) | GLX |
@@ -216,7 +235,7 @@ Everyone the documents name, with every role they were given and the threads the
 | Reuters; The Block | Press sources cited | AP |
 | RHINO, MILARK, THEHEYYMAN/GSV, R3LIC, ALTAMIRA, KRILL, DALA | Unlabeled names on Manifest deck (likely collabs/partners) | Origins |
 | Rick Rubin (60 Minutes) | Inspiration for Crypto Options Protocol | Origins |
-| Robinhood | gets a dedicated "Robinhood Brief" (5_MEMBERS_AND_PUBLIC/09) as a launch partner; HOOD also No. 32 | AP |
+| Robinhood | gets a dedicated "Robinhood Brief" (5_MEMBERS_AND_PUBLIC/09) as a launch partner; HOOD also No. 32; Partner brief (Sept 2026) | AP, Drive |
 | Robinhood (JB Mackenzie, VP/GM Futures & International), IBKR, Schwab, Fidelity, Coinbase Financial Markets, JPMS, Goldman, Morgan Stanley, BofA/BAML, Marex, StoneX, Wedbush, Cash App, Binance.US | Integrators / targets | GLX |
 | Robinhood (Securities / Derivatives) | AP partner brief; clearing-path issue; "another listing after the launch" for XR | Claude |
 | Robinhood (Securities, Financial, Derivatives); Mackenzie; Marszalek | Launch-partner target; quotes on routing/single-stock perps | AP |
@@ -234,16 +253,18 @@ Everyone the documents name, with every role they were given and the threads the
 | S&P DJI, Cboe | Royalty comparables | AP |
 | Saheb (@Saheb; Swaich) | author of every doc; "licensor and financier"; American Perpetual LLC + Greyline, Inc. (GLX) interest | Claude |
 | Saheb (Singh) Swaich | Founder & CEO, Greyline Markets / GLX, Inc.; signatory; saheb@glx.com; swaichsaheb@icloud.com | GLX |
-| Saheb Swaich | Founder & Managing Member (sole member) of American Perpetual LLC. Signs for AP and personally receives the $40M signing payment as assignee. Gives launch cooperation. Notice email swaichsaheb@icloud.com; Founder & CEO, Greyline Markets / GLX. Author of rulebook, risk engine, regulatory pathway. Holds the 36 royalty points. Contact saheb@glx.com; Founder, sole Member, Managing Member, Manager-designate & Partnership Representative of American Perpetual LLC; author of all work ("with AI drafting tools"); payee of $40M; Author; Manifest founder; Andromeda manager (30%→50%); Telegram @sahebswaich | AP, GLX, Origins |
+| Saheb Swaich | Founder & Managing Member (sole member) of American Perpetual LLC. Signs for AP and personally receives the $40M signing payment as assignee. Gives launch cooperation. Notice email swaichsaheb@icloud.com; Founder & CEO, Greyline Markets / GLX. Author of rulebook, risk engine, regulatory pathway. Holds the 36 royalty points. Contact saheb@glx.com; Founder, sole Member, Managing Member, Manager-designate & Partnership Representative of American Perpetual LLC; author of all work ("with AI drafting tools"); payee of $40M; Author; Manifest founder; Andromeda manager (30%→50%); Telegram @sahebswaich | AP, Drive, GLX, Origins |
 | Saheb Swaich (@sahebswaich Telegram) | Manager/contact of Andromeda capital-partner trades; author of ACM ops, Letter, 3S | Origins |
 | Saheb Swaich / Saheb Singh Swaich | Founder & CEO, Greyline, Inc. → Greyline Markets, Inc.; age 23 (Nov 2025); emails swaichsaheb@gmail.com, swaichsaheb@icloud.com, saheb@greyline.markets, saheb@glx.com | Greyline |
 | Saheb's father | bought/renovated an Iowa commercial building (5 units); involved with Fannie Mae/Freddie Mac | Claude |
 | Schulte Roth, Cooley, Latham & Watkins, MG Stover, Cohen & Co | Service providers in pasted reference fund terms | Origins |
 | SEC Office of FOIA Services; CFTC Office of the General Counsel | CTR recipients | AP |
 | SEC, CFTC, FINRA, NFA, ISG, NSCC | Regulators/SROs | AP |
+| SEC; CFTC; OCC; ISG | Approvals (19b-7, 19b-4, §41.23), clearing, surveillance | Drive |
 | Selig | CFTC Chairman (Apr 2026), "only sitting Commissioner" | Greyline |
 | shek.dev; Yang Jiefeng (dddappp); Zhe (Sujiko) | Hyperdrive hackathon | Origins |
 | Silver Lake ("Silver Lake LTC"; Silver Lake–designated Cayman vehicle) | Proposed June buyer of 3.5 points for $210M | AP |
+| Silver Lake (Cayman designee) | Buyer of 3.5 AP royalty points ($210M) | Drive |
 | Silver Lake (LTC), Bloomberg L.P. / Bloomberg Beta, Warburg Pincus, Mubadala | Investors | GLX |
 | Silver Lake Long-Term Capital (LTC) | Target lead / exclusive royalty buyer; "25-year vehicle" | GLX |
 | SIP / consolidated tape | Index source; 23×5 from Dec 6, 2026 | AP |
@@ -251,12 +272,14 @@ Everyone the documents name, with every role they were given and the threads the
 | SIP plans: CTA/CQ, UTP, CT Plan | Index data licensing | AP |
 | sisyphus | Cited "mercenary" trader | Origins |
 | SKHY, CBRS, SPCX | New 2026 listings in the class (SPCX very likely SpaceX) | AP |
+| SpaceX | Proposed anchor client for Swaich eVTOL | Drive |
 | Split Capital founder (Zaheer Ebtikar — name inferred) | Cited on FTX-estate SOL SPV | Origins |
 | Sudoswap, Dero, Klima, Olympus | Network connections | Origins |
 | Susquehanna | Partner in Robinhood-led venture (Rothera) | AP |
 | Taiko Labs | Grant program (yami) | Origins |
 | Teply (SEC), Tente (CFTC) | Joint-staff counterparts under the JHI | GLX |
 | The Options Clearing Corporation (OCC) | Clearing agency; computes per-member funding; standing terminal-settlement rule; DCO / clearing agency; Ovation platform; STANS/OFRA/RBH/TIMS; clearing house (Ovation, DDS, OFRA, STANS); adjusts CAs under Rules 2801–2805 | AP |
+| Thiel Fellowship | Heading of a June 2023 ideas note | Drive |
 | thismanq@gmail.com | Mecasso author | Origins |
 | Thomas (Tom) Gallagher | MIAX Chairman & CEO; "Our edge is technology"; SAA dependency | GLX |
 | Tim Draper | PROPY backer (cited) | Origins |

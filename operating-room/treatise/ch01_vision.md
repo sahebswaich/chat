@@ -32,11 +32,14 @@ Read in date order, the documents repeat three engines.
    app tokens in ManifestOS. In 2023 the rule is written down: ecosystem coins must stay below
    the main coin, and the main coin should be about 100 million tokens priced in the tens of
    dollars. *Coin Denominated Reality* (Nov 2023) puts a main chain coin in a public company's
-   treasury above 100+ dividend-paying product coins. Rei is where this line lands.
+   treasury above 100+ dividend-paying product coins. A second line runs beside it: "Real" as the
+   endgame (Aug 2022), "Stable coin is algorithmic REAL" (Jun 2023), and in 2025 a single $REAL
+   token on a zk layer-1 that earns a share of revenue. Rei is where both lines land.
 2. **A fund that wants to become a bank.** Andromeda Capital Partners (2024) pools capital into
    options trades on ETH and SOL, then becomes ACM and the 3S Capital brochure, and names its
    end point as "the first legal crypto Prime bank in the world".
-3. **An exchange where the house earns the fees.** BTCZPERP on the Z stablecoin (2023),
+3. **An exchange where the house earns the fees.** "Perpetuals on Stocks, Cheaper than Options on
+   Stocks" first appears in *Operation 100b* (Mar 2023). Then BTCZPERP on the Z stablecoin (2023),
    "Lend. Options. Perps." (2023), the Andromeda Terminal (2024), then Greyline → GLX → American
    Perpetual (Nov 2025 → Sep 2026): perpetual futures on US stocks, built with MIAX, ending as a
    licence that pays 60% of every perpetual's fees.
@@ -46,7 +49,7 @@ the American Perpetual stock perps sit in the same account; and the desk trades 
 
 > [!quote] "If you have 100m tokens at 40, and they go to 400, you have 40b." — Saheb's rule of tokenomics, Aug 2023
 
-*Sources: World of Ohm (Aug 2022); Master / ManifestOS (Oct 2022); Saheb's rule of tokenomics (Aug 2023); Coin Denominated Reality (Nov 2023); Andromeda Capital Partners (Feb 2024); GLX and AP documents (2025–26)*
+*Sources: World of Ohm (Aug 2022); Olympus plan (Aug 2022); Master / ManifestOS (Oct 2022); Operation 100b (Mar 2023); What can be done now? (Jun 2023); Saheb's rule of tokenomics (Aug 2023); Coin Denominated Reality (Nov 2023); Andromeda Capital Partners (Feb 2024); Real Deck and Real Yield Plan (2025); GLX and AP documents (2025–26)*
 
 ## The pods {#vision-pods}
 
@@ -90,7 +93,7 @@ The pods are not independent. Four links decide whether the whole system works.
 
 ## What this treatise is built from {#vision-sources}
 
-The research read **about 240 documents and artifacts**: Saheb's Google Drive (the idea docs from 2021
+The research read **more than 400 documents and artifacts**: Saheb's Google Drive (the idea docs from 2021
 on, the Greyline, GLX and Perps folders, the American Perpetual × MIAX data room in its
 39-document "AI readable" edition, the closing set, the Silver Lake data room, the investor and
 counsel documents) and his Claude workspace (the Rei, XR, Trader in Time, Hyperbull, AP data
@@ -112,6 +115,8 @@ both values and flags the conflict in a **Tension** box.
 ## How to read it {#vision-guide}
 
 - **Chapter II** is the 2021–2025 lineage: the coin, the fund and the first exchange sketches.
+- **Chapter II-B** is the deeper archive: REAL, Operation 100b, the master plans, the Andromeda
+  fund papers and the farming operations.
 - **Chapter III** is Greyline → GLX, the equity-perp exchange as it changed month by month.
 - **Chapters IV–VIII** are American Perpetual: the product and machine, the legal road, the deal,
   the street, and the expansion to crypto, FX, metals and world indices.

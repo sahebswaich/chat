@@ -161,6 +161,17 @@
   "summary": "Manifest, the main coin over product coins, the Z stablecoin, Andromeda and its fund successors, the market tools and the media bets. The lineage Rei inherits.",
   "chapter": "origins",
   "pods": [
+   "archive-real",
+   "archive-usdc-pay",
+   "archive-token-rules",
+   "archive-operation-100b",
+   "archive-master-plans",
+   "archive-manifest-onchain",
+   "archive-andromeda-fund",
+   "archive-terminal",
+   "archive-farming",
+   "archive-grayline",
+   "archive-ventures",
    "manifest",
    "main-coin",
    "stable-z",
@@ -171,8 +182,10 @@
    "side-builds"
   ],
   "feeds": [
+   "org-ap",
    "org-glx",
-   "org-rei"
+   "org-rei",
+   "org-street"
   ]
  }
 ]

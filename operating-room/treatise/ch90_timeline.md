@@ -133,11 +133,13 @@ Every dated event the research found, oldest first, exactly as each source recor
 | 2020 | Rel. 34-90244 lowers SFP margin 20% → 15%; four concurrences | GLX | Reg Pathway |
 | 2020 | MIH acquires MGEX via §38.3(d); Dexter becomes LedgerX CEO | GLX | MIAX.pdf; Path to Close |
 | 2020–22 | MGEX (DCM+DCO) and Dorman (FCM) acquired by MIAX | GLX | Deck |
+| 2020-04-30 | Rollbit (crypto/skin casino) exposé saved — earliest crypto-adjacent doc | Drive | Concerns regarding Rollbit |
 | Jun 25 & Jul 13, 2020 | OCC Info Memos #47201, #47284 (OCX.NoDivRisk dividend adjustments) | AP | Doc23 App. C |
 | Sep 2020 / Dec 21, 2020 | OneChicago closes / DCM designation vacated | GLX | Fee Exemption |
 | Sep 14 2020 | 2020 RDS + Supplement implemented (FINRA RN 20-28) | AP | Doc 11 |
 | Sept 14, 2020 | Info Memos #47581 (last NoDivRisk dividend notice shape) and #47576 | AP | Doc14 pp.15, 17 |
 | Sept 18, 2020 | OneChicago maturities accelerated; OCC discontinued SF scan class (#47600) | AP | Doc14 pp.12, 17 |
+| 2020-11 (copied 2021-04-08) | Altcoin "Snowball" leverage plan + DeFi buy-and-hold list | Drive | Copy of Weekly Trading Plan (sahebbusiness@gmail.com) |
 | Nov 24 2020 | Customer Margin Rules Relating to Security Futures, 85 FR 75112 (Strategy-Based Offset Table) | AP | Doc 8 |
 | 11 Dec 2020 | Form 1-N notice registration (acknowledged Rel. 34-90785) that MIAX is asked to confirm stands for MIAX Futures; SEC list shows only "Minneapolis Grain Exchange, Inc. (formerly registered)" — predecessor inferred | AP | Brief p12 |
 | 2020-12-11 | MIAX Futures (ex-MGEX) Form 1-N notice registration (Release 34-90785) | AP | Doc37 p8 |
@@ -154,11 +156,23 @@ Every dated event the research found, oldest first, exactly as each source recor
 | 2021-05 → 2021-10 | Fleek technical marketing (+ sonic.ooo PM at Fleek/Psychedelic) | Origins | Resume; yami |
 | 2021-05-22 | Victor Bonhomme's decentralized-derivatives tracker shared with Saheb | Origins | 2023 tracker metadata |
 | 2021-06 → 2021-08 | DFinance (ICP) one-pager authored; shared 2021-10-27 | Origins | One Pager.pdf |
+| 2021-06-25 | Layered geometric bid ladders (ICP, LINK, BNB, ETH, MKR, SOL, FTT) | Drive | Layered Bids |
 | 2021-07-02 | Internet Computer NFT collection ideas | Origins | Internet Computer NFTs |
+| 2021-08 | Lottery EV and stock/crypto option EV calculators | Drive | IALottery EV; Stock Option EV |
 | 2021-08-04 | Saheb copies "2021 DeFi Next Big Thing: Decentralized Derivatives" | Origins | 2021 tracker |
 | 2021-10 → 2022-07 | Manifest founder; $1.3M raised in 8 hours | Origins | Resume; yami |
 | 2021-10/11 | NFT Tracker, Mecasso (11-10), Possible Airdrop List (11-18) shared | Origins | shared docs |
+| 2021-11-01 11:11 EST | Manifest Discord opens | Drive | Medium #1: Manifest Discord; Calendar |
+| 2021-11-05 | 50 OHM ($46,000) deposited for mint, bonds, LP | Drive | Expense report |
+| 2021-11-09/10/24 | MNFST contract deployments (4.777 / 1.333 / 1.5 ETH) | Drive | Expense report |
+| 2021-11-10 | Manifest mainnet contracts recorded — OHM-fork token/staking/treasury/bonds + Genesis ERC1155 | Drive | MNFST Contract Info |
+| 2021-11-11 | Planned NFT/token/staking launch 11:11 | Drive | Calendar |
+| 2021-11-20 | KLIMA × MNFST "Save the World" 333-tee NFT plan | Drive | KLIMA x MNFST Collaboration |
 | 2021-12-02 | PhantomDAO <> Olympus proposal shared | Origins | PhantomDAO |
+| 2021-12-07 | CoinMarketCap listing form copied | Drive | Copy of CMC Form Public |
+| 2021-12-08 | NFT → "claimed version" → tx-hash QR physical-redemption flow | Drive | Manufactering |
+| 2021-12-09 | MANIFEST + KLIMA brief: "MNFST tokens are backed by … staked OHM" | Drive | MANIFEST + KLIMA |
+| 2021-12-17 | Manifest × KLIMA Genesis shock drop (1,332 NFTs) | Drive | Manifest Genesis |
 | 2021-12-19 | Manifest FAQs (MNFST, genesis hoodie NFT, OHM/KLIMA treasury) | Origins | Manifest FAQs |
 
 ## 2022 {#timeline-2022}
@@ -166,11 +180,24 @@ Every dated event the research found, oldest first, exactly as each source recor
 | Date | Event | Thread | Source |
 |---|---|---|---|
 | 2022-01 (early) | Founders visit clothing manufacturing | Origins | Manifest FAQs |
+| 2022-01-27/28 | Dunnsy MNFST token-thesis drafts (premium-responsive bonding) | Drive | MNFST Token Thesis drafts |
+| 2022-01-31 | zkSync grant application ("streetwear to the metaverse… crypto to the real world") | Drive | Zk Sync application |
+| 2022-02-07 | Krill's Policy Thesis | Drive | Krill's Policy Thesis |
+| 2022-02-08 | Manifest Collective LLC formed (Delaware) | Drive | DE Filing Evidence |
+| 2022-02-12 | Manifest Policy bond/APY/cap-table sheet | Drive | Manifest Policy |
 | 2022-03-05 | OhmieDay FAQ shared | Origins | OhmieDay |
+| 2022-04-26 | Manifest Inc. formation drafts incl. SAFE consent ≤ $500k | Drive | Manifest Inc. Draft Docs.zip |
 | 2022-04-29 | Manifest "Latest_Pitch_Deck.pdf" finalized | Origins | pitch deck |
+| 2022-05-02 / 05-25 | Manifest Tech founder vesting start / Milan Schouten SPA DocuSigned | Drive | 5.19.22 Stock Purchase Agreement |
+| 2022-05-24 | Manifest Collective LLC DE filing + EIN letter | Drive | (title only) |
+| 2022-06-12 | Manifest Homepage Spec ("50mil Series A") | Drive | Homepage Spec |
+| 2022-06-29 | MNFST NFT↔token buy/sell curve | Drive | Buy/Sell |
 | 2022-08-18 | Manifest → Olympus acquisition/"World of Ohm" plan (OHM forex 500x, options) | Origins | Manifest plan |
+| 2022-08-19 | Olympus plan: $25m buyout, Flow, Odyssey, Super App, "Real" endgame, Fibonacci-prime targets | Drive | Olympus plan |
 | 2022-08-19 | fibonacci prime energy-empire note (F(83) target) | Origins | fibonacci prime |
+| 2022-10-04 | Master plan ladder (blockchain+OS → hardware → semis; capital-management firm concurrent) | Drive | Personal |
 | 2022-10-04 | Master (ManifestOS, C-Prime), Year 1 (token stack, LIFE handles), Blockchain philosophy | Origins | Master; Year 1; Blockchain |
+| 2022-10-29 | "Master Capital" ETH binary put-spread parlay | Drive | ETH Trade |
 | Nov 2022 | FTX collapse (cited) | GLX | Op Doc §33 |
 
 ## 2023 {#timeline-2023}
@@ -182,14 +209,25 @@ Every dated event the research found, oldest first, exactly as each source recor
 | 2023-02-03 | $SUP Support AI-bot + dividend-airdrop token | Origins | $SUP |
 | 2023-02-11 | BTC Ordinals NFT one-pager | Origins | BTC NFT One Pager |
 | 2023-02-11/12 | Clive's Ordinals list copied; Bitcoin Bears listings shared | Origins | Ordinals docs |
+| 2023-02-23 | Cypher Trade deal; asks Harrison to co-found Andromeda | Drive | Cypher Trade Deal |
+| 2023-02-28 | Manifest AngelList Stack entity to be paid & dissolved | Drive | TAX |
+| 2023-03-09 | Andromeda website spec (Andromeda.vc, Ethshort.com; Nick, Monk) | Drive | Saheb's eth trade |
 | 2023-03-13 | Skin price dump (CS:GO/Dota/Rust) | Origins | prices |
+| 2023-03-23 | Operation 100b — first "Perpetuals on Stocks" line | Drive | Operation 100b |
+| 2023-03-29 | "Market" token-design rules & real-estate token sale | Drive | Market |
 | 2023-03-29 | Real-estate crypto empire (Reg D 506(b) SPV NFTs) | Origins | real estate doc |
+| 2023-04-01 | Andromeda world-government / Andromeda Foundation sectors | Drive | Andromeda; Untitled 1sDRls… |
 | 2023-04-01 | Stablecoin Z with prime stairsteps; BTCZPERP | Origins | Stablecoin |
+| 2023-04-20 | Andromeda Capital binary-fund prospectus + investor agreement (AND 10M) | Drive | Andromeda Gnosis.pdf; Tentative Investor Agreement.pdf |
 | May 2023 (May 19) | LedgerX (FTX's U.S. derivatives exchange) goes to MIAX from FTX estate | AP | Doc31 p4, p14 |
 | 2023-05-09 | "Manifest - liquidity pools on bitcoin" (title only) | Origins | Manifest LP on BTC |
+| 2023-05-31 | Otonomos Mirror Token tranche 1 opens (source of "mirror token" term) | Drive | Captable simulator |
 | June 2023 | VeriClear (Vermiculus) deployed; real-time VM 2024 | GLX | Investor Doc |
+| 2023-06-15 | "Stable coin is algorithmic REAL" (Thiel Fellowship note) — earliest REAL-currency mention | Drive | What can be done now? |
 | Jul 25, 2023 → Jan 1, 2024 | NFA repeals reduced SFP rate (I-23-15) | GLX | Fee Exemption |
 | 2023-08-11 → 09-10 | Saheb's rule of tokenomics | Origins | rule of tokenomics |
+| 2023-08-18 / 08-25 | Options-parlay "$100M" plan; zk name/identity login system | Drive | The "Impossible" Task; Login system |
+| 2023-09-08 | "Crypto will serve as the primary equity source" | Drive | Ideas |
 | 2023-09-23 → 10-13 | "80 companies" deck (Airbnb/Turo/jets but crypto) | Origins | Untitled presentation |
 | 2023-09-28 | MEV.fyi research hub shared | Origins | MEV.fyi |
 | 2023-10-05 | Crypto Winning meta tier list | Origins | Crypto Winning |
@@ -197,8 +235,12 @@ Every dated event the research found, oldest first, exactly as each source recor
 | 2023-10-21/22 | Flooring audit; Hyperdrive projects + dddappp shared (Sujiko listed) | Origins | shared docs |
 | 2023-10-25 → 2024-01-06 | Altcoin ecosystem + tiered target sheet | Origins | Altcoin |
 | 2023-10-28 | Hook NFT options bidding bot spec | Origins | Hook bot |
+| 2023-10-29 | Andromeda US LLC → BVI Andromeda Trading structure | Drive | Andromeda Fund Structure |
 | 2023-11-10 | Coin Denominated Reality / Andromeda Fund Prospectus I | Origins | CDR |
+| 2023-11-13 | Chartpaint → Andromeda Terminal spec (upnl rolling, Hyperliquid/Bybit) | Drive | Chartpaint doc |
 | Dec 2023 | Robinhood 24 Hour Market ("only US retail brokerage to offer 24/5") | AP | Doc31 p3 |
+| 2023-12-05 | Andromeda Digital Asset investor agreement (AND 20M, 30%/50%) | Drive | Tentative Investor Agreement |
+| 2023-12-18 | CEX listing price sheet (Listing.Help) | Drive | Offer Exchanges by Listing.Help |
 | 2023-12-18 | RGB Points FAQ shared | Origins | RGB |
 | 2023-12-27 | Donnie call: $20m Andromeda fund | Origins | Donnie Call |
 
@@ -212,6 +254,7 @@ Every dated event the research found, oldest first, exactly as each source recor
 | 2024-01-31 | Crypto Options Protocol note; Solana airdrop farming sheet | Origins | COP; Airdrop sheet |
 | 2024-02-09 | Justin Drake "sequencing & preconfs" directory shared | Origins | sequencing sheet |
 | 2024-02-11 | Andromeda Term Sheet (AND tokens) | Origins | Term Sheet |
+| 2024-02-12 | Andromeda $20M Offering Memorandum | Drive | Offering Memorandum |
 | 2024-02-13 | Saheb's 5 Year Plan ("crypto Prime bank"); CDR minimized | Origins | 5 Year Plan; CDR min |
 | 2024-02-15 → 02-24 | Andromeda - Capital Partners (ETH call-spread raise) drafted | Origins | Andromeda doc |
 | 2024-02-19 | Proposal Rifts (RIFT token; $2b @ $25b FDV) | Origins | Proposal Rifts |
@@ -221,14 +264,20 @@ Every dated event the research found, oldest first, exactly as each source recor
 | 2024-03-01 | Zeneca Blast Info shared | Origins | Blast Info |
 | 2024-03-03 | "Andromeda (March)" re-issue (identical) + "Sol Trade" communiqué created (edited to 03-08) | Origins | Andromeda docs |
 | 2024-03-08 | Allbridge Feb report shared | Origins | Allbridge |
+| 2024-04-06 | "Multiplayer web": OS identity + Rifts | Drive | Untitled 10UjcT8… |
 | 2024-04-06 | Multiplayer web note | Origins | Untitled document |
 | 2024-04-11/12 | TOKEN2049 Dubai side-events copied; "Outreach for Andromeda" LP list | Origins | TOKEN2049; Outreach |
 | 2024-04-14 | Blast Gold sheet shared | Origins | Blast Gold |
+| 2024-04-19/20 | Blast ToU shared by arcaderesearch.io; Blast Gold valuation $15.58; Blackbird sybil SOP | Drive | MetaLayer ToU; Blast Valuation; Airdrop SOP |
 | 2024-04-28/29 | "ETH DOWNTURN" Andromeda communiqué ($400k put spreads) | Origins | ETH DOWNTURN |
+| 2024-04-29 | $400k "ETH DOWNTURN" raise; "Trade. Fund. Tech. Miltech." | Drive | ETH DOWNTURN; Untitled 1Kt2_Z… |
+| 2024-05-17 / 05-22 | Blur for Memecoins; James Piazza shares cold-email blueprint (earliest Piazza link) | Drive | Blur for Memecoins; Blueprint |
 | 2024-06-04 → 07-13 | Fund Summary June | Origins | Fund Summary |
 | 2024-06-11 | "Greatest Solana Option trade" stub | Origins | Solana option doc |
 | 2024-06-16 → 06-27 | "Operations for ACM" memo | Origins | ACM |
+| 2024-06-27 | Strategy-vault tokens ("one taxable event") | Drive | Business Plan ACM |
 | 2024-09-06 → 09-27 | Fund Summary Sep | Origins | Fund Summary |
+| 2024-09-27 | Fund book incl. "Minneapolis trip $2,000" | Drive | Fund Summary Sep |
 | 2024-10 | 3S Capital / 3S Crypto brochure (launch Jan 2025 expected) | Origins | 3S brochure |
 | 2024-10-06 | "Letter from the Founder" (fund thesis + term template) | Origins | Letter |
 
@@ -243,6 +292,7 @@ Every dated event the research found, oldest first, exactly as each source recor
 | Q3 2025 | Gallagher: "We built the church for Easter Sunday." | GLX | Deck |
 | Q3 2025 (forecast) | ~30% correction "end of cycles"; TAO halving Aug 2025 = predicted bull peak | Origins | CDR; Altcoin |
 | 2025-02-07 | Rifts proposal last edited | Origins | Proposal Rifts |
+| 2025-02-12 | Map of Apps (Homer/Jetter/Cartel tokens; Andromeda US derivatives exchange; REAL currency) | Drive | Map of Apps |
 | Feb 21, 2025 | Bybit $1.5B Safe{Wallet} hack (cited) | GLX | Op Doc §33 |
 | Mar 12 / Mar 26, 2025 | Hyperliquid ETH whale / JELLY incidents (cited) | GLX | Op Doc §33 |
 | 2025-04 | BIS Triennial: OTC FX $9.5T/day | AP | Doc33 |
@@ -251,20 +301,28 @@ Every dated event the research found, oldest first, exactly as each source recor
 | May 2025 | Nodal Clear first 24×7 margined futures DCO | GLX | Op Doc §49 |
 | May 21, 2025 | Robinhood Derivatives letter to CFTC supporting perps on DCMs | AP | Doc31 p3 |
 | May 30 2025 | NYSE Texas Rule 24 (Rel. 34-103159) | AP | Doc 9 |
+| 2025-06-06 → 06-26 | REAL Yield Plan, Real Deck, Real Spec, practice spec, 1Real, Space spec | Drive | REAL docs |
 | 2025-06-25 | CDR last edited | Origins | CDR |
+| 2025-07 | USDC Pay app + VC emails | Drive | USDC App; VC Emails |
 | Jul 25, 2025 | CME §36(a)(1) application (Rule 6h-1(b)) | GLX | Reg Pathway |
 | 2025-08-03 | 3S brochure PDF uploaded to Drive ("old" folder) | Origins | 3S metadata |
 | 2025-08-04/05 | StableStation ramp spec | Origins | StableStation |
+| 2025-08-14 | eVTOL deck: "22-year-old serial entrepreneur with 7-figure exit from previous crypto venture" | Drive | Swaich: From Starbase to the World |
+| 2025-08-14/17 | Vertiport requirements ($7M/yr) and Starbase Shuttle deck ($3.5–4M/yr) | Drive | Vertiport doc; Starbase Shuttle |
 | Aug 14, 2025 | MIAX Holdings NYSE IPO | GLX | Investor Doc |
 | 2025-08-17 | Untitled doc in "old" (empty) — no perps content before Nov | Greyline | 1alx9… |
 | Sep 5, 2025 | Atkins–Pham joint statement with "Perpetual Contracts" section | GLX | Investor Doc |
 | Sep 5, 2025 | SEC/CFTC joint statement ("innovation exemptions") | GLX | Op Doc App C |
+| 2025-09-26 | Grayline: JEMSE dividend strip + Stabroek royalty strip | Drive | Grayline |
 | 2025-10-10 | $19.1B crypto forced-liquidation day | AP | Doc33 p11 |
 | 2025-10-10/11 | Offshore crypto liquidation cascade (~$19B; ADL ~20,000 accounts) — cited as why no ADL | AP | Fact Sheet |
 | Oct 10, 2025 | Offshore liquidation cascade | GLX | All |
 | Oct 10, 2025 | Offshore $19.1B liquidation day; $2.1B ADL | GLX | Competitive Memo |
+| 2025-10-13 | $25M SPV LP target list | Drive | SPV Reach |
 | Oct 13, 2025 | Hyperliquid HIP-3 activated | GLX | Reg Pathway; Fee Arch |
 | 2025-10-15 | XR smart-glasses bundle note | Origins | XR |
+| 2025-11 | Equity-perps idea started; first MIAX approach about index perps | Drive | Progress Document |
+| 2025-11-10 / 11-25 | Funding-arb fund; "regulated perpetual exchange for US equities… 20x cross margin" | Drive | Funding Arb; Perps untitled |
 | Nov 10, 2025 | Ferraro named President of MIAX Products, LLC | GLX | Path to Close |
 | 2025-11-12 | Resume PDF | Origins | Resume |
 | 2025-11-23 | Executive Summary + Todo list created in Perps folder: basket perps on MIAX → $100B exchange plan | Greyline | Perps |
@@ -276,6 +334,7 @@ Every dated event the research found, oldest first, exactly as each source recor
 | 2025-11-27 → 12-01 | First "GREYLINE" pitch text ($100M, own DCO/FCM/DCM) | Greyline | Untitled 10Ohm |
 | 2025-11-29 | Perps folder created | Greyline | folder metadata |
 | 2025-12-01/02 | Greyline.docx + Pitch Deck Full ("November 2025", $100M) | Greyline | old |
+| 2025-12-02 | MIAX general counsel engaged; investment interest | Drive | Progress Document |
 | 2025-12-05 | Pivot: Greyline_MIAX_Equity_Perps v1 — partnership with MIAX | Greyline | old |
 | 2025-12-06 | v2 + Equity Perp Proposal (exemptions matrix, JV/rev share) | Greyline | old |
 | 2025-12-10 | v3 (maker/taker, NVDA example, DMM) | Greyline | old |
@@ -305,6 +364,7 @@ Every dated event the research found, oldest first, exactly as each source recor
 | Q4 2026 (plan) | First live trades (Exec Summary) | GLX | Exec Summary |
 | Q3 2026 (target) | Live trading of top 30 equities (Feb deck) | Greyline | Old Investor Deck |
 | Jan 2026 | Selig op-ed "Golden Age" | GLX | Investor Doc |
+| 2026-01-04 | Perp contract-spec checklist (funding, liquidation, ADL, mark/index, IM/MM, cross/isolated, corporate actions, order types) | Drive | Untitled 1Pfp9DP… |
 | 2026-01-05 | Future Greyline Ideas (first BLP idea; whitelabel Coinbase/Robinhood) | Greyline | old |
 | Jan 7, 2026 | SEC list of exchanges last updated | AP | Doc24 App. A |
 | 2026-01-09 | Unsigned MOU last modified (≥80%) | Greyline | old data room |
@@ -384,6 +444,7 @@ Every dated event the research found, oldest first, exactly as each source recor
 | June 2026 | Rothera trading | AP | Doc31 p4 |
 | June 2026 | Fact Sheet & Contract Specs v1.0 (VeriClear design); SpaceX IPO "largest in history" | AP | Fact Sheet; IM |
 | 2026-06-01 | American Perpetual LLC organized in Delaware (file 10643461); organizer's Initial Resolutions; EIN CP575G | AP | 0D; Binder |
+| 2026-06-01 / 06-05 | AP organizer resolutions + EIN CP575G / DE good standing | Drive | 0B_Corporate_Binder_Checklist |
 | 2 Jun 2026 | First crypto perp approval knocks 9% off Cboe, ≈4% off CME & ICE | AP | Deal p2 |
 | 2026-06-02 | CFTC approves first crypto perpetual; Cboe −9%, CME/ICE/Nasdaq −4–5% | AP | prepack v4.55 |
 | June 3, 2026 | CFTC Part 17 FIXML mandatory | GLX | One-pager |
@@ -392,8 +453,10 @@ Every dated event the research found, oldest first, exactly as each source recor
 | Jun 3 / Jun 4, 2026 | Form 102A/B FIXML compliance / FINRA 4210 effective | GLX | Op Doc |
 | 2026-06-05 | Delaware good standing certificate | AP | Binder |
 | 2026-06-05→06-08 | Silver Lake Phase-One closing package built ($210M for 3.5 points); Deal memo 06-08 | AP | zip; Deal memo |
+| 2026-06-07/08 | Silver Lake phase-one closing package ($210M for 3.5 points) | Drive | AP_SilverLake_DataRoom (Drive copies) |
 | June 8, 2026 | Onyx v1.3 specs; Financial Product Fees in effect | AP | Annex A; Annex E |
 | Jun 8, 2026 | Onyx v1.3 posted; Financial Product Fees in effect | AP | Doc19; Doc21 |
+| 2026-06-10/14 | Final filings checklist; OneChicago §41.23 / 19b-7 matched-pair precedent | Drive | Example_41.23_SEC19B-7_Filing_Onechicago |
 | June 12 2026 | SpaceX (SPCX) listed on Nasdaq | AP | Doc 7 |
 | Jun 12, 2026 | SPCX (Space Exploration Technologies Corp.) listed | AP | Doc22 III.11 |
 | 2026-06-14 | claude.ai chat "Prime token currency" | Claude | Rei — Brief |
@@ -437,6 +500,7 @@ Every dated event the research found, oldest first, exactly as each source recor
 | July 31, 2026 | Onyx v1.3a | AP | Card |
 | Jul 31, 2026 | Onyx v1.3a posted | AP | Doc19 |
 | 2026-08 | Saheb writes Fannie/Freddie conservatorship-exit thesis | Claude | Trader in Time |
+| 2026-08-04 | China-AI equity dossier (compiled with Claude) | Drive | China AI Dossier |
 | 5 Aug 2026 | MIAX reports Q2 2026 | AP | Brief p15 |
 | Aug 5, 2026 | DCM Submission No. 26-60 (audit trail Rule 2.3.2) | AP | Annex E p.121 |
 | Aug 5, 2026 | DCM Submission No. 26-60 (Rule 2.3.2 audit trail) | AP | Doc21 |
@@ -450,6 +514,7 @@ Every dated event the research found, oldest first, exactly as each source recor
 | 2026-08-26 | Cut-off for the six-month totals used to set position levels | AP | Doc37 p18 |
 | Aug 26 2026 | Data date: six-month volume; free float for Nos. 1-35 | AP | Doc 7 |
 | Aug 26, 2026 | Data date for 101-name register | AP | Doc22 Part IV |
+| 2026-08-26 | Listing-desk data date; SPYP marked "Listed (No. 1)" in internal register | Drive | 07_Listing_Desk_Workbook |
 | Sep 2026 | Coinbase Derivatives Form 19b-4; four Form 1-N filings acknowledged | AP | Doc24 |
 | Sept 2026 | Launch Partner Brief, Market Maker Brief, Robinhood Brief, Connamara Brief editions | AP | Docs 25, 30–32 |
 | 1 Sep 2026 | Coinbase Derivatives Form 1-N (File 10-252) | AP | Brief p6 |
@@ -526,6 +591,7 @@ Every dated event the research found, oldest first, exactly as each source recor
 | Sep 30, 2026 | All six docs revised (data room compiled) | AP | all |
 | Sept 30, 2026 | Annexes C & D revised; text copies prepared | AP | Docs 26, 27 |
 | 2026-09-30 | v4.81 final: MPPLA v2.8, Signing Set, Delivery Ack (99 files), MIAX_SIMPLE, Room Update 30 Sept; "Nothing sent" | AP | prepack; instruments |
+| 2026-09-30 | Closing set re-cut to MPPLA/100M units; Delivery Acknowledgment (99 files, 101 names); binder shows Royalty Agreement + Commission order still "added at execution" | Drive | CLOSING_DOCUMENTS; AP_Delivery_Acknowledgment_FORM; 00_Binder_Contents |
 | Sep 30, 2026 | AP compilation: American Perpetual LLC, 60% royalty, OCC clearing (no GLX/Greyline mention) | GLX | AP compilation |
 | 2026-10-03 | XR Language — Brief | Claude | doc |
 | 2026-10-04 | Astrellis session starts; XR Chart Reading, XR Suggestion Bar, Unsaid Build Dashboard | Claude | session list; gallery |
@@ -539,6 +605,7 @@ Every dated event the research found, oldest first, exactly as each source recor
 | 2026-10-15 | Rei — Stack created; Nimbus iMessage session; Rei "Since 15 October: no fee, no burn, no Ethereum…" | Claude | gallery; Prime ticks |
 | 2026-10-16 | Ticker XR adopted; Rei × MIAX Brief; Cookbook; World doc; Prime ticks; coin variations; "Decided Oct 16 … At 21:24: Foundation treasury sales" | Claude | docs |
 | 2026-10-17 | Rei — The Deck; Rei, redesigned | Claude | gallery |
+| 2026-10-18/19 | Altcoin short book copied/reopened in My Drive root | Drive | Copy of Copy of May 2024 Altcoin Shorts |
 | 2026-10-19 | Hyperbull Break List; Spaceyard | Claude | gallery |
 | 2026-10-20 | Comment deadline, SEC Regulation Crypto Assets (only fixed date) | Claude | Rei×MIAX |
 | 2026-10-21/22 | Cambrian Brief | Claude | doc |
