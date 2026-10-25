@@ -473,7 +473,8 @@
    "ap",
    "ap-llc",
    "ap-ten-percent",
-   "glx-exchange"
+   "glx-exchange",
+   "rei"
   ],
   "chapter": "deal",
   "org": "org-ap"
@@ -657,7 +658,8 @@
   "feeds": [
    "ap-llc",
    "ap-mppla",
-   "glx-exchange"
+   "glx-exchange",
+   "rei"
   ],
   "chapter": "deal",
   "org": "org-capital"
@@ -1757,6 +1759,430 @@
   ],
   "chapter": "origins",
   "org": "org-origins"
+ },
+ {
+  "id": "rei",
+  "name": "Rei (零 · XR) — the prime coin",
+  "tagline": "Supply on the primes, split by Riemann's R, lossless money",
+  "era": "2026-05 → 2026-10",
+  "status": "idea",
+  "summary": "Rei is the whole coin and XR its tenth decimal (1 Rei = 10^10 XR). Supply starts at 2 Rei and steps up the primes (mint = next prime − this prime) when a Foundation-proposed milestone is accepted by holders, paid into savings; nothing burns and moving XR is free. The first spec (14 Oct) split each step by Riemann's R function ('prime rata'); the 16–17 Oct documents pay steps 'in proportion' and no longer mention R.",
+  "ideas": [
+   {
+    "name": "Prime staircase",
+    "one_liner": "Supply is always a prime number of Rei; each step mints the gap (1, 2, 2, 4, 2, 4…).",
+    "date": "2026-10"
+   },
+   {
+    "name": "Prime rata",
+    "one_liner": "New units split by R(balance)/ΣR instead of balance; small holders gain slightly.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Prime root and the Token Depository",
+    "one_liner": "v0.6: mints go to KYC'd locked XR weighted by R(amount in billionths); relock to share again.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Savings (the lock)",
+    "one_liner": "Steps paid to self-held or locked XR; Foundation and equity co XR never share or vote.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Folds",
+    "one_liner": "Prime marks ⁗ ‴ ″ ′ as lossless decimal groupings; ⁗ = 1,000 XR.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Milestones as civilization objectives",
+    "one_liner": "Step 3 everyday money, 5 most human AI, 7 every city on the map, 11 Rei off Earth.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Two architectures",
+    "one_liner": "v0.6 5G phone hops with no Ethereum vs Rei Chain, a Nitro rollup by Caldera on Ethereum.",
+    "date": "2026-10"
+   },
+   {
+    "name": "June secure-chip design",
+    "one_liner": "A chip per phone holds the balance and works offline and off-world (from a June chat).",
+    "date": "2026-06"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "2 Rei = 20 billion XR",
+    "label": "first step, minted only as the one sale sells"
+   },
+   {
+    "value": "$600M",
+    "label": "cap at the 3-cent floor"
+   },
+   {
+    "value": "2, 3, 5, 7, 11, 13, 17, 19, 23",
+    "label": "supply path in Rei"
+   },
+   {
+    "value": "42.5% / 31.9% / 25.6%",
+    "label": "prime-rata split of 0.50/0.30/0.20 Rei holders vs 50/30/20 pro rata"
+   },
+   {
+    "value": "9,905×",
+    "label": "weight of 20,000× the holding under R at billionths-of-XR scale"
+   },
+   {
+    "value": "65,536 accounts: 8.0 s, 195 KB, 10.8 ms",
+    "label": "v0.6 tick proof on 2 CPU cores"
+   },
+   {
+    "value": "80.1% → 96.1%",
+    "label": "share of supply in the Token Depository, day 0 to day 30 (sim)"
+   }
+  ],
+  "people": [
+   "Saheb — author of every Rei document",
+   "The Foundation — keeps the curve; independent board (to be formed)",
+   "Caldera — proposed Rei Chain operator",
+   "Privy — wallets",
+   "World (ProveKit) — post-quantum prover"
+  ],
+  "next_moves": [
+   "Decide the architecture: v0.6 phone hops or the Nitro rollup on Ethereum, and record it as a decision",
+   "Decide prime rata vs pro rata, and if R stays fix its unit, precision and rounding rule",
+   "Publish the milestone list and pick the snapshot-gaming fix (unannounced fire time or time-weighting)",
+   "Harvest the PRIME protocol, Prime token currency and Private money system chats and the Rei data room",
+   "Benchmark the Noir circuit library on real iPhones before the beta"
+  ],
+  "feeds": [
+   "main-coin",
+   "rei-capital",
+   "rei-miax",
+   "rei-surfaces",
+   "stable-z",
+   "xr-lang"
+  ],
+  "chapter": "rei",
+  "org": "org-rei"
+ },
+ {
+  "id": "rei-capital",
+  "name": "Rei — the one sale, the Foundation and a public home",
+  "tagline": "One sale up a ladder, no equity sold, bonds and a merger",
+  "era": "2026-10 → 2028-03 (proposed)",
+  "status": "idea",
+  "summary": "The equity co sells XR once, at launch: sell orders from $0.03 to $0.30 over 6.2 billion XR on MIAX's XR/USD book, 30 days from 1 November 2027 (proposed), with 50 XR minted to the Foundation and 19 to the equity co for every 31 sold. Bonds fund the build; after the sale the equity co would reverse-merge into AMBR and buy Gemini for stock. The legal target is a digital-commodity sale under the 17 March 2026 SEC/CFTC interpretation, with Reg A and Reg Crypto Assets as fallbacks.",
+  "ideas": [
+   {
+    "name": "The one sale",
+    "one_liner": "Single-sided sell ladder, equal-percentage steps, KYC'd buyers capped at 60M XR each.",
+    "date": "2026-10"
+   },
+   {
+    "name": "50/19/31 minting",
+    "one_liner": "Shares fixed on whatever sells; unsold XR is never minted.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Foundation treasury sales",
+    "one_liner": "Foundation sells its own XR up to $50M per 12 months (CLARITY §202), from 2028.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Bonds and a public home",
+    "one_liner": "144A bonds; reverse merger into AMBR; Gemini bought for AMBR stock.",
+    "date": "2026-10"
+   },
+   {
+    "name": "28 filings in four steps",
+    "one_liner": "Custody, MTLs, IB/NFA, BD-N, 40.6 spot, 40.3 perps, exemptive relief, GENIUS.",
+    "date": "2026-10"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "$0.03 → $0.30 over 6.2B XR",
+    "label": "the sell ladder"
+   },
+   {
+    "value": "$81M / $323M / $727M",
+    "label": "raised if the ladder clears at 6¢ / 15¢ / 30¢"
+   },
+   {
+    "value": "50 / 19 / 31",
+    "label": "Foundation / equity co and team / buyers"
+   },
+   {
+    "value": "60M XR",
+    "label": "per-buyer cap; under 1% of supply above the 6¢ mark"
+   },
+   {
+    "value": "5%",
+    "label": "of sale dollars to two-sided market making after the close"
+   },
+   {
+    "value": "~$570M / ~$150M",
+    "label": "Gemini / AMBR market value in the documents"
+   },
+   {
+    "value": "59% / 35% / 6.5%",
+    "label": "Rei / Gemini / AMBR holders in the merger example"
+   }
+  ],
+  "people": [
+   "Saheb — decides the CLARITY call ('This is Saheb's call')",
+   "Michael Wu and Amber Fort — ~77.8% of AMBR votes",
+   "Winklevoss twins — ~93% of Gemini votes",
+   "Counsel — not yet engaged"
+  ],
+  "next_moves": [
+   "Engage counsel on XR's status, the sale path, custody and money transmission",
+   "Make the CLARITY call: let holders vote milestones and model governance, or accept the Foundation counts as insider",
+   "Line up bond buyers and a backer before revenue",
+   "Approach Michael Wu and Amber Fort for an LOI by 31 December 2026",
+   "Set the employee option pool (10–15%) at a low 409A now"
+  ],
+  "feeds": [
+   "rei",
+   "rei-miax"
+  ],
+  "chapter": "rei",
+  "org": "org-rei"
+ },
+ {
+  "id": "rei-miax",
+  "name": "Rei × MIAX — the XR/USD book and one account",
+  "tagline": "XR spot, crypto perps and AP stock perps at MIAX",
+  "era": "2026-10 → 2027-11 (proposed)",
+  "status": "idea",
+  "summary": "MIAX would list XR/USD spot (the one sale's book) and run the US market for bitcoin and ether perps and dated options, margined and settled in dollars 24/7 at its own clearinghouse; every Rei Pay payment sells XR on that book. AP's single-stock perps sit in the same account through the equity co as introducing broker and Dorman as FCM. AP's draft MPPLA pays AP 60% of MIAX's fees on every perpetual on any underlying, so Rei's perps must be carved out before AP signs.",
+  "ideas": [
+   {
+    "name": "One agreement",
+    "one_liner": "'The market, dollar clearing and the fees' in one deal with MIAX.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Payments as public trades",
+    "one_liner": "Rei Pay sells the payer's XR as their own order; payment volume is spot volume.",
+    "date": "2026-10"
+   },
+   {
+    "name": "24/7 dollar clearing",
+    "one_liner": "Hourly variation margin as book entries; liquidity line for nights and weekends.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Stock perps inside Rei",
+    "one_liner": "AP's 100-share perps on Onyx/OCC in the same account as XR.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Quant API",
+    "one_liner": "One on-chain book and one API: XR spot, perps, stock perps and options via Dorman.",
+    "date": "2026-10"
+   },
+   {
+    "name": "AP carve-out",
+    "one_liner": "Exclude Rei's BTC, ETH and XR perps from AP's 60% royalty and exclusivity.",
+    "date": "2026-10"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "60%",
+    "label": "AP's share of MIAX fees on any perpetual, as drafted (MPPLA ¶5(a))"
+   },
+   {
+    "value": "~7,400",
+    "label": "AP documents described as groundwork for crypto perps at MIAX"
+   },
+   {
+    "value": "15% / ~6.7×",
+    "label": "AP stock-perp margin floor and implied leverage"
+   },
+   {
+    "value": "35 names",
+    "label": "AP's first list, SPY through SpaceX"
+   },
+   {
+    "value": "under 10×",
+    "label": "where a new coin's leverage starts"
+   },
+   {
+    "value": "2026-05-29",
+    "label": "Kalshi bitcoin perp approved under 40.3 — the precedent"
+   }
+  ],
+  "people": [
+   "MIAX / MIAX Futures — exchange and clearinghouse",
+   "Dorman Trading — FCM carrying accounts",
+   "OCC — clears AP stock perps; 'holds no crypto'",
+   "Joe Ferraro — President, MIAX Products (AP contact)",
+   "Saheb — on both sides (AP LLC and Greyline, Inc.; Rei)"
+  ],
+  "next_moves": [
+   "Write the Rei carve-out into the MPPLA and the IP Assignment before AP signs and before the 10% unit sale",
+   "Agree any split of MIAX's fees across MIAX, AP and Rei",
+   "Ask counsel whether a 40.6 XR spot contract with no expiry falls under MPPLA ¶1",
+   "Prepare the Core Principle 3 showing and the dollar clearing package for MIAX",
+   "Draft the four-part conflict disclosure and get independent-director approval"
+  ],
+  "feeds": [
+   "ap",
+   "glx-exchange",
+   "rei",
+   "rei-capital"
+  ],
+  "chapter": "rei",
+  "org": "org-rei"
+ },
+ {
+  "id": "xr-lang",
+  "name": "XR — the language for organizing",
+  "tagline": "No where; only settled facts and promises with check times",
+  "era": "2026-10-03 → 2026-10-16",
+  "status": "active",
+  "summary": "XR began on 3 October 2026 as 'a language for organizing people, built on mixed reality', whose goal is 'the greatest organization in the world'. It has two sentence types (settled, or promised with a check time), turns opinions into dated bets, and uses zk tick compression so a constant-size proof carries a growing record. On 16 October XR became Rei's ticker and the house style of every Rei document.",
+  "ideas": [
+   {
+    "name": "Two kinds of sentences",
+    "one_liner": "Settled, or promised with a time it can be checked; 'Will you?' is the only question.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Opinions are bets",
+    "one_liner": "'This deal loses money by March' replaces 'I don't like this deal'.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Zk tick compression",
+    "one_liner": "Each tick's proof swallows the last; same size, growing information; post-quantum.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Compliance edge",
+    "one_liner": "A running proof to regulators that limits hold every second, showing no position.",
+    "date": "2026-10"
+   },
+   {
+    "name": "XR Suggestion Bar",
+    "one_liner": "iMessage keyboard with Classical/Quantum cards that need check times.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Ticker XR",
+    "one_liner": "REI was taken; 'Rei ticker XR' on 16 October.",
+    "date": "2026-10"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "3",
+    "label": "levels: plain XR, XR + ZKP, zk tick compression"
+   },
+   {
+    "value": "3",
+    "label": "words so far: Spaceyard, Near, On"
+   },
+   {
+    "value": "T+5 → T+1",
+    "label": "'Faster ticks, less talk' settlement analogy"
+   }
+  ],
+  "people": [
+   "Saheb — author"
+  ],
+  "next_moves": [
+   "Write down why the ticker is XR and keep the language and the coin's naming consistent",
+   "Define how standing weighs the size of kept promises, not just the count",
+   "Decide whether the XR Suggestion Bar becomes Rei's iMessage composer"
+  ],
+  "feeds": [
+   "rei",
+   "rei-surfaces"
+  ],
+  "chapter": "rei",
+  "org": "org-rei"
+ },
+ {
+  "id": "rei-surfaces",
+  "name": "Rei consumer surfaces — map, iMessage, Spaceyard",
+  "tagline": "One page: agent left, 3D map right, coins for every handle",
+  "era": "2026-10-04 → 2026-10-19",
+  "status": "idea",
+  "summary": "Rei's app is one page with the agent on the left and a friendly 3D map on the right: avatars, pets in portals, stores that take Rei Pay, and every @handle a coin of a million units. Rei opens inside iMessage through a native app's Messages extension, prototyped as the Nimbus iOS app (15–16 Oct). Spaceyard (19 Oct) is a sibling live-stream map with its own in-app currency, SPY.",
+  "ideas": [
+   {
+    "name": "Handles are coins",
+    "one_liner": "Each handle is 1 million units, ranked by market value; picture coins priced in the handle's coin.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Agents talk first",
+    "one_liner": "Agents negotiate on context; numbers swap only when both people agree.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Rei inside iMessage",
+    "one_liner": "Messages extension sends the bubble; proofs are made in the app.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Nimbus",
+    "one_liner": "Working iOS app + Messages extension streaming AI answers; invite-only TestFlight.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Spaceyard and SPY",
+    "one_liner": "Live-stream map; 'Stream 30 min, earn SPY'; drops priced in SPY.",
+    "date": "2026-10"
+   },
+   {
+    "name": "The most human AI",
+    "one_liner": "'The payment is the label': agent chats labelled by real choices; checkpoints every two weeks.",
+    "date": "2026-10"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "1,000,000",
+    "label": "units per handle coin"
+   },
+   {
+    "value": "12,480 SPY",
+    "label": "demo balance in Spaceyard"
+   },
+   {
+    "value": "200/day",
+    "label": "Nimbus answers per person cap"
+   },
+   {
+    "value": "91 + 84",
+    "label": "Nimbus iOS and server tests passing"
+   },
+   {
+    "value": "20–30%",
+    "label": "markup over serving cost for Astra tokens"
+   }
+  ],
+  "people": [
+   "Saheb — author and Nimbus requester",
+   "The model company — trains Rei's model every two weeks (owner to decide)",
+   "Z.ai — GLM-5.2 open weights for the uncensored model"
+  ],
+  "next_moves": [
+   "Decide how Spaceyard's SPY relates to XR (points layer, separate token or placeholder)",
+   "Turn Nimbus into the Rei iMessage extension once the circuit library exists",
+   "Settle what handle-coin holders get beyond the coin, keeping them collectibles",
+   "Confirm Apple 3.1.5 scope: which features stay in the web app"
+  ],
+  "feeds": [
+   "rei",
+   "rei-miax",
+   "xr-lang"
+  ],
+  "chapter": "rei",
+  "org": "org-rei"
  },
  {
   "id": "street-build",

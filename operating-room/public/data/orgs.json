@@ -8,12 +8,19 @@
   "era": "Oct 2026 →",
   "summary": "Rei (零), ticker XR, is the coin the whole system is denominated in. Supply steps up the prime numbers and is shared by Riemann's R function; it launches on an XR/USD book on MIAX, in the same account as the stock perps.",
   "chapter": "rei",
-  "pods": [],
+  "pods": [
+   "rei",
+   "rei-capital",
+   "rei-miax",
+   "xr-lang",
+   "rei-surfaces"
+  ],
   "feeds": [
    "org-ap",
    "org-capital",
    "org-classes",
    "org-desk",
+   "org-glx",
    "org-origins"
   ]
  },

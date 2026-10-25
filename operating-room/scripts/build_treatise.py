@@ -289,7 +289,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 
 
 # Pod ids writers guessed for pods in other chapters → the ids those chapters use.
-POD_ALIASES = {"glx": "glx-exchange", "greyline": "glx-exchange", "american-perpetual": "ap"}
+POD_ALIASES = {"glx": "glx-exchange", "greyline": "glx-exchange", "american-perpetual": "ap", "stable": "stable-z"}
 
 
 def merge_pods() -> tuple[list[dict], list[dict]]:

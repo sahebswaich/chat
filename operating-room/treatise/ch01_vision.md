@@ -19,7 +19,7 @@ built to make it worth more. That is what **X → ∞** means here.
 > Master Perpetual Products License Agreement v2.8, final text of 30 September 2026.
 
 > [!number] 2 → 3 → 5 → 7 — Rei's supply steps, one prime at a time
-> New units are split by Riemann's R function ("prime rata"); see Chapter IX.
+> 1 Rei = 10¹⁰ XR; supply starts at 2 Rei and each step mints the gap to the next prime, first split by Riemann's R function ("prime rata"). See Chapter IX.
 
 *Sources: AP data room (30 Sep 2026); MPPLA v2.8 execution form; "Rei — The World a $100 Billion Coin Makes" (16 Oct 2026)*
 
@@ -69,8 +69,9 @@ The pods are not independent. Four links decide whether the whole system works.
 
 - **The licence covers Rei unless it is carved out.** The MPPLA pays American Perpetual 60% of
   MIAX's fees on every perpetual product on any underlying. A Rei perpetual on MIAX would be one
-  of them. Saheb's own to-do says "carve Rei out" of the American Perpetual draft. Which entity
-  should earn Rei's perp fees has to be decided before MIAX signs.
+  of them, and the bitcoin and ether perps are both American Perpetual's planned second class and
+  Rei's planned first products at MIAX. The Rei × MIAX brief says to carve Rei out of the deal and
+  its IP assignment before either is signed, and before the 10% sale.
 - **The IP assignment sweeps in earlier work.** The September IP Assignment moves all
   pre-formation perpetual work into American Perpetual LLC. The June version kept five future
   ventures outside it (an FCM/broker-dealer, a trading app, white-label broker software, a
