@@ -1441,6 +1441,560 @@
   "org": "org-capital"
  },
  {
+  "id": "trader-in-time",
+  "name": "Trader in Time — the frame",
+  "tagline": "Price the wait, shorten it, sell it, write it down",
+  "era": "2026-10",
+  "status": "active",
+  "summary": "A twelve-chapter book (9 Oct 2026) that states Saheb's method: every claim has a stretch of time nobody can check, and he either shortens it or prices it and holds it. It maps the perpetual, the zk receipt, the royalty and the XR language onto four moves on time, and it is the frame the desk trades by.",
+  "ideas": [
+   {
+    "name": "Watch how long, not the price",
+    "one_liner": "Risk is the unchecked stretch; its price rises with length and opacity.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Four moves on time",
+    "one_liner": "Perpetual prices the wait, receipt shortens it, licence sells it, XR writes it down.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Dated opinions",
+    "one_liner": "'This deal loses money by March' is a bet that can be checked.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Loosened by a record",
+    "one_liner": "Start limits low; let a clean record earn looser ones.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Roll names, keep bets",
+    "one_liner": "GLX became American Perpetual; zkTPU became Cambrian; the bets stay open.",
+    "date": "2026-10"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "12",
+    "label": "chapters, Clock to Open"
+   },
+   {
+    "value": "4",
+    "label": "open questions it ends on, incl. 'How does a hunch become a promise?'"
+   }
+  ],
+  "people": [
+   "Saheb Swaich — subject and author (@Saheb)"
+  ],
+  "next_moves": [
+   "Use the four moves as the test for every new desk tool: which wait does it price or shorten?",
+   "Answer the book's open question on hunches in the terminal: hunches off the record, bets with a check date"
+  ],
+  "feeds": [
+   "ap",
+   "cambrian",
+   "hyperbull",
+   "terminal",
+   "xr-lang"
+  ],
+  "chapter": "desk",
+  "org": "org-desk"
+ },
+ {
+  "id": "hyperbull",
+  "name": "Hyperbull Break List",
+  "tagline": "1,450 names, one break each, priced to a 2029 top",
+  "era": "2026-10",
+  "status": "active",
+  "summary": "A sortable screen (19 Oct 2026) that calls the Nasdaq-100 from ~29,600 to 65,000 by a 1 Jan 2029 top and scores each of 1,450 companies by prize ÷ (market cap + stock it must sell). Each name has a dated path, a whole-company multiple to the top and a best 8-month trade; crypto treasury names carry a token call (each token doubles).",
+  "ideas": [
+   {
+    "name": "Break score",
+    "one_liner": "Prize at max ÷ (cap + stock to sell), log scale; 1× doubles the company.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Best 8-month trade",
+    "one_liner": "Slide an 8-month window to the top; 1,324 names peak in May 2028 → Jan 2029.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Token call",
+    "one_liner": "Treasury companies valued on their token doubling: BTC $86K → ~$172K.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Seven-year supply-chain thesis",
+    "one_liner": "Top Jan 1, 2029; 2029–30 hardest; strong bull again before 2034.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Your screen: Oct 10",
+    "one_liner": "Saheb's own 77-name screen folded into the list.",
+    "date": "2026-10"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "1,450",
+    "label": "names scored"
+   },
+   {
+    "value": "65,000",
+    "label": "Nasdaq-100 at the 1 Jan 2029 top (2.2×)"
+   },
+   {
+    "value": "~$172K",
+    "label": "bitcoin token call (2× from $86K)"
+   },
+   {
+    "value": "1,324",
+    "label": "names whose best 8 months are May 2028 → Jan 2029"
+   },
+   {
+    "value": "675",
+    "label": "names scoring 1× or more"
+   },
+   {
+    "value": "21",
+    "label": "crypto names"
+   }
+  ],
+  "people": [
+   "Saheb Swaich — author of the Oct 10 screen",
+   "Gemini (GEMI), AMBR — listed names that are also Rei's public-home targets"
+  ],
+  "next_moves": [
+   "Refresh prices before acting on any row; some are mid-October or stale",
+   "Decide whether the dated market path becomes a regime input to the terminal",
+   "Trade the 121 near-term windows (now → Jun 2027) separately from the late-cycle list"
+  ],
+  "feeds": [
+   "cambrian",
+   "rei",
+   "terminal"
+  ],
+  "chapter": "desk",
+  "org": "org-desk"
+ },
+ {
+  "id": "terminal",
+  "name": "The trading terminal",
+  "tagline": "Perp setups by timeframe, sized to the account's rules",
+  "era": "2026-10 →",
+  "status": "active",
+  "summary": "A password-gated Cloudflare Worker + D1 in this repository. Pick 1D, 3D or 1W; it ranks Hyperliquid perps by a seven-part score (breakout, momentum, volume, funding, leverage, OI flow, Korea flow), sizes each trade by the tightest of risk ÷ stop, a leverage cap and 0.25% of perp OI, screens long/short pairs by order-book impact (zero-fee trenches) and journals fills against the move since.",
+  "ideas": [
+   {
+    "name": "Seven-part score",
+    "one_liner": "Breakout (weight 3) first; six components confirm or warn; ±100.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Three-limit sizing",
+    "one_liner": "Smallest of risk ÷ 1.5-ATR stop, equity × leverage cap, 0.25% of perp OI.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Leverage map",
+    "one_liner": "Cross-venue perp OI ÷ market cap: 0.5–10% is fuel, >20% liquidation risk.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Korea flow",
+    "one_liner": "Upbit + Bithumb KRW share ÷ global share, TokenPost-style; early help, late fade.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Zero-fee trenches pair impact",
+    "one_liner": "Walk Hyperliquid books for a $25k pair; keep pairs under 20 bps.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Fills journal",
+    "one_liner": "Move since each fill, P&L and how long ago, owner only.",
+    "date": "2026-10"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "3 of 9.25",
+    "label": "breakout's share of the score weight"
+   },
+   {
+    "value": "20 / 10 / 8",
+    "label": "breakout lookback bars on 1D / 3D / 1W"
+   },
+   {
+    "value": "0.25%",
+    "label": "max share of a coin's perp OI per position"
+   },
+   {
+    "value": "$25,000 · 20 bps",
+    "label": "default pair size and max impact"
+   },
+   {
+    "value": "4.5 bps",
+    "label": "Hyperliquid taker fee per side used in round trips"
+   },
+   {
+    "value": "36",
+    "label": "coin cap on the free Workers plan"
+   }
+  ],
+  "people": [
+   "Saheb Swaich — owner and trader"
+  ],
+  "next_moves": [
+   "Import the zero-fee-trenches site's rules and the funded-account thread's limits",
+   "Replace the placeholder account rules ($100k, $1k risk, 5×/2×)",
+   "Deploy with D1 migrations and a CoinGecko key; let a week of OI snapshots build",
+   "Fix the over-extension haircut in scoreSide (it tests a clamped value)"
+  ],
+  "feeds": [
+   "andromeda",
+   "ap",
+   "archive-terminal",
+   "desk-funded",
+   "hyperbull"
+  ],
+  "chapter": "desk",
+  "org": "org-desk"
+ },
+ {
+  "id": "desk-funded",
+  "name": "Funded account (Breakout)",
+  "tagline": "The account the terminal sizes for; its rules still outside",
+  "era": "2026-10",
+  "status": "active",
+  "summary": "The terminal's leverage caps are meant to be set 'to your funded-account rules'. Those rules, and the analysis of which breakout coins to trade with what leverage, are in the claude.ai thread 'Funded breakout coin leverage analysis', which the research tools could not reach. Saheb's stated record: a $4,000 monthly salary traded to $300,000, then $150,000 into one project that returned $1.4 million.",
+  "ideas": [
+   {
+    "name": "Funded-account rules as code",
+    "one_liner": "Majors vs alts leverage caps and risk per trade set from the account's rules.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Breakout coin leverage analysis",
+    "one_liner": "The thread behind the rules; not yet in the record.",
+    "date": "2026-10"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "$4,000 → $300,000",
+    "label": "monthly salary traded up"
+   },
+   {
+    "value": "$150,000 → $1.4M",
+    "label": "one project's return"
+   }
+  ],
+  "people": [
+   "Saheb Swaich — trader"
+  ],
+  "next_moves": [
+   "Export the 'Funded breakout coin leverage analysis' chat to Drive",
+   "Write its limits into the terminal's Rules and load past fills as CSV",
+   "Record which strategies are personal, Cambrian's or Rei's, and check them against AP's IP assignment"
+  ],
+  "feeds": [
+   "cambrian",
+   "retained-ip",
+   "terminal"
+  ],
+  "chapter": "desk",
+  "org": "org-desk"
+ },
+ {
+  "id": "astrellis",
+  "name": "Astrellis — Trafigura for AI",
+  "tagline": "Match AI-hardware buyers and sellers; take 10–20%",
+  "era": "2026-10",
+  "status": "parked",
+  "summary": "A logistics terminal for the AI supply chain (4–12 Oct 2026): a Bottleneck Radar of 13 segments and 153 suppliers, a buyer's agent that negotiates with seller agents under escrow and export screening and keeps an XR record, and a study sizing ~$5.75B of value capturable in 2026 ($0.58–1.15B revenue at a 10–20% take). The report was committed but never pushed.",
+  "ideas": [
+   {
+    "name": "Bottleneck Radar",
+    "one_liner": "HBM, optics, ABF, server DRAM, SSDs critical; 153 sourced suppliers.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Astrellis Agent",
+    "one_liner": "Sealed quotes, escrow, export screening; BET, SETTLE and a hunch board.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Arbitrage study",
+    "one_liner": "Perfect matching's 2026 value: $4.25B price gap + ~$1.5B speed.",
+    "date": "2026-10"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "~$5.75B",
+    "label": "value capturable in 2026 ($1.4–17B)"
+   },
+   {
+    "value": "$0.58–1.15B",
+    "label": "revenue at a 10–20% take"
+   },
+   {
+    "value": "~13%",
+    "label": "break-even take"
+   },
+   {
+    "value": "$0.42B",
+    "label": "EBITDA at a 20% take (37%)"
+   },
+   {
+    "value": "153",
+    "label": "suppliers on the radar"
+   }
+  ],
+  "people": [
+   "Saheb Swaich — 'so trafigura for ai'",
+   "Trafigura — the analogy"
+  ],
+  "next_moves": [
+   "Make the Rhino repo private and push docs/ARBITRAGE.md, or drop it",
+   "Decide whether Astrellis is a desk trade or a company"
+  ],
+  "feeds": [
+   "ap",
+   "cambrian",
+   "hyperbull",
+   "xr-lang"
+  ],
+  "chapter": "desk",
+  "org": "org-desk"
+ },
+ {
+  "id": "cloud-spend",
+  "name": "S&P 500 cloud-spend screen",
+  "tagline": "What a 30% AI cut to cloud bills is worth",
+  "era": "2026-10",
+  "status": "parked",
+  "summary": "A 12 Oct 2026 screen of 56 US-listed companies by cloud spend in their SEC filings (~$54B a year), with a slider for an AI-driven cut (default 30%) and savings as a share of market cap. Snap leads at ~4.8% of its value a year; seven non-disclosers are estimated.",
+  "ideas": [
+   {
+    "name": "Savings ÷ market cap",
+    "one_liner": "Rank stocks by how much a cloud cut re-rates them.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Frontier-model efficiency",
+    "one_liner": "Gemini 4 Argon (Sept 30) as the cut's driver; 29% waste is the ceiling.",
+    "date": "2026-10"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "56",
+    "label": "companies ranked"
+   },
+   {
+    "value": "~4.8%",
+    "label": "Snap's yearly saving as a share of value at 30%"
+   },
+   {
+    "value": "~$16B",
+    "label": "yearly saving across the list at 30%"
+   }
+  ],
+  "people": [
+   "Saheb Swaich — asked for the screen"
+  ],
+  "next_moves": [
+   "Rerun with sec.gov allowed and replace derived rows with filed numbers"
+  ],
+  "feeds": [
+   "hyperbull"
+  ],
+  "chapter": "desk",
+  "org": "org-desk"
+ },
+ {
+  "id": "zktpu",
+  "name": "zkTPU — a clearinghouse for answers",
+  "tagline": "A receipt on every AI answer; the proof is the meter",
+  "era": "2026-10",
+  "status": "superseded by Cambrian",
+  "summary": "A decision paper (7 Oct 2026) for a sealed multi-lab AI compute pool: a 348-byte receipt per request, an hourly tick proof, warrant access through a 3-of-5 split key, and a fee of ~20 bps said as a tax on tokens. It dropped an earlier 'credit tokens and a central coin' design for 'one public company, no token', and listed GPU-hour price indices and planned compute futures.",
+  "ideas": [
+   {
+    "name": "Receipts and the tick prover",
+    "one_liner": "Every answer gets a receipt; each hour's proof swallows the last.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Three meters",
+    "one_liner": "$25/GPU/month, $5 per proof, $5,000 per warrant opening.",
+    "date": "2026-10"
+   },
+   {
+    "name": "No token",
+    "one_liner": "'token networks earn far less than they emit'",
+    "date": "2026-10"
+   },
+   {
+    "name": "Compute as a priced asset",
+    "one_liner": "H100 $2.82, B200 $7.56 indices; CME, ICE, Ornn, Kalshi compute futures.",
+    "date": "2026-10"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "~20 bps",
+    "label": "fee said as a tax on tokens"
+   },
+   {
+    "value": "348 bytes",
+    "label": "receipt per request"
+   },
+   {
+    "value": "$422.8B",
+    "label": "AI data-center chip run-rate; each 1% = $4.2B/yr"
+   },
+   {
+    "value": "Jan 6, 2027",
+    "label": "gate: three labs sign intent"
+   }
+  ],
+  "people": [
+   "AI labs — customers",
+   "Five warrant custodians — 3-of-5 key"
+  ],
+  "next_moves": [
+   "Clear the name by 11 Nov 2026 ('TPU' is Google's; Cambrian is close to Cambricon)",
+   "Hold the 6 Jan 2027 three-lab gate"
+  ],
+  "feeds": [
+   "cambrian",
+   "rei",
+   "xr-lang"
+  ],
+  "chapter": "desk",
+  "org": "org-desk"
+ },
+ {
+  "id": "cambrian",
+  "name": "Cambrian — debt, computer, fund",
+  "tagline": "Buy the site's debt, build the computer, sell the tokens",
+  "era": "2026-09 → 2026-10",
+  "status": "idea",
+  "summary": "Rolled from the FEL-8 chip and Black Cube computer (22 Sept) and zkTPU (7 Oct) into a 21 Oct brief: buy senior loans on stalled AI data centers below face, finish the sites with an American-made C1 computer, sell compute on 3–5 year contracts. Its equity is 'Cambrian's trading book', and it calls the same 1 Jan 2029 top as the break list.",
+  "ideas": [
+   {
+    "name": "Enter through the debt",
+    "one_liner": "CoreWeave 2032s near 78¢; Jupiter loan at 89–91¢; Poolin Chapter 11 sites.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Time is the profit",
+    "one_liner": "A year sooner on power is worth $14–18M per MW every year.",
+    "date": "2026-10"
+   },
+   {
+    "name": "C1 computer",
+    "one_liner": "Wafer-scale logic on Intel 14A over DRAM; 12–27× Cerebras memory per wafer.",
+    "date": "2026-10"
+   },
+   {
+    "name": "FEL-8 and Black Cube",
+    "one_liner": "Eight Rubin-equivalents per part; eight parts in a 1.1 m cube.",
+    "date": "2026-09"
+   },
+   {
+    "name": "The fund's trading book",
+    "one_liner": "Equity for site one, beside a chip vendor's credit guarantee.",
+    "date": "2026-10"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "$3–6M",
+    "label": "per MW: building bought 20–40% off (once)"
+   },
+   {
+    "value": "$14–18M",
+    "label": "per MW per year: going live a year sooner"
+   },
+   {
+    "value": "~$25M",
+    "label": "per MW: owning the computer vs buying Nvidia's"
+   },
+   {
+    "value": "Jan 1, 2029",
+    "label": "called top; 2028 peak year"
+   }
+  ],
+  "people": [
+   "Intel, Micron, Lightmatter, xLight — supply-chain partners",
+   "OpenAI or Anthropic — anchor-lab target"
+  ],
+  "next_moves": [
+   "Price the first distressed-loan positions from the fund's trading book",
+   "Note that the 35% chip-plant credit covers only construction started by 31 Dec 2026"
+  ],
+  "feeds": [
+   "desk-funded",
+   "hyperbull",
+   "rei",
+   "zktpu"
+  ],
+  "chapter": "desk",
+  "org": "org-desk"
+ },
+ {
+  "id": "nimbus",
+  "name": "Unsaid → Nimbus (iMessage AI)",
+  "tagline": "An AI that pops up inside iMessage; Rei's surface prototype",
+  "era": "2026-10",
+  "status": "active",
+  "summary": "Unsaid (4 Oct 2026) was a two-person iMessage AI beta with the XR brief in its model prompt. Nimbus (15–16 Oct) is the working app in this repository: iOS with a Messages extension and a Cloudflare Worker with invite codes, the same pattern the terminal uses, and the prototype of 'Rei inside iMessage'.",
+  "ideas": [
+   {
+    "name": "Unsaid",
+    "one_liner": "Messages extension with Classical/Quantum tabs; XR in the prompt.",
+    "date": "2026-10"
+   },
+   {
+    "name": "Nimbus",
+    "one_liner": "Invite-only TestFlight; Send / Card / Insert; paste chips.",
+    "date": "2026-10"
+   }
+  ],
+  "numbers": [
+   {
+    "value": "200",
+    "label": "answers per person per day (Nimbus)"
+   },
+   {
+    "value": "91 + 84",
+    "label": "iOS and server tests green (Nimbus)"
+   },
+   {
+    "value": "1 of 19",
+    "label": "Unsaid release gates closed (4 Oct)"
+   }
+  ],
+  "people": [
+   "Saheb Swaich — builder",
+   "Invited friends — TestFlight users"
+  ],
+  "next_moves": [
+   "Run setup on the Mac and ship the first TestFlight build"
+  ],
+  "feeds": [
+   "rei-surfaces",
+   "xr-lang"
+  ],
+  "chapter": "desk",
+  "org": "org-desk"
+ },
+ {
   "id": "glx-exchange",
   "name": "GLX equity-perp product",
   "tagline": "Cash-settled, no-expiry perps on US stocks, 1 share per contract",

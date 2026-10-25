@@ -377,8 +377,9 @@ export function scoreSide(f: CoinFeatures, side: "long" | "short", w: Weights = 
   if (b.direction && fin(b.barsSince)) {
     const dir = b.direction === "up" ? 1 : -1;
     const freshness = Math.max(0, 1 - b.barsSince / 8);
-    const ext = fin(b.extensionAtr) ? clamp(b.extensionAtr / 2, -1, 1) : 0;
-    bo = dir * s * (b.holding ? 0.5 + 0.5 * freshness : -0.5) * (ext > 1.5 ? 0.7 : 1);
+    // More than 3 ATRs past the level is a chase: keep the signal but cut it.
+    const stretched = fin(b.extensionAtr) && b.extensionAtr > 3;
+    bo = dir * s * (b.holding ? 0.5 + 0.5 * freshness : -0.5) * (stretched ? 0.7 : 1);
     const when = b.barsSince === 0 ? "on this bar" : `${b.barsSince} bar${b.barsSince === 1 ? "" : "s"} ago`;
     boNote = `${b.direction === "up" ? "broke above" : "broke below"} ${when}, ${
       b.holding ? "holding" : "failed"

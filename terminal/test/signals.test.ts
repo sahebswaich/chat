@@ -179,6 +179,12 @@ describe("scoreSide", () => {
     expect(scoreSide(f, "short").score).toBeLessThan(-30);
   });
 
+  it("cuts a breakout that has run more than 3 ATRs past its level", () => {
+    const near = scoreSide(features({ breakout: { ...upBreakout, extensionAtr: 1 } }), "long").components[0]!.value;
+    const far = scoreSide(features({ breakout: { ...upBreakout, extensionAtr: 4 } }), "long").components[0]!.value;
+    expect(far).toBeCloseTo(near * 0.7, 10);
+  });
+
   it("penalises paying heavy funding to be long", () => {
     const calm = scoreSide(features({ breakout: upBreakout, fundingHourly: 0 }), "long").score;
     const crowded = scoreSide(features({ breakout: upBreakout, fundingHourly: 0.0001 }), "long").score; // ~88% APR

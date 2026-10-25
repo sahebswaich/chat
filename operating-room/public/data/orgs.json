@@ -104,9 +104,22 @@
   "era": "2024 →",
   "summary": "Where the vision trades: the terminal (setups by timeframe from OI/mcap, funding, breakouts, Korea flow and depth), the Hyperbull break list, and the adjacent arbitrage bets.",
   "chapter": "desk",
-  "pods": [],
+  "pods": [
+   "trader-in-time",
+   "hyperbull",
+   "terminal",
+   "desk-funded",
+   "astrellis",
+   "cloud-spend",
+   "zktpu",
+   "cambrian",
+   "nimbus"
+  ],
   "feeds": [
+   "org-ap",
+   "org-capital",
    "org-classes",
+   "org-origins",
    "org-rei",
    "org-street"
   ]

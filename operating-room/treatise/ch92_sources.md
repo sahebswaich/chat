@@ -462,5 +462,25 @@ Every document the research read, by thread. Drive files keep their titles; the 
 | Design "Rei coin variations" | 2026-10-16 | 11 colorways of the Rei mark — visual |
 | Artifact "XR Suggestion Bar" | 2026-10-04 | XR-language iMessage keyboard prototype (Classical/Quantum cards) |
 | Other 10 gallery artifacts (see list) | Sept 22 – Oct 19 | Not opened (non-crypto titles / visual / budget) |
+| Artifact | Updated | Gist |
+| Chip Chokepoint Breakers (Copy) | 2026-10-15 | Semiconductor chokepoint map + 5 openings for a materials startup |
+| Chip Chokepoint Breakers (shared) | — | Same page; the user's copy above is of this |
+| S&P 500 Cloud Spenders | 2026-10-12 | Cloud spend × cut ÷ market cap |
+| Forty-Five | 2026-10-10 | 45-minute AI study session + blind exam; no crypto |
+| What the QPU Knows | 2026-10-10 | Browser quantum-processor simulator + "QuantumScript"; no crypto |
+| Tom Cruise × 1 | 2026-10-09 (doc date) | Astrology overlay of Tom Cruise's chart on Saheb's — personal, not reproduced |
+| Unsaid Build Dashboard | 2026-10-04 | Build status of "Unsaid", an iMessage AI app (precursor of Nimbus) |
+| zkTPU logo | 2026-10-07 | Three logo directions |
+| zkTPU verification report | 2026-10-07 | Sealed verified AI compute pool, "no token" |
+| Astrellis Bottleneck Radar | 2026-10-05 | 13 AI-hardware segments; 153 suppliers |
+| Astrellis Agent | 2026-10-05 | Agent that sources AI hardware and negotiates with seller agents |
+| FEL-8 Chip | 2026-09-22 | Wafer-scale part = 8 Rubin GPUs; "stop at the chip" |
+| Black Cube Computer | 2026-09-22 | 8 × FEL-8 in a 1.1 m black cube; NeXT analogy |
+| Cambrian Brief — tab "Best stack" | 2026-10-21 | Layer picks, money per MW, distressed-loan targets, C1 numbers, deals |
+| AP Data Room — Final Check | 2026-09-25 | AP room review (AP writers own the detail) |
+| AP × MIAX Data Room — Internal Guide | 2026-09-22 | Room rules, folders, shares, open items |
+| Trader in Time (re-read for exact words) | 2026-10-09 | Unifying frame |
+| Hyperbull Break List (stats from data) | 2026-10-19 | Counts and crypto rows below |
+| Skipped (Rei/XR writer) | — | — |
 
 <!-- END CHAPTER -->
